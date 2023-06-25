@@ -1,0 +1,420 @@
+Uri: https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,400italic&subset=latin,cyrillic,greek,latin-ext&display=swap
+File Name: C:\Downloaded Web Sites\www.16personalities.com\css
+Content Type: text/css
+
+Uri: https://fonts.gstatic.com/s/opensans/v35/memQYaGs126MiZpBA-UFUIcVXSCEkx2cmqvXlWq8tWZ0Pw86hd0Rk8ZkaVc.ttf
+File Name: C:\Downloaded Web Sites\www.16personalities.com\s\opensans\v35\memQYaGs126MiZpBA-UFUIcVXSCEkx2cmqvXlWq8tWZ0Pw86hd0Rk8ZkaVc.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1y4n.ttf
+File Name: C:\Downloaded Web Sites\www.16personalities.com\s\opensans\v35\memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1y4n.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1y4n.ttf
+File Name: C:\Downloaded Web Sites\www.16personalities.com\s\opensans\v35\memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1y4n.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4n.ttf
+File Name: C:\Downloaded Web Sites\www.16personalities.com\s\opensans\v35\memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4n.ttf
+Content Type: font/ttf
+
+Uri: https://www.16personalities.com/build/assets/ag9tzxbhz2u--125da34f.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\ag9tzxbhz2u--125da34f.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/ag9tzxxhcmdl--bcf469d9.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\ag9tzxxhcmdl--bcf469d9.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/app.55558136.js
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\app.55558136.js
+Content Type: application/javascript
+
+Uri: https://www.16personalities.com/build/assets/aw50zxlszxm--e10c012b.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\aw50zxlszxm--e10c012b.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/aw50zxxhcmdl--805d1b4c.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\aw50zxxhcmdl--805d1b4c.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/bgvnywfyz2u--012a6b7b.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\bgvnywfyz2u--012a6b7b.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/bgvnywxlcw--fd7579f2.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\bgvnywxlcw--fd7579f2.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/c3r5bgnvcmu--2526d8bc.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\c3r5bgnvcmu--2526d8bc.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/c3r5bgxhcmdl--4b3852f7.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\c3r5bgxhcmdl--4b3852f7.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/c3r5bgzvbnrz--779365ef.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\c3r5bgzvbnrz--779365ef.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/cgvyc2fyz2u--8d9534b5.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\cgvyc2fyz2u--8d9534b5.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/cgvyc2vzda--4d68f601.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\cgvyc2vzda--4d68f601.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/dhlwzs1saxn0--f6226494.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\dhlwzs1saxn0--f6226494.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/dhlwzsfyz2u--4a2cf88e.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\dhlwzsfyz2u--4a2cf88e.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/dhlwzsjnzq--3a2d9536.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\dhlwzsjnzq--3a2d9536.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/dhlwzslvbg--414ab387.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\dhlwzslvbg--414ab387.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/y29udgfjda--0c0a2ad5.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\y29udgfjda--0c0a2ad5.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/y29udgfyz2u--0cccefc8.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\y29udgfyz2u--0cccefc8.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/build/assets/zm9udcvzb21l--be749329.css
+File Name: C:\Downloaded Web Sites\www.16personalities.com\build\assets\zm9udcvzb21l--be749329.css
+Content Type: text/css
+
+Uri: https://www.16personalities.com/ru
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-enfj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-enfj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-enfp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-enfp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-entj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-entj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-entp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-entp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-esfj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-esfj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-esfp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-esfp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-estj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-estj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-estp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-estp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-infj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-infj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-infp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-infp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-intj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-intj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-intp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-intp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-isfj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-isfj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-isfp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-isfp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-istj
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-istj.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/lichnost-istp
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\lichnost-istp.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/svyazatsya
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\svyazatsya.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/test-lichnosti
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\test-lichnosti.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/ru/tipy-lichnosti
+File Name: C:\Downloaded Web Sites\www.16personalities.com\ru\tipy-lichnosti.html
+Content Type: text/html
+
+Uri: https://www.16personalities.com/static/animations/team.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\team.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/adventurer.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\adventurer.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/advocate.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\advocate.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/architect.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\architect.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/campaigner.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\campaigner.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/commander.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\commander.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/consul.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\consul.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/debater.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\debater.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/defender.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\defender.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/entertainer.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\entertainer.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/entrepreneur.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\entrepreneur.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/executive.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\executive.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/logician.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\logician.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/logistician.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\logistician.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/mediator.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\mediator.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/protagonist.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\protagonist.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/animations/type-descriptions/introductions/virtuoso.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\animations\type-descriptions\introductions\virtuoso.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/favicons/favicon-16x16.png
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\favicons\favicon-16x16.png
+Content Type: image/png
+
+Uri: https://www.16personalities.com/static/images/favicons/favicon-32x32.png
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\favicons\favicon-32x32.png
+Content Type: image/png
+
+Uri: https://www.16personalities.com/static/images/favicons/favicon-96x96.png
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\favicons\favicon-96x96.png
+Content Type: image/png
+
+Uri: https://www.16personalities.com/static/images/homepage/header-mountains-desktop.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\homepage\header-mountains-desktop.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/homepage/header-mountains-mobile.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\homepage\header-mountains-mobile.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/international/flags/en.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\international\flags\en.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/enfj-protagonist.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\enfj-protagonist.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/enfp-campaigner.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\enfp-campaigner.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/entj-commander.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\entj-commander.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/entp-debater.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\entp-debater.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/esfj-consul.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\esfj-consul.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/esfp-entertainer.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\esfp-entertainer.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/estj-executive.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\estj-executive.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/estp-entrepreneur.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\estp-entrepreneur.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/infj-advocate.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\infj-advocate.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/infp-mediator.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\infp-mediator.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/intj-architect.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\intj-architect.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/intp-logician.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\intp-logician.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/isfj-defender.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\isfj-defender.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/isfp-adventurer.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\isfp-adventurer.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/istj-logistician.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\istj-logistician.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/avatars/istp-virtuoso.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\avatars\istp-virtuoso.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/analysts_Architect_INTJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\analysts_Architect_INTJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/analysts_Commander_ENTJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\analysts_Commander_ENTJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/analysts_Debater_ENTP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\analysts_Debater_ENTP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/analysts_Logician_INTP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\analysts_Logician_INTP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/diplomats_Advocate_INFJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\diplomats_Advocate_INFJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/diplomats_Campaigner_ENFP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\diplomats_Campaigner_ENFP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/diplomats_Mediator_INFP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\diplomats_Mediator_INFP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/diplomats_Protagonist_ENFJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\diplomats_Protagonist_ENFJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/explorers_Adventurer_ISFP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\explorers_Adventurer_ISFP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/explorers_Entertainer_ESFP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\explorers_Entertainer_ESFP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/explorers_Entrepreneur_ESTP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\explorers_Entrepreneur_ESTP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/explorers_Virtuoso_ISTP_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\explorers_Virtuoso_ISTP_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/sentinels_Consul_ESFJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\sentinels_Consul_ESFJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/sentinels_Defender_ISFJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\sentinels_Defender_ISFJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/sentinels_Executive_ESTJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\sentinels_Executive_ESTJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/personality-types/headers/sentinels_Logistician_ISTJ_personality_header.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\personality-types\headers\sentinels_Logistician_ISTJ_personality_header.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/system/logo.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\system\logo.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/test-header-1.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\test-header-1.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/test-header-2.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\test-header-2.svg
+Content Type: image/svg+xml
+
+Uri: https://www.16personalities.com/static/images/test-header-3.svg
+File Name: C:\Downloaded Web Sites\www.16personalities.com\static\images\test-header-3.svg
+Content Type: image/svg+xml
+
+Uri: https://www.google-analytics.com/analytics.js
+File Name: C:\Downloaded Web Sites\www.16personalities.com\analytics.js
+Content Type: text/javascript
+
+Uri: https://www.googletagmanager.com/gtag/js?id=G-7YT1C03C8C
+File Name: C:\Downloaded Web Sites\www.16personalities.com\gtag\js
+Content Type: application/javascript
+
