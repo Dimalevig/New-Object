@@ -143,6 +143,7 @@ class CfgVehicles
 		attachments[] =
 		{
 			"Material_WoodenLogs",
+			"Material_WoodenPlanks",
 			"Material_Nails",
 			"Material_MetalWire"
 		};
@@ -161,7 +162,7 @@ class CfgVehicles
 			{
 				name = "$STR_CfgVehicles_Palisade_Att_Category_Materials";
 				description = "";
-				attachmentSlots[] = {"Material_Nails", "Material_MetalWire"};
+				attachmentSlots[] = {"Material_WoodenPlanks", "Material_Nails", "Material_MetalWire"};
 				icon = "cat_bb_attachments";
 				selection = "wall_down";
 			};
@@ -257,7 +258,7 @@ class CfgVehicles
 		{
 			class palisade
 			{
-				// 1) dug in base - two logs
+				// 1) dug in corner posts - two logs
 				class base
 				{
 					name = "$STR_CfgVehicles_Palisade_Base0";
@@ -281,7 +282,7 @@ class CfgVehicles
 					};
 				};
 
-				// 2) lower row of logs
+				// 2) half of the logs + two lower board rows (inner side)
 				class wall_down
 				{
 					name = "$STR_CfgVehicles_Palisade_WallDown0";
@@ -302,6 +303,12 @@ class CfgVehicles
 						};
 						class Material2
 						{
+							type = "WoodenPlank";
+							slot_name = "Material_WoodenPlanks";
+							quantity = 4;
+						};
+						class Material3
+						{
 							type = "Nails";
 							slot_name = "Material_Nails";
 							quantity = 10;
@@ -309,7 +316,7 @@ class CfgVehicles
 					};
 				};
 
-				// 3) upper row of logs (tied with metal wire)
+				// 3) other half of the logs + top board row + outer pole, tied with metal wire
 				class wall_up
 				{
 					name = "$STR_CfgVehicles_Palisade_WallUp0";
@@ -329,6 +336,12 @@ class CfgVehicles
 							quantity = 2;
 						};
 						class Material2
+						{
+							type = "WoodenPlank";
+							slot_name = "Material_WoodenPlanks";
+							quantity = 2;
+						};
+						class Material3
 						{
 							type = "MetalWire";
 							slot_name = "Material_MetalWire";
