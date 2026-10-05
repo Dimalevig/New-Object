@@ -32,12 +32,13 @@ from mathutils import Matrix, Vector
 # ----------------------------------------------------------------- SETTINGS --
 WIDTH         = 4.2     # wall length between corner posts (m)
 LOG_COUNT     = 22      # vertical logs
-LOG_RADIUS    = 0.085   # average log radius
-LOG_TAPER     = 0.92    # top radius = bottom radius * taper
+LOG_OVERLAP   = 1.18    # logs are thicker than their spacing -> no gaps between them
+LOG_RADIUS    = WIDTH / LOG_COUNT / 2 * LOG_OVERLAP   # derived average radius
+LOG_TAPER     = 0.97    # top radius = bottom radius * taper
 HEIGHT        = 3.0     # log height above ground (without spike)
 HEIGHT_RAND   = 0.15    # random +- height
-TILT_DEG      = 1.2     # random lean of each log
-BARK_JITTER   = 0.07    # radial noise of the bark (fraction of radius)
+TILT_DEG      = 1.2     # random lean of each log (front/back only, so no gaps open)
+BARK_JITTER   = 0.05    # radial noise of the bark (fraction of radius)
 SPIKE_HEIGHT  = (0.30, 0.48)   # min/max sharpened tip height
 SPIKE_SEGS    = 6       # axe facets on the tip
 BURY          = 0.15    # how deep logs go under ground (visual LODs only)
@@ -369,11 +370,11 @@ def make_layout():
 
     logs = []
     for i in range(LOG_COUNT):
-        x = -WIDTH / 2 + step * (i + 0.5) + rnd.uniform(-0.01, 0.01)
-        lean = Vector((rnd.uniform(-tilt, tilt), rnd.uniform(-tilt, tilt) * 0.5, 1))
+        x = -WIDTH / 2 + step * (i + 0.5)
+        lean = Vector((rnd.uniform(-tilt, tilt) * 0.1, rnd.uniform(-tilt, tilt), 1))
         logs.append(stake(Vector((x, 0, 0)), lean,
                           HEIGHT + rnd.uniform(-HEIGHT_RAND, HEIGHT_RAND),
-                          LOG_RADIUS * rnd.uniform(0.98, 1.15),
+                          LOG_RADIUS * rnd.uniform(0.97, 1.06),
                           P_DOWN if i % 2 == 0 else P_UP))
     posts = [stake(Vector((side * (WIDTH / 2 + POST_RADIUS), 0, 0)), UP,
                    HEIGHT + POST_EXTRA, POST_RADIUS, P_BASE) for side in (-1, 1)]
