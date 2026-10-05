@@ -197,9 +197,9 @@ def bark(h, w, rng):
     cracks = _periodic_noise(h, w, 4, 140, rng)
     cracks = np.clip((cracks - 1.3) * 2.0, 0, 1)
 
-    dark = np.array([0.20, 0.16, 0.12])
-    mid = np.array([0.36, 0.30, 0.23])
-    grey = np.array([0.45, 0.42, 0.37])
+    dark = np.array([0.19, 0.17, 0.14])
+    mid = np.array([0.34, 0.31, 0.26])
+    grey = np.array([0.47, 0.45, 0.41])
 
     t = np.clip(0.5 + 0.22 * fibres + 0.10 * fine, 0, 1)
     col = _lerp(dark, mid, t)
@@ -253,14 +253,15 @@ def build_atlas(seed=7):
 
 # ---------------------------------------------------------------- settings
 
-WALL_LENGTH = 4.0
-POST_COUNT = 16
-POST_RADIUS = (0.112, 0.130)
+WALL_LENGTH = 4.0          # recalculated from the posts (they stand log to log)
+POST_COUNT = 18
+POST_RADIUS = (0.118, 0.134)
+POST_OVERLAP = 0.03        # neighbouring logs overlap -> no gaps, nothing to see through
 POST_HEIGHT = 2.70          # above ground, before the tip
 POST_HEIGHT_VAR = 0.12
 POST_TIP = 0.34
 POST_SINK = 0.35            # below ground
-POST_TILT_DEG = 1.2
+POST_LEAN_DEG = 1.0        # small lean in depth only (sideways lean would open gaps)
 
 RAIL_RADIUS = 0.085
 RAIL_Z = (0.75, 2.05)
@@ -286,24 +287,35 @@ ROPE_U0, ROPE_U1, ROPE_V0, ROPE_V1 = 0.76, 0.99, 0.01, 0.49
 # ---------------------------------------------------------------- layout
 
 def make_posts(seed=11):
+    """Posts stand log to log: each one touches (overlaps) the previous one."""
+    global WALL_LENGTH
     rng = random.Random(seed)
-    spacing = WALL_LENGTH / POST_COUNT
     posts = []
+    x = 0.0
     for i in range(POST_COUNT):
-        x = -WALL_LENGTH / 2 + spacing * (i + 0.5)
+        r = rng.uniform(*POST_RADIUS)
+        if posts:
+            x += posts[-1]["r"] + r - POST_OVERLAP
         posts.append({
             "index": i,
-            "x": x + rng.uniform(-0.01, 0.01),
-            "y": rng.uniform(-0.015, 0.015),
-            "r": rng.uniform(*POST_RADIUS),
+            "x": x,
+            "y": rng.uniform(-0.012, 0.012),
+            "r": r,
             "h": POST_HEIGHT + rng.uniform(-POST_HEIGHT_VAR, POST_HEIGHT_VAR),
             "tip": POST_TIP + rng.uniform(-0.05, 0.05),
-            "tilt_x": math.radians(rng.uniform(-POST_TILT_DEG, POST_TILT_DEG)),
-            "tilt_y": math.radians(rng.uniform(-POST_TILT_DEG, POST_TILT_DEG)),
+            "tilt_x": 0.0,
+            "tilt_y": math.radians(rng.uniform(-POST_LEAN_DEG, POST_LEAN_DEG)),
             "v_off": rng.uniform(0, 1),
             "rot": rng.uniform(0, 2 * math.pi),
             "base": i in (0, POST_COUNT - 1),
         })
+    # centre the wall on the origin
+    left = posts[0]["x"] - posts[0]["r"]
+    right = posts[-1]["x"] + posts[-1]["r"]
+    shift = (left + right) / 2
+    for p in posts:
+        p["x"] -= shift
+    WALL_LENGTH = right - left
     return posts
 
 
@@ -391,7 +403,7 @@ def add_post(mb, p, sides, sel, with_tip=True, closed=True, uv=True):
     z_rings = [-POST_SINK, p["h"] * 0.5, p["h"]]
     rings = []
     for zi, z in enumerate(z_rings):
-        rr = r * (1.04 if zi == 0 else (1.0 if zi == 1 else 0.97))
+        rr = r * (1.03 if zi == 0 else 1.0)
         ring = []
         for s in range(sides):
             a = p["rot"] + 2 * math.pi * s / sides
