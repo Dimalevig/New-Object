@@ -62,6 +62,9 @@ WIRE_LOOPS    = 4       # loops per wire binding
 
 SEED          = 1337
 
+MASS          = 10000   # Geometry LOD mass (kg), written as Arma Toolbox vertex weights
+PLACING_MASS  = 10
+
 # texture paths written into the P3D (Arma Toolbox material props)
 MATERIALS = {
     "logs":   (r"PalisadeMod\data\palisade_logs_co.paa",   r"PalisadeMod\data\palisade_logs.rvmat"),
@@ -125,11 +128,17 @@ class Lod:
         v[self.deform][self._gid(name)] = 1.0
 
     def build(self, collection, lod, resolution=0.0, materials=(),
-              triangulate=False, props=None):
+              triangulate=False, props=None, mass=None):
         # P3D supports only triangles and quads -> split n-gons (log caps etc.)
         faces = self.bm.faces[:] if triangulate else [f for f in self.bm.faces if len(f.verts) > 4]
         if faces:
             bmesh.ops.triangulate(self.bm, faces=faces)
+        # Geometry LOD mass: Arma Toolbox reads it from the "FHQWeights" vertex layer
+        if mass is not None and self.bm.verts:
+            weights = self.bm.verts.layers.float.get("FHQWeights") or self.bm.verts.layers.float.new("FHQWeights")
+            per_vertex = mass / len(self.bm.verts)
+            for v in self.bm.verts:
+                v[weights] = per_vertex
         # remove leftovers of a previous run so names stay without ".001"
         old = bpy.data.objects.get(self.name)
         if old:
@@ -518,7 +527,7 @@ def build():
     visual_lod("palisade_res2", layout, 5, 1, 0.0, 0.0, wire=False, spike_segs=4).build(col, "RES", 2.0, mats)
     visual_lod("palisade_shadow", layout, 5, 1, 0.0, 0.0, wire=False, spike_segs=4).build(
         col, "SHADOW", 0.0, triangulate=True)
-    collision_lod("palisade_geometry", layout, False).build(col, "GEOMETRY", props=geo_props)
+    collision_lod("palisade_geometry", layout, False).build(col, "GEOMETRY", props=geo_props, mass=MASS)
     collision_lod("palisade_viewgeo", layout, False).build(col, "VIEW_GEO")
     collision_lod("palisade_firegeo", layout, True).build(col, "FIRE_GEO")
     memory_lod("palisade_memory", layout).build(col, "MEMORY")
@@ -532,7 +541,7 @@ def build():
     g = Lod("palisade_placing_geometry")
     g.tag(make_box(g, Vector((0, (front - back) / 2, HEIGHT / 2)),
                    (half * 2, front + back, HEIGHT)), ["placing"], component=True)
-    g.build(col_p, "GEOMETRY", props={"autocenter": "0"})
+    g.build(col_p, "GEOMETRY", props={"autocenter": "0"}, mass=PLACING_MASS)
 
     print("[palisade] done: %d logs, %d boards" % (len(layout["logs"]), len(layout["boards"])))
 

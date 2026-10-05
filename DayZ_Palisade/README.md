@@ -51,7 +51,7 @@ server/
    * `palisade`: Res 0/1/2, ShadowVolume, Geometry, View Geometry, Fire Geometry, Memory;
    * `palisade_placing`: голограма (Res 0 із селекцією `placing` + Geometry).
 4. ПКМ на колекції → *Select Objects* → File → Export → **P3D** (*Selected only*) → `palisade.p3d` / `palisade_placing.p3d` у `PalisadeMod/data/`.
-5. В Object Builder відкрий p3d, у Geometry LOD задай масу (*Structure → Mass*, напр. 10000) і збережи.
+5. Маса Geometry LOD (`MASS = 10000`) уже записана скриптом — у Object Builder нічого додавати не треба.
 
 Розміри, кількість колод, висоту тощо можна змінити в блоці `SETTINGS` на початку скрипта.
 Якщо твоя версія Arma Toolbox не прийме LOD-и автоматично (у консолі буде `[palisade] ... failed`),
