@@ -2,7 +2,7 @@ class CfgPatches
 {
 	class CustomPalisade
 	{
-		units[] = {"CP_PalisadeWall"};
+		units[] = {"CP_PalisadeKit","CP_PalisadeWall"};
 		weapons[] = {};
 		requiredVersion = 0.1;
 		requiredAddons[] =
@@ -27,7 +27,7 @@ class CfgMods
 		credits = "";
 		author = "";
 		authorID = "0";
-		version = "0.1.1";
+		version = "0.2.0";
 		extra = 0;
 		type = "mod";
 
@@ -72,7 +72,16 @@ class CfgMods
 
 class CfgVehicles
 {
+	class FenceKit;
 	class Fence;
+
+	// Palisade marking kit. Temporary: reuses the vanilla FenceKit model.
+	class CP_PalisadeKit: FenceKit
+	{
+		scope = 2;
+		displayName = "$STR_CP_PALISADEKIT_NAME";
+		descriptionShort = "$STR_CP_PALISADEKIT_DESC";
+	};
 
 	// Temporary: reuses the vanilla Fence model and Construction config
 	// until the mod has its own log-palisade model.

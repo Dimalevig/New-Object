@@ -3,7 +3,7 @@
 Vanilla-style wooden palisade construction. Developed stage by stage;
 see the technical specification for the full plan.
 
-Current stage: **1 — mod skeleton** + test palisade wall (`CP_PalisadeWall`).
+Current stage: **2 — palisade kit item** (`CP_PalisadeKit`) + test palisade wall (`CP_PalisadeWall`).
 
 > The wall temporarily reuses the vanilla Fence model (wooden variant) and
 > its vanilla construction/dismantle actions. The mod's own log-palisade
@@ -50,13 +50,13 @@ Server: `DayZServer_x64.exe -config=serverDZ.cfg -mod=@CustomPalisade -scrAllowF
 In `profiles/script_*.log` expect:
 
 ```
-[CustomPalisade] INFO: Server loaded. Version 0.1.1, module CustomPalisade:4_World
+[CustomPalisade] INFO: Server loaded. Version 0.2.0, module CustomPalisade:4_World
 ```
 
 Client (`-mod=@CustomPalisade`, join the server) — in the client `script_*.log`:
 
 ```
-[CustomPalisade] INFO: Client loaded. Version 0.1.1, module CustomPalisade:4_World
+[CustomPalisade] INFO: Client loaded. Version 0.2.0, module CustomPalisade:4_World
 ```
 
 Neither log (nor the RPT) may contain `Can't compile`, `Unknown type`,
@@ -92,3 +92,16 @@ Admin tools can also spawn `CP_PalisadeWall` by class name; "spawn special"
 (OnDebugSpawn) builds the wooden wall, a plain spawn gives an empty base site.
 
 Set the flag to `false` for a release build.
+
+## Test kit (stage 2)
+
+`CP_DEBUG_SPAWN_TEST_KIT = true` drops one `CP_PalisadeKit` ("Розмітка частоколу")
+at the player's feet ~5 s after joining, unless a kit already lies within 5 m.
+Expected server log line:
+
+```
+[CustomPalisade] INFO: Palisade kit spawned at <pos>
+```
+
+In stage 2 the kit can be picked up, carried, dropped and disassembled
+(detach the rope). Placing it is disabled until stage 3.
