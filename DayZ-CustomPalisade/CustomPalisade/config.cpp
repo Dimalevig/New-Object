@@ -2,13 +2,14 @@ class CfgPatches
 {
 	class CustomPalisade
 	{
-		units[] = {};
+		units[] = {"CP_PalisadeWall"};
 		weapons[] = {};
 		requiredVersion = 0.1;
 		requiredAddons[] =
 		{
 			"DZ_Data",
-			"DZ_Scripts"
+			"DZ_Scripts",
+			"DZ_Gear_Camping"
 		};
 	};
 };
@@ -26,7 +27,7 @@ class CfgMods
 		credits = "";
 		author = "";
 		authorID = "0";
-		version = "0.1.0";
+		version = "0.1.1";
 		extra = 0;
 		type = "mod";
 
@@ -66,5 +67,19 @@ class CfgMods
 				};
 			};
 		};
+	};
+};
+
+class CfgVehicles
+{
+	class Fence;
+
+	// Temporary: reuses the vanilla Fence model and Construction config
+	// until the mod has its own log-palisade model.
+	class CP_PalisadeWall: Fence
+	{
+		scope = 2;
+		displayName = "$STR_CP_PALISADEWALL_NAME";
+		descriptionShort = "$STR_CP_PALISADEWALL_DESC";
 	};
 };

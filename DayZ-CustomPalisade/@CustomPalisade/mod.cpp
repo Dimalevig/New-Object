@@ -8,4 +8,4 @@ overview = "Vanilla-style wooden palisade construction for DayZ.";
 action = "";
 author = "";
 authorID = "0";
-version = "0.1.0";
+version = "0.1.1";

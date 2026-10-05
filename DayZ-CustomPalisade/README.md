@@ -3,7 +3,11 @@
 Vanilla-style wooden palisade construction. Developed stage by stage;
 see the technical specification for the full plan.
 
-Current stage: **1 — mod skeleton** (no gameplay content yet).
+Current stage: **1 — mod skeleton** + test palisade wall (`CP_PalisadeWall`).
+
+> The wall temporarily reuses the vanilla Fence model (wooden variant) and
+> its vanilla construction/dismantle actions. The mod's own log-palisade
+> model and construction stages come in later stages.
 
 ## Layout
 
@@ -22,6 +26,8 @@ DayZ-CustomPalisade/
 │   │   ├── 4_World/CustomPalisade/
 │   │   └── 5_Mission/CustomPalisade/
 │   └── Data/{Models,Textures,Materials}/
+├── ServerFiles/
+│   └── types_CustomPalisade.xml  # add to the mission (see below)
 └── tools/check_mod.py        # static pre-pack checks
 ```
 
@@ -44,14 +50,45 @@ Server: `DayZServer_x64.exe -config=serverDZ.cfg -mod=@CustomPalisade -scrAllowF
 In `profiles/script_*.log` expect:
 
 ```
-[CustomPalisade] INFO: Server loaded. Version 0.1.0, module CustomPalisade:4_World
+[CustomPalisade] INFO: Server loaded. Version 0.1.1, module CustomPalisade:4_World
 ```
 
 Client (`-mod=@CustomPalisade`, join the server) — in the client `script_*.log`:
 
 ```
-[CustomPalisade] INFO: Client loaded. Version 0.1.0, module CustomPalisade:4_World
+[CustomPalisade] INFO: Client loaded. Version 0.1.1, module CustomPalisade:4_World
 ```
 
 Neither log (nor the RPT) may contain `Can't compile`, `Unknown type`,
 or `CustomPalisade` errors.
+
+## Server economy (types.xml)
+
+So the central economy does not clean up the wall, register the types file
+in your mission (e.g. `mpmissions/dayzOffline.chernarusplus`):
+
+1. Copy `ServerFiles/types_CustomPalisade.xml` to `<mission>/custom/`.
+2. In `<mission>/cfgeconomycore.xml`, inside `<economycore>`, add:
+
+```xml
+<ce folder="custom">
+    <file name="types_CustomPalisade.xml" type="types" />
+</ce>
+```
+
+## Test wall
+
+`CP_DEBUG_SPAWN_TEST_WALL = true` in
+`Scripts/3_Game/CustomPalisade/CP_Constants.c` makes the server spawn one
+finished wooden palisade wall ~4 m in front of a player about 5 s after
+they join, unless a palisade wall already exists within 30 m.
+Expected server log line:
+
+```
+[CustomPalisade] INFO: Palisade wall built at <pos>, parts: N
+```
+
+Admin tools can also spawn `CP_PalisadeWall` by class name; "spawn special"
+(OnDebugSpawn) builds the wooden wall, a plain spawn gives an empty base site.
+
+Set the flag to `false` for a release build.
