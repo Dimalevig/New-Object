@@ -126,8 +126,17 @@ class Lod:
 
     def build(self, collection, lod, resolution=0.0, materials=(),
               triangulate=False, props=None):
-        if triangulate:
-            bmesh.ops.triangulate(self.bm, faces=self.bm.faces[:])
+        # P3D supports only triangles and quads -> split n-gons (log caps etc.)
+        faces = self.bm.faces[:] if triangulate else [f for f in self.bm.faces if len(f.verts) > 4]
+        if faces:
+            bmesh.ops.triangulate(self.bm, faces=faces)
+        # remove leftovers of a previous run so names stay without ".001"
+        old = bpy.data.objects.get(self.name)
+        if old:
+            bpy.data.objects.remove(old, do_unlink=True)
+        old = bpy.data.meshes.get(self.name)
+        if old:
+            bpy.data.meshes.remove(old)
         mesh = bpy.data.meshes.new(self.name)
         self.bm.to_mesh(mesh)
         self.bm.free()
