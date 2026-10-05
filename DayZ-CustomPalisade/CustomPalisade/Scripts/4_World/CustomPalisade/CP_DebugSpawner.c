@@ -39,6 +39,42 @@ class CP_DebugSpawner
 		wall.CP_BuildFinishedWall();
 	}
 
+	// New log palisade model (static), placed to the right of the test wall.
+	static void SpawnTestModelWall(PlayerBase player)
+	{
+		if (!g_Game.IsServer() || !player || !player.IsAlive())
+			return;
+
+		vector dir = player.GetDirection();
+		dir[1] = 0;
+		dir.Normalize();
+		vector right = Vector(dir[2], 0, -dir[0]);
+
+		vector pos = player.GetPosition() + dir * CP_DEBUG_TEST_WALL_DISTANCE + right * CP_DEBUG_TEST_MODEL_SIDE_OFFSET;
+		pos[1] = g_Game.SurfaceY(pos[0], pos[2]);
+
+		if (HasObjectNear(pos, CP_DEBUG_TEST_MODEL_SIDE_OFFSET * 0.5, CP_CLASS_PALISADE_WALL_MODEL))
+		{
+			CP_Log.Info("Test model wall skipped: one already stands near " + pos.ToString());
+			return;
+		}
+
+		Object wall = g_Game.CreateObjectEx(CP_CLASS_PALISADE_WALL_MODEL, pos, ECE_PLACE_ON_SURFACE);
+		if (!wall)
+		{
+			CP_Log.Error("Test model wall: CreateObjectEx(" + CP_CLASS_PALISADE_WALL_MODEL + ") failed. Check config.cpp / model path.");
+			return;
+		}
+
+		vector orientation = player.GetOrientation();
+		orientation[1] = 0;
+		orientation[2] = 0;
+		wall.SetPosition(pos);
+		wall.SetOrientation(orientation);
+
+		CP_Log.Info("Palisade model wall spawned at " + pos.ToString());
+	}
+
 	static void SpawnTestKitAtFeet(PlayerBase player)
 	{
 		if (!g_Game.IsServer() || !player || !player.IsAlive())

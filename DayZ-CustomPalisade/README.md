@@ -3,7 +3,8 @@
 Vanilla-style wooden palisade construction. Developed stage by stage;
 see the technical specification for the full plan.
 
-Current stage: **2 — palisade kit item** (`CP_PalisadeKit`) + test palisade wall (`CP_PalisadeWall`).
+Current stage: **2 — palisade kit item** (`CP_PalisadeKit`) + test palisade wall (`CP_PalisadeWall`)
++ the mod's own log palisade model on a static test object (`CP_PalisadeWallModel`).
 
 > The wall temporarily reuses the vanilla Fence model (wooden variant) and
 > its vanilla construction/dismantle actions. The mod's own log-palisade
@@ -38,7 +39,7 @@ DayZ-CustomPalisade/
    - Source: `DayZ-CustomPalisade/CustomPalisade`
    - Destination: `@CustomPalisade/Addons`
    - Prefix: `CustomPalisade`
-   - Files to copy directly: `*.c;*.csv;*.paa;*.rvmat;*.p3d` (default list + `*.c`, `*.csv`)
+   - Files to copy directly: `*.c;*.csv;*.xml` (models are binarised, see below)
    - Exclude: `*.gitkeep`
    - Sign with your private key; copy the `.bikey` to `@CustomPalisade/Keys`.
 
@@ -50,13 +51,13 @@ Server: `DayZServer_x64.exe -config=serverDZ.cfg -mod=@CustomPalisade -scrAllowF
 In `profiles/script_*.log` expect:
 
 ```
-[CustomPalisade] INFO: Server loaded. Version 0.2.0, module CustomPalisade:4_World
+[CustomPalisade] INFO: Server loaded. Version 0.2.1, module CustomPalisade:4_World
 ```
 
 Client (`-mod=@CustomPalisade`, join the server) — in the client `script_*.log`:
 
 ```
-[CustomPalisade] INFO: Client loaded. Version 0.2.0, module CustomPalisade:4_World
+[CustomPalisade] INFO: Client loaded. Version 0.2.1, module CustomPalisade:4_World
 ```
 
 Neither log (nor the RPT) may contain `Can't compile`, `Unknown type`,
@@ -105,3 +106,30 @@ Expected server log line:
 
 In stage 2 the kit can be picked up, carried, dropped and disassembled
 (detach the rope). Placing it is disabled until stage 3.
+
+## Palisade model (`Data/Models/cp_palisade_wall.p3d`)
+
+Author's model, retextured to **vanilla DayZ textures only** (paths verified
+against the game's data):
+
+| part   | texture | material |
+|--------|---------|----------|
+| logs   | `dz\gear\consumables\data\pile_of_planks_co.paa` (bark column) | `dz\gear\camping\data\wooden_log.rvmat` |
+| planks | `dz\gear\consumables\data\wooden_planks_co.paa` | `dz\gear\consumables\data\wooden_planks.rvmat` |
+| wire   | `dz\gear\crafting\data\string_metalwire_co.paa` | `dz\gear\camping\data\fence_metalwire.rvmat` |
+| Fire Geometry | – | `dz\data\data\penetration\wood_desk.rvmat` |
+
+No game files are shipped in the mod. Pipeline (in `tools/model/`):
+
+1. `cp_p3d_retexture.py in.p3d out.p3d` – texture/material paths + UV remap, LOD count fix;
+   everything else copied byte for byte.
+2. `cp_fix_model_blender.py -- in.p3d out.p3d` (Blender + Arma 3 Object Builder) –
+   removes duplicated faces, turns inside-out wire faces outwards, recomputes normals.
+
+Selections `base`, `wall_down`, `wall_up`, `spikes` are prepared in `model.cfg` as hide
+animations (sources in `config.cpp`) for the construction stages.
+
+**The model must be binarised**: Addon Builder → Options → *Binarize* ON, with the DayZ
+Tools work drive **P:** mounted (game data extracted) and the mod source at
+`P:\CustomPalisade`. Do **not** put `*.p3d`, `*.rvmat` or `model.cfg` in
+"files to copy directly" (only `*.c;*.csv;*.xml`).
