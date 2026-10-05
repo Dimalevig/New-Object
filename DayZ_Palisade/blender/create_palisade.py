@@ -27,6 +27,7 @@ import bpy
 import bmesh
 import math
 import random
+import traceback
 from mathutils import Matrix, Vector
 
 # ----------------------------------------------------------------- SETTINGS --
@@ -527,4 +528,27 @@ def build():
     print("[palisade] done: %d logs, %d boards" % (len(layout["logs"]), len(layout["boards"])))
 
 
-build()
+def _popup(lines, icon):
+    """Visible feedback in the Blender UI (the Python console does not show script output)."""
+    if bpy.app.background or not bpy.context.window_manager.windows:
+        return
+    def draw(self, context):
+        for line in lines:
+            self.layout.label(text=line)
+    try:
+        bpy.context.window_manager.popup_menu(draw, title="Palisade", icon=icon)
+    except Exception:
+        pass
+
+
+print("[palisade] start")
+try:
+    build()
+    _popup(["Done: collections 'palisade' and 'palisade_placing' created.",
+            "See the Outliner (top right)."], "INFO")
+except Exception:
+    traceback.print_exc()
+    _popup(["Error - details in Window > Toggle System Console:"]
+           + traceback.format_exc().strip().splitlines()[-3:], "ERROR")
+    raise
+# ---- END OF SCRIPT (if you don't see this line in Blender, the script was not copied completely) ----
