@@ -1,0 +1,1017 @@
+PanelWidgetClass rootFrame {
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ {
+  PanelWidgetClass layoutSettingsPanel {
+   visible 0
+   ignorepointer 1
+   position 0.025 0.025
+   size 0.45 0.45
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline
+   {
+    TextWidgetClass TextWidget0 {
+     ignorepointer 1
+     position 0 10
+     size 0.9 50
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Стилі інтерфейсу"
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass availableLayoutsPicker {
+     ignorepointer 1
+     size 0.5 0.88
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      TextWidgetClass TextWidget19 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Доступно:"
+       "text halign" center
+       "text valign" center
+      }
+      TextListboxWidgetClass availableLayoutsListStyles {
+       position 0 10
+       size 0.95 0.88
+       halign center_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       lines 20
+      }
+     }
+    }
+    PanelWidgetClass availableLayoutsPicker0 {
+     ignorepointer 1
+     position 0 0
+     size 0.5 0.88
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      XComboBoxWidgetClass comboBoxStyle {
+       position 0 40
+       size 0.95 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+      }
+      TextWidgetClass TextWidget110 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Вибрати стиль:"
+       "text halign" center
+       "text valign" center
+      }
+      ButtonWidgetClass toDefaultStyle {
+       position 5 10
+       size 0.435 30
+       halign right_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Типово"
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass colorSettingsPanel {
+   ignorepointer 1
+   position 0.025 0.025
+   size 0.45 0.45
+   halign right_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline
+   {
+    TextWidgetClass TextWidget1 {
+     ignorepointer 1
+     position 0 10
+     size 0.9 50
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Налаштування кольору"
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass colorLeft {
+     ignorepointer 1
+     size 0.5 0.88
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      TextWidgetClass TextWidget2 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Доступно:"
+       "text halign" center
+       "text valign" center
+      }
+      TextListboxWidgetClass availableColors {
+       position 0 10
+       size 0.95 0.88
+       halign center_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       lines 20
+      }
+     }
+    }
+    PanelWidgetClass colorRight {
+     ignorepointer 1
+     size 0.5 0.88
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      TextWidgetClass TextWidget3 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Вибір кольору:"
+       "text halign" center
+       "text valign" center
+      }
+      ButtonWidgetClass toDefault {
+       position 5 10
+       size 0.435 30
+       halign right_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Типово"
+      }
+      PanelWidgetClass colorPickerAlpha {
+       ignorepointer 1
+       position 0 40
+       size 0.97 0.18
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       style blank
+       {
+        TextWidgetClass TextWidget4 {
+         ignorepointer 1
+         position 0 0
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Альфа-канал (прозорість):"
+        }
+        SliderWidgetClass sliderA {
+         position 0 23
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         maximum 255
+         current 255
+         "fill in" 1
+        }
+        WrapSpacerWidgetClass WrapSpacerWidget0 {
+         ignorepointer 1
+         size 1 25
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         {
+          TextWidgetClass TextWidget5 {
+           ignorepointer 1
+           position 10 10
+           size 0.3 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           text "Значення (0-255):"
+           "size to text h" 1
+           "size to text v" 1
+          }
+          EditBoxWidgetClass editA {
+           size 0.3 0.8
+           halign center_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+       }
+      }
+      PanelWidgetClass colorPickerRed {
+       ignorepointer 1
+       position 0 125
+       size 0.97 0.18
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       {
+        TextWidgetClass TextWidget6 {
+         ignorepointer 1
+         position 0 0
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Червоний канал:"
+        }
+        SliderWidgetClass sliderR {
+         color 1 0 0 1
+         position 0 23
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         maximum 255
+         current 255
+         "fill in" 1
+        }
+        WrapSpacerWidgetClass WrapSpacerWidget1 {
+         ignorepointer 1
+         size 1 25
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         {
+          TextWidgetClass TextWidget7 {
+           ignorepointer 1
+           position 10 10
+           size 0.3 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           text "Значення (0-255):"
+           "size to text h" 1
+           "size to text v" 1
+          }
+          EditBoxWidgetClass editR {
+           size 0.3 0.8
+           halign center_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+       }
+      }
+      PanelWidgetClass colorPickerGreen {
+       ignorepointer 1
+       position 0 210
+       size 0.97 0.18
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       {
+        TextWidgetClass TextWidget8 {
+         ignorepointer 1
+         position 0 0
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Зелений канал:"
+        }
+        SliderWidgetClass sliderG {
+         color 0 1 0 1
+         position 0 23
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         maximum 255
+         current 255
+         "fill in" 1
+        }
+        WrapSpacerWidgetClass WrapSpacerWidget2 {
+         ignorepointer 1
+         size 1 25
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         {
+          TextWidgetClass TextWidget9 {
+           ignorepointer 1
+           position 10 10
+           size 0.3 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           text "Значення (0-255):"
+           "size to text h" 1
+           "size to text v" 1
+          }
+          EditBoxWidgetClass editG {
+           size 0.3 0.8
+           halign center_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+       }
+      }
+      PanelWidgetClass colorPickerBlue {
+       ignorepointer 1
+       position 0 295
+       size 0.97 0.18
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       {
+        TextWidgetClass TextWidget10 {
+         ignorepointer 1
+         position 0 0
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Синій канал:"
+        }
+        SliderWidgetClass sliderB {
+         color 0 0 1 1
+         position 0 23
+         size 1 25
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         maximum 255
+         current 255
+         "fill in" 1
+        }
+        WrapSpacerWidgetClass WrapSpacerWidget3 {
+         ignorepointer 1
+         position 0 0
+         size 1 25
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         {
+          TextWidgetClass TextWidget11 {
+           ignorepointer 1
+           position 10 0
+           size 0.3 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           text "Значення (0-255):"
+           "size to text h" 1
+           "size to text v" 1
+          }
+          EditBoxWidgetClass editB {
+           size 0.3 0.8
+           halign center_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+       }
+      }
+      PanelWidgetClass colorPreview {
+       ignorepointer 1
+       position 5 5
+       size 0.435 25
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       style rover_sim_colorable
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass layoutPositions {
+   ignorepointer 1
+   position 0.025 0.025
+   size 0.45 0.45
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline
+   {
+    TextWidgetClass TextWidget14 {
+     ignorepointer 1
+     position 0 10
+     size 0.9 50
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Позиції інтерфейсу"
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass availableLayouts {
+     ignorepointer 1
+     size 0.5 0.88
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      TextWidgetClass TextWidget15 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Доступно:"
+       "text halign" center
+       "text valign" center
+      }
+      TextListboxWidgetClass availableLayoutsList {
+       position 0 10
+       size 0.95 0.88
+       halign center_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       lines 20
+      }
+     }
+    }
+    PanelWidgetClass PanelWidget0 {
+     ignorepointer 1
+     size 0.5 0.88
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      TextWidgetClass TextWidget16 {
+       ignorepointer 1
+       position 0 5
+       size 1 30
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Попередній перегляд:"
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass previewPanel {
+       ignorepointer 1
+       position 0.02 40
+       size 0.88 0.48
+       halign right_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       style Outline
+       {
+        PanelWidgetClass previewIcon {
+         ignorepointer 1
+         position 0.05 0.1
+         size 15 15
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style rover_sim_colorable
+        }
+       }
+      }
+      PanelWidgetClass PanelWidget1 {
+       ignorepointer 1
+       position 0 5
+       size 1 0.4
+       halign center_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       {
+        TextWidgetClass TextWidget17 {
+         ignorepointer 1
+         position 10 35
+         size 0.45 30
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Позиція Y:"
+        }
+        TextWidgetClass TextWidget18 {
+         ignorepointer 1
+         position 10 65
+         size 0.45 30
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Позиція X:"
+        }
+        SliderWidgetClass sliderX {
+         position 0.02 0
+         size 0.88 30
+         halign right_ref
+         hexactpos 0
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         maximum 1
+         step 0.001
+         current 0.5
+         "fill in" 1
+        }
+        EditBoxWidgetClass editBox_Y {
+         position 0 35
+         size 0.5 30
+         halign right_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+        }
+        EditBoxWidgetClass editBox_X {
+         position 0 65
+         size 0.5 30
+         halign right_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+        }
+        ButtonWidgetClass toDefaultPosition {
+         position 5 5
+         size 0.435 30
+         halign right_ref
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "Типово"
+        }
+        CheckBoxWidgetClass checkInvertY {
+         position 10 5
+         size 0.5 30
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "інвертувати Y"
+        }
+        CheckBoxWidgetClass checkInvertX {
+         position 10 35
+         size 0.5 30
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         text "інвертувати X"
+        }
+       }
+      }
+      SliderWidgetClass sliderY {
+       position 10 40
+       size 30 0.48
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 0
+       maximum 1
+       step 0.001
+       current 0.5
+       vertical 1
+       "fill in" 1
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass PanelWidget2 {
+   ignorepointer 1
+   position 0.025 0.025
+   size 0.45 0.45
+   halign right_ref
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline
+   {
+    PanelWidgetClass PanelWidget4 {
+     ignorepointer 1
+     size 1 0.88
+     halign center_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+    }
+    TextWidgetClass TextWidget111 {
+     ignorepointer 1
+     position 0 10
+     size 0.9 50
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Різне"
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass PanelWidget3 {
+     ignorepointer 1
+     position 0 80
+     size 0.95 0.6
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     {
+      CheckBoxWidgetClass chckbx_Playerlist {
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Список гравців (U)"
+       checked 1
+      }
+      CheckBoxWidgetClass chckbx_Compass {
+       position 0 32
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Компас (H)"
+       checked 1
+      }
+      TextWidgetClass TextWidget20 {
+       ignorepointer 1
+       position 10 196
+       size 0.5 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "іконка пінгу:"
+      }
+      XComboBoxWidgetClass comboboxPingIcon {
+       position 0.05 196
+       size 0.45 30
+       halign right_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+      }
+      ImageWidgetClass imagePingIcon {
+       ignorepointer 1
+       position 0 196
+       size 30 30
+       halign right_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       mode blend
+       "src alpha" 1
+       stretch 1
+      }
+      TextWidgetClass txtChatSize {
+       ignorepointer 1
+       position 10 227
+       size 0.5 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Розмір тексту чату:"
+      }
+      XComboBoxWidgetClass comboboxChatSize {
+       position 0.05 227
+       size 0.45 30
+       halign right_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+      }
+
+      CheckBoxWidgetClass chckbx_ShowChatTag {
+       position 0 64
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Показувати тег групи в чаті"
+       checked 1
+      }
+      CheckBoxWidgetClass chckbx_ShowClantextures {
+       position 0 95
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Використовувати текстури групи"
+       checked 1
+      }
+      CheckBoxWidgetClass chckbx_StreamerMode {
+       position 0 125
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "Режим стримера"
+       checked 1
+      }
+     }
+    }
+    PanelWidgetClass resetButtons {
+     ignorepointer 1
+     position 0 0
+     size 1 0.22
+     halign right_ref
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style Outline
+     {
+      ButtonWidgetClass btn_ResetAll {
+       position 0 5
+       size 0.3333 0.3
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       text "Скинути все"
+      }
+      ButtonWidgetClass btn_Reload_From_Config {
+       position 0 5
+       size 0.3333 0.3
+       halign center_ref
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       text "Завантажити"
+      }
+      ButtonWidgetClass btn_Save_Config {
+       position 0 5
+       size 0.3333 0.3
+       halign right_ref
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       text "Зберегти"
+      }
+      TextWidgetClass TextWidget12 {
+       ignorepointer 1
+       color 1 0 0 1
+       position 0 3
+       size 1 0.3
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       text "Значення змінено лише для цієї сесії!"
+       "exact text" 0
+       "text halign" center
+       "text valign" center
+      }
+      TextWidgetClass TextWidget13 {
+       ignorepointer 1
+       color 1 0 0 1
+       position 0 0.31
+       size 1 0.3
+       halign center_ref
+       hexactpos 1
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "Натисніть Зберегти, щоб зберегти назавжди"
+       "exact text" 0
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass ident_page3_0 {
+   visible 0
+   ignorepointer 1
+   position 10 10
+   size 48 48
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+  }
+  PanelWidgetClass PanelWidget5 {
+   ignorepointer 1
+   position 0.025 0.025
+   size 0.45 0.45
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline
+   {
+    TextWidgetClass TextWidget21 {
+     ignorepointer 1
+     position 0 10
+     size 0.9 50
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Тимчасові налаштування інтерфейсу"
+     "text halign" center
+     "text valign" center
+    }
+    XComboBoxWidgetClass comboPlayerlistStyleTemp {
+     position 0 100
+     size 0.5 30
+     halign right_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+    }
+    TextWidgetClass TextWidget22 {
+     ignorepointer 1
+     position 0 100
+     size 0.5 30
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Стиль списку гравців: "
+     "text halign" right
+    }
+    TextWidgetClass txtTeammate3DDistance {
+     ignorepointer 1
+     position 0 140
+     size 0.5 30
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "3D-маркер тімейта:"
+     "text halign" right
+    }
+    XComboBoxWidgetClass comboboxTeammate3DDistance {
+     position 0 140
+     size 0.5 30
+     halign right_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+    }
+   }
+  }
+ }
+}

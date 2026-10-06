@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<modded_inputs>
+    <inputs>
+        <actions>
+            <input name="IGroupOpenMap" loc="Відкрити мапу" />
+            <input name="IGroupOpenMapGroup" loc="Відкрити сторінку групи" />
+            <input name="IGroupTacticalPing" loc="Тактичний пінг" />
+            <input name="IGroupTacticalPingClear" loc="Очистити тактичний пінг" />
+            <input name="IGroupAcceptInvite" loc="Прийняти запрошення" />
+            <input name="IGroupDeleteMarker" loc="Видалити маркер" />
+            <input name="IGroupToggleVisibility" loc="Перемкнути видимість 3D-маркерів" />
+            <input name="ISwitchChatChannel" loc="Перемкнути канал чату" />
+            <input name="IGroupToggleCompass" loc="Перемкнути компас" />
+            <input name="IGroupTogglePlayerList" loc="Перемкнути список гравців" />
+        </actions>
+    </inputs>
+    <preset>
+		<input name="IGroupOpenMap">
+            <btn name="kM"/>
+        </input>
+		<input name="IGroupOpenMapGroup">
+            <btn name="kP"/>
+        </input>
+		<input name="IGroupTacticalPing">
+            <btn name="kT"/>
+        </input>
+		<input name="IGroupTacticalPingClear">
+            <btn name="kC"/>
+        </input>
+		<input name="IGroupDeleteMarker">
+            <btn name="kDelete"/>
+        </input>
+		<input name="IGroupToggleVisibility">
+            <btn name="kK"/>
+        </input>
+		<input name="ISwitchChatChannel">
+            <btn name="kComma"/>
+        </input>
+		<input name="IGroupToggleCompass">
+            <btn name="kH"/>
+        </input>
+		<input name="IGroupTogglePlayerList">
+            <btn name="kU"/>
+        </input>
+		<input name="IGroupAcceptInvite">
+            <btn name="kLControl">
+				<btn name="kJ"/>
+			</btn>
+            <btn name="kRControl">
+				<btn name="kJ"/>
+			</btn>
+        </input>
+    </preset>
+</modded_inputs>

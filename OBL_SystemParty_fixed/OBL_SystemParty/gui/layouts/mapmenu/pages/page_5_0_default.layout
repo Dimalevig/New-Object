@@ -1,0 +1,129 @@
+PanelWidgetClass Page5_0 {
+ visible 1
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ {
+  TextWidgetClass txt_title {
+   ignorepointer 1
+   position 0 5
+   size 0.95 30
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Магазин — Склад"
+   "text halign" center
+   "text valign" center
+  }
+  TextWidgetClass lbl_hint {
+   ignorepointer 1
+   position 0 40
+   size 0.95 20
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Виберіть предмет і натисніть «Забрати», щоб отримати його в грі."
+  }
+  TextListboxWidgetClass list_items {
+   position 0 70
+   size 0.95 320
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   lines 13
+   {
+    PanelWidgetClass uaSecondaryShop1 {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+    }
+   }
+  }
+  ButtonWidgetClass btn_refresh {
+   position 0 400
+   size 0.46 32
+   halign left_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Оновити склад"
+   {
+    PanelWidgetClass uaSecondaryShop2 {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+    }
+   }
+  }
+  ButtonWidgetClass btn_claim {
+   position 0 400
+   size 0.46 32
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Забрати"
+   {
+    PanelWidgetClass uaSecondaryShop3 {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline
+    }
+   }
+  }
+  TextWidgetClass txt_status {
+   ignorepointer 1
+   position 0 440
+   size 0.95 40
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text ""
+   "text halign" center
+  }
+  PanelWidgetClass ident_page5_0 {
+   visible 0
+   ignorepointer 1
+   position 10 10
+   size 48 48
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+  }
+ }
+}

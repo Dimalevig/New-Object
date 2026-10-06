@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{F7815EF426947308}BXD_SystemParty/gui/images/logoplaceholder.edds"
+ Author "desktop-1jtbbmp"
+ ChangeDate -622106247
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "logoplaceholder.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

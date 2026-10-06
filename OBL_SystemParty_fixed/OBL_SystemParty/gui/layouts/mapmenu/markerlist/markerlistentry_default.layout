@@ -1,0 +1,176 @@
+PanelWidgetClass rootFrame {
+ color 0.8196 0.8196 0.8196 0.3137
+ size 1 30
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 1
+ style blank
+ {
+  GridSpacerWidgetClass left {
+   ignorepointer 1
+   size 48 1
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 0
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   Rows 1
+   {
+    PanelWidgetClass spacer {
+     ignorepointer 1
+     position 10 10
+     size 30 48
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+    }
+    ImageWidgetClass icon {
+     visible 1
+     ignorepointer 1
+     position 10 10
+     size 30 30
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     mode blend
+     "src alpha" 1
+     "stretch mode" stretch_w_h
+     {
+      PanelWidgetClass PanelWidget2 {
+       ignorepointer 1
+       color 1 1 1 0.0275
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       style Outline
+      }
+     }
+    }
+    TextWidgetClass name {
+     ignorepointer 1
+     position 321 17
+     size 48 48
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Маркер"
+     "exact text" 0
+     "size to text h" 1
+     "size to text v" 1
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  GridSpacerWidgetClass right {
+   ignorepointer 1
+   position 1.05214 0.52541
+   size 0.04325 31.052
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   Rows 1
+   {
+    PanelWidgetClass PanelWidget0 {
+     ignorepointer 1
+     color 1 1 1 0.5529
+     size 30 30
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Outline
+     {
+      ButtonWidgetClass btn_0 {
+       position 0 0
+       size 26 26
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+      }
+     }
+    }
+    PanelWidgetClass PanelWidget1 {
+     ignorepointer 1
+     color 1 1 1 0.5529
+     size 30 30
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Outline
+     {
+      ButtonWidgetClass btn_1 {
+       position 0 0
+       size 26 26
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+      }
+     }
+    }
+    PanelWidgetClass PanelWidget2 {
+     ignorepointer 1
+     color 1 1 1 0.5529
+     size 30 30
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Outline
+     {
+      ButtonWidgetClass btn_2 {
+       position 0 0
+       size 26 26
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass ident_markerlist {
+   visible 0
+   ignorepointer 1
+   position 10 10
+   size 48 48
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+  }
+ }
+}
