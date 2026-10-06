@@ -31,9 +31,9 @@ class OblivionRadiatorRepairSettings
 class OblivionMetalPlatesSettings
 {
 	bool Enabled         = true;
-	int  PlatesFromDoor  = 2;  // пластин з дверей
-	int  PlatesFromTrunk = 3;  // пластин з кришки багажника
-	int  PlatesFromHood  = 4;  // пластин з капота
+	int  PlatesFromDoor  = 1;  // пластин з дверей
+	int  PlatesFromTrunk = 2;  // пластин з кришки багажника
+	int  PlatesFromHood  = 2;  // пластин з капота
 	int  HacksawDamage   = 20; // скільки здоров'я знімає з пилки за один розпил
 
 	void Write(ParamsWriteContext ctx)

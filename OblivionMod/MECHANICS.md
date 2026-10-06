@@ -57,9 +57,9 @@
 
 | Деталь | Поле | Дефолт |
 |--------|------|--------|
-| Двері | `PlatesFromDoor` | `2` |
-| Кришка багажника | `PlatesFromTrunk` | `3` |
-| Капот | `PlatesFromHood` | `4` |
+| Двері | `PlatesFromDoor` | `1` |
+| Кришка багажника | `PlatesFromTrunk` | `2` |
+| Капот | `PlatesFromHood` | `2` |
 
 Інші поля: `Enabled` (`true`), `HacksawDamage` — скільки здоров'я знімає з пилки за розпил (`20`).
 
