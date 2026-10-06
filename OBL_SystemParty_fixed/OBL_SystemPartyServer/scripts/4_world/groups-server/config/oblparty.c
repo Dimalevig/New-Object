@@ -1,8 +1,6 @@
 modded class OBLParty {
 
 	[NonSerialized()]
-	static int currentGroup = 0;
-	[NonSerialized()]
 	static const int OBL_INVITE_CODE_MIN = 10000;
 	[NonSerialized()]
 	static const int OBL_INVITE_CODE_MAX = 99999;
@@ -36,7 +34,6 @@ modded class OBLParty {
 			member.currentSubgroup = OBLPartyConstants.SUBGROUP_OFFLINE;
 			member.parentGroup = this;
 		}
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(StartUpdateDelayed, (((currentGroup++) * 733) % GROUP_UPDATE_TIMER), false);
 		InitNumbers();
 		if (GetFreeMemberSlots() < 0) {
 			GetGame().AdminLog("Loaded Group has more players, than allowed: " + shortname + " (" + name + ") MemberCount: " + members.Count() + " Max: " + maxPlayers);
@@ -45,23 +42,20 @@ modded class OBLParty {
 	
 	void ~OBLParty() {
 		if (GetGame()) {
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(StartUpdateDelayed);
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateGroup);
 			if (OBLLogger.IsDebug())
 				OBLLogger.Debug("Delete Group: " + shortname);
 		}
 	}
 	
-	void StartUpdateDelayed() {
-		if (OBLLogger.IsDebug())
-			OBLLogger.Debug("Starting Update Delayed " + shortname);
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateGroup, GROUP_UPDATE_TIMER, true);
-	}
+	// оптимізація: «брудна» група — є незбережені зміни (вхід/вихід, активність)
+	[NonSerialized()]
+	bool saveDirty = false;
 	
 	void OnPlayerOnline(PlayerBase player, PlayerIdentity identity) {
 		if (!player)
 			return;
 		lastActivity = JMDate.Now(true).GetTimestamp();
+		saveDirty = true;
 		if (OBLLogger.IsDebug())
 			OBLLogger.Debug("Player Online: " + (identity != null) + " " + (player != null), true);
 		if (playerChars.Find(player) == -1)
@@ -75,6 +69,7 @@ modded class OBLParty {
 		if (player)
 			playerChars.RemoveItem(player);
 		lastActivity = JMDate.Now(true).GetTimestamp();
+		saveDirty = true;
 		bool identOk = (player && player.GetIdentity());
 		if (OBLLogger.IsDebug())
 			OBLLogger.Debug("Player Offline: " + identOk + " " + (player != null));
@@ -775,16 +770,38 @@ modded class OBLParty {
 		}
 	}
 	
+	// оптимізація: зміни позицій/здоров'я всієї групи йдуть ОДНИМ пакетом кожному учаснику
+	// (раніше — окремий пакет на кожного гравця для кожного учасника)
 	void UpdatePlayerPositionsAndHealth() {
+		array<OBLPartyMember> changed = new array<OBLPartyMember>();
 		foreach (PlayerBase player : playerChars) {
 			if (!player || !player.GetIdentity())
 				continue;
 			OBLPartyMember member = GetMemberBySteamid(player.GetIdentity().GetPlainId());
-			if (member) {
-				member.SetPosition(player.GetPosition());
-				member.SetHealth(player.GetHealth());
-			}
+			if (!member)
+				continue;
+			vector pos = player.GetPosition();
+			float hp = player.GetHealth();
+			bool posChanged = vector.Distance(pos, member.position) > 1;
+			bool hpChanged = Math.AbsFloat(hp - member.health) > 1 || (hp == 0 && member.health != 0) || (hp == 100 && member.health != 100);
+			if (!posChanged && !hpChanged)
+				continue;
+			member.position = pos;
+			member.health = hp;
+			changed.Insert(member);
 		}
+		if (changed.Count() == 0)
+			return;
+		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.POSITIONS_BATCH);
+		rpc.Write(changed.Count());
+		foreach (OBLPartyMember m : changed) {
+			rpc.Write(m.uid);
+			rpc.Write(m.position[0]);
+			rpc.Write(m.position[1]);
+			rpc.Write(m.position[2]);
+			rpc.Write(m.health);
+		}
+		SendRPCToGroupMembers(rpc);
 	}
 	
 	void SendErrorNotification(PlayerIdentity player, string message, float show_time = 4) {

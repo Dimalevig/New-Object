@@ -245,16 +245,24 @@ class OBLPartyManagePage : OBLPartyPage {
 		int added = 0;
 		for (int i = 0; i < list.Count(); i++) {
 			SyncPlayer player = list.Get(i);
-			string name = player.m_PlayerName;
+			if (!player)
+				continue;
 			string steamid = player.m_UID;
 			if (OBLOnlinePrivacyManager.IsHidden(steamid))
 				continue;
+			// замість ніка показуємо код запрошення гравця
+			string code = OBLInviteCodes.Get(steamid);
+			string label = " #" + code;
+			if (code == "")
+				label = " #?";
+			if (steamid == MissionBaseWorld.mySteamid)
+				label = label + "  (ви)";
 			Param1<string> param = new Param1<string>(steamid);
-			if (IsSearched(name)) {
+			if (IsSearched(code)) {
 				if (items <= added) {
-					playerlist_online.AddItem(" " + name, param, 0);
+					playerlist_online.AddItem(label, param, 0);
 				} else {
-					playerlist_online.SetItem(added, " " + name, param, 0);
+					playerlist_online.SetItem(added, label, param, 0);
 				}
 				added++;
 			}
@@ -264,14 +272,16 @@ class OBLPartyManagePage : OBLPartyPage {
 		}
 	}
 	
-	bool IsSearched(string name) {
-		string lowerName = name + "";
-		lowerName.ToLower();
-		string lowerSearch = searchbox.GetText();
-		lowerSearch.ToLower();
-		if (lowerSearch.Length() == 0)
+	// пошук за кодом запрошення
+	bool IsSearched(string code) {
+		if (!searchbox)
 			return true;
-		return lowerName.IndexOf(lowerSearch) != -1;
+		string search = searchbox.GetText();
+		search.Replace(" ", "");
+		search.Replace("#", "");
+		if (search.Length() == 0)
+			return true;
+		return code.IndexOf(search) != -1;
 	}
 	
 	void FillMembersList() {

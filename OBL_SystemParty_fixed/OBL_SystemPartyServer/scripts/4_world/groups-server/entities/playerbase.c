@@ -90,6 +90,8 @@ modded class PlayerBase {
 		int hash = id.Hash();
 		identityIdHash = hash;
 		SetSynchDirty();
+		// два пакети навмисно: через сутність гравця і через місію — страховка на момент входу,
+		// коли персонаж на клієнті ще може бути не створений (пакет іде лише при вході/змінах групи)
 		ScriptRPC rpc = new ScriptRPC();
 		WriteOBLGroupSyncRPC(rpc);
 		rpc.Send(this, OBLPartyRPCs.GROUP_SYNC, true, ident);

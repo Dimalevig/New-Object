@@ -128,6 +128,21 @@ class OBLParty {
 			MissionBaseWorld mission = MissionBaseWorld.Cast(GetGame().GetMission());
 			if (mission)
 				mission.OnGroupChanged();
+		} else if (type == OBLPartyRPCs.POSITIONS_BATCH) {
+			int batchCount;
+			if (!ctx.Read(batchCount))
+				return;
+			for (int bi = 0; bi < batchCount; bi++) {
+				int bUid;
+				float bx, by, bz, bHealth;
+				if (!ctx.Read(bUid) || !ctx.Read(bx) || !ctx.Read(by) || !ctx.Read(bz) || !ctx.Read(bHealth))
+					return;
+				OBLPartyMember bMember = FindMemberByUID(bUid);
+				if (!bMember)
+					continue;
+				bMember.SetPosition(Vector(bx, by, bz));
+				bMember.SetHealth(bHealth);
+			}
 		} else if (type > OBLPartyRPCs.START_MARKER_RPC) {
 			int uid2;
 			if (!ctx.Read(uid2))

@@ -21,8 +21,31 @@ class MuteConfig {
 	int badWordsMuteTime = 0;
 	[NonSerialized()]
 	ref TStringArray mutedPlayersSteamids = new TStringArray();
+	// кому який стан мута ми вже відправили — щоб слати лише зміни
+	[NonSerialized()]
+	ref TStringArray lastSentMuted = new TStringArray();
 	
+	// оптимізація: шле стан мута лише тим онлайн-гравцям, у кого він змінився
+	// (раніше щохвилини всім розсилалось «зняти мут з усіх» + усі мути)
 	void SendMuteList() {
+		UpdateList();
+		array<PlayerIdentity> changedIdents = new array<PlayerIdentity>();
+		GetGame().GetPlayerIndentities(changedIdents);
+		foreach (PlayerIdentity onlineIdent : changedIdents) {
+			if (!onlineIdent)
+				continue;
+			string onlineId = onlineIdent.GetPlainId();
+			bool wasMuted = lastSentMuted.Find(onlineId) != -1;
+			bool isMuted = mutedPlayersSteamids.Find(onlineId) != -1;
+			if (wasMuted != isMuted)
+				GetGame().RPCSingleParam(null, OBLPartyRPCs.OBL_GLOBAL_MUTELIST, new Param1<bool>(isMuted), true, onlineIdent);
+		}
+		lastSentMuted.Clear();
+		lastSentMuted.InsertAll(mutedPlayersSteamids);
+	}
+	
+	// повна розсилка (після перезавантаження конфігу)
+	void SendMuteListFull() {
 		UpdateList();
 		array<PlayerIdentity> identities = new array<PlayerIdentity>();
 		GetGame().GetPlayerIndentities(identities);
@@ -35,6 +58,8 @@ class MuteConfig {
 				SendMute(ident); 
 			}
 		}
+		lastSentMuted.Clear();
+		lastSentMuted.InsertAll(mutedPlayersSteamids);
 	}
 	bool IsAdmin(string steamid) {
 		return muteAdmins.Find(steamid) != -1;
@@ -191,7 +216,7 @@ static MuteConfig LoadMuteConfig() {
 }
 static void ReloadMuteConfig() {
 	g_MuteConfig = LoadMuteConfig();
-	g_MuteConfig.SendMuteList();
+	g_MuteConfig.SendMuteListFull();
 	g_MuteConfig.SendChatList();
 }
 class MuteAdmin {

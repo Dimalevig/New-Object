@@ -260,6 +260,8 @@ modded class MissionGameplay {
 			myInviteCode = codeParam.param1;
 			if (OBLLogger.IsDebug())
 				OBLLogger.Debug("Received own invite code: " + myInviteCode);
+		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES) {
+			OBLInviteCodes.Read(ctx);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST) {
 			OBLOnlinePrivacyManager.ReadHiddenSteamids(ctx);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS) {

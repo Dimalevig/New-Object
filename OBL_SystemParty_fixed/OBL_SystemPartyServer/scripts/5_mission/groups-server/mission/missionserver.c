@@ -95,6 +95,39 @@ modded class MissionServer {
 		}
 	}
 
+	// коди запрошення для списку онлайн-гравців: новачку — усі, решті — лише код новачка
+	void SendInviteCodes(PlayerIdentity joined) {
+		if (!joined)
+			return;
+		TStringArray hidden = OBLParty.GetOBLHiddenOnlineSteamids();
+		array<PlayerIdentity> identities = new array<PlayerIdentity>();
+		GetGame().GetPlayerIndentities(identities);
+		ScriptRPC full = new ScriptRPC();
+		int count = 0;
+		foreach (PlayerIdentity ident : identities) {
+			if (ident && hidden.Find(ident.GetPlainId()) == -1)
+				count++;
+		}
+		full.Write(count);
+		foreach (PlayerIdentity ident2 : identities) {
+			if (!ident2 || hidden.Find(ident2.GetPlainId()) != -1)
+				continue;
+			full.Write(ident2.GetPlainId());
+			full.Write(OBLParty.GetOrCreateOBLInviteCode(ident2));
+		}
+		full.Send(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES, true, joined);
+		if (hidden.Find(joined.GetPlainId()) != -1)
+			return;
+		ScriptRPC single = new ScriptRPC();
+		single.Write(1);
+		single.Write(joined.GetPlainId());
+		single.Write(OBLParty.GetOrCreateOBLInviteCode(joined));
+		foreach (PlayerIdentity other : identities) {
+			if (other && other != joined)
+				single.Send(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES, true, other);
+		}
+	}
+	
 	void SendOBLOnlinePrivacyList(PlayerIdentity target = null) {
 		TStringArray hiddenSteamids = OBLParty.GetOBLHiddenOnlineSteamids();
 		ScriptRPC rpc = new ScriptRPC();
@@ -117,6 +150,7 @@ modded class MissionServer {
 		OBLParty.GetOrCreateOBLInviteCode(identity);
 		player.InitGroupServer(identity);
 		SendOBLOnlinePrivacyList(identity);
+		SendInviteCodes(identity);
 
 		#ifndef OBL_DISABLE_CHAT
 		// Synchronize mute/chat state only for the joining player.
@@ -143,9 +177,10 @@ modded class MissionServer {
 	ref map<string, ref TStringSet> muteVotes = new map<string, ref TStringSet>();
 	const int OBL_CHAT_MAX_LENGTH = 256;
 	
+	// раз на хвилину: лише знімаємо прострочені мути (шлемо тільки змінам).
+	// Список каналів більше не розсилається всім щохвилини — гравець отримує його при вході
 	void UpdateMuteList() {
 		GetMuteConfig().SendMuteList();
-		GetMuteConfig().SendChatList();
 	}
 	
 	void OnChatRPC(PlayerIdentity sender, ParamsReadContext ctx) {

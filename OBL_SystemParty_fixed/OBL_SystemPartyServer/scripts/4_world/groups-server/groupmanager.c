@@ -14,14 +14,19 @@ modded class OBLPartyManager {
 	int currentSaveIndex = -1;
 	
 	
+	const int GROUP_UPDATE_INTERVAL = 4000;
+	
 	void OBLPartyManager() {
 		GetDayZGame().Event_OnRPC.Insert(OnRPC_GroupMgr);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SaveNextGroups, SAVE_GROUP_INTERVAL, true);
+		// оптимізація: один спільний таймер замість окремого в кожної групи
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateActiveGroups, GROUP_UPDATE_INTERVAL, true);
 	}
 	
 	void ~OBLPartyManager() {
 		GetDayZGame().Event_OnRPC.Remove(OnRPC_GroupMgr);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(SaveNextGroups);
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateActiveGroups);
 		SaveAllGroups();
 	}
 	
@@ -36,24 +41,30 @@ modded class OBLPartyManager {
 			OBLLogger.Debug("Saved all " + allGroups.Count() + " Groups");
 	}
 	
+	// оновлюємо лише групи, де хтось онлайн
+	void UpdateActiveGroups() {
+		for (int i = allGroups.Count() - 1; i >= 0; i--) {
+			OBLParty grp = allGroups.Get(i);
+			if (grp && grp.playerChars && grp.playerChars.Count() > 0)
+				grp.UpdateGroup();
+		}
+	}
+	
+	// оптимізація: періодично зберігаємо лише змінені групи (до SAVE_ITERATION_COUNT за раз).
+	// Події (вступ, кік, маркер, ранг) і так зберігаються одразу; при вимкненні — зберігаються всі
 	void SaveNextGroups() {
-		if (allGroups.Count() < SAVE_ITERATION_COUNT) {
-			SaveAllGroups();
-			return;
-		}
-		if (OBLLogger.IsDebug())
-			OBLLogger.Debug("Saving Next " + SAVE_ITERATION_COUNT + " Groups. Start: " + currentSaveIndex);
-		for (int i = 0; i < SAVE_ITERATION_COUNT; i++) {
-			if (allGroups.Count() == 0) {
-				currentSaveIndex = -1;
-				return;
+		int saved = 0;
+		for (int i = allGroups.Count() - 1; i >= 0 && saved < SAVE_ITERATION_COUNT; i--) {
+			if (i >= allGroups.Count())
+				continue;
+			OBLParty grp = allGroups.Get(i);
+			if (grp && grp.saveDirty) {
+				SaveGroup(grp);
+				saved++;
 			}
-			currentSaveIndex = (currentSaveIndex + 1) % allGroups.Count();
-			OBLParty grp = allGroups.Get(currentSaveIndex);
-			SaveGroup(grp);
 		}
-		if (OBLLogger.IsDebug())
-			OBLLogger.Debug("Saved " + SAVE_ITERATION_COUNT + " Groups. Next Index: " + currentSaveIndex);
+		if (saved > 0 && OBLLogger.IsDebug())
+			OBLLogger.Debug("Saved " + saved + " changed groups");
 	}
 	
 	void SerializeAllGroups(ParamsWriteContext ctx) {
@@ -472,6 +483,7 @@ modded class OBLPartyManager {
 		}
 		string path = OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUPS_FOLDER + grp.shortname + ".json";
 		JsonFileLoader<OBLParty>.JsonSaveFile(path, grp);
+		grp.saveDirty = false;
 	}
 	
 	override void LoadAllGroups() {

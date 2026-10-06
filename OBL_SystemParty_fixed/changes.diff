@@ -1177,7 +1177,7 @@ diff -ruN client_orig/scripts/3_Game/Groups/OBLTheme.c client/scripts/3_Game/Gro
 +}
 diff -ruN client_orig/scripts/3_Game/Groups/RPCs.c client/scripts/3_Game/Groups/RPCs.c
 --- client_orig/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:08:50.535793642 +0000
-+++ client/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:49:52.283978742 +0000
++++ client/scripts/3_Game/Groups/RPCs.c	2026-10-06 23:03:51.935398352 +0000
 @@ -20,7 +20,7 @@
  	GROUP_ADMIN_PROMOTE,
  	GROUP_ADMIN_DEMOTE,
@@ -1202,8 +1202,8 @@ diff -ruN client_orig/scripts/3_Game/Groups/RPCs.c client/scripts/3_Game/Groups/
 +	// колишні RPC альянсів (видалені); слоти лишаються, щоб номери RPC магазину не змінились
 +	GROUP_ADMIN_MAX_PLAYERS,  // client → server: адмін задає ліміт гравців групи (0 = за замовчуванням)
 +	MEMBER_DOWNED,            // server → client: тіммейт у нокауті (true/false)
-+	RESERVED_3,
-+	RESERVED_4,
++	CONFIG_SYNC_INVITE_CODES, // server → client: коди запрошення онлайн-гравців (steamid → код)
++	POSITIONS_BATCH,          // server → client: позиції та здоров'я всієї групи одним пакетом
 +	RESERVED_5,
 +	RESERVED_6,
 +	RESERVED_7,
@@ -1859,9 +1859,43 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLMarkerVisivilityManager.
  			mgr.UpgradeVersion(mgr.version, CURRENT_VERSION);
  			mgr.Save();
  		}
+diff -ruN client_orig/scripts/4_World/Groups/configs/OBLOnlinePrivacyManager.c client/scripts/4_World/Groups/configs/OBLOnlinePrivacyManager.c
+--- client_orig/scripts/4_World/Groups/configs/OBLOnlinePrivacyManager.c	2026-10-06 22:08:50.536953071 +0000
++++ client/scripts/4_World/Groups/configs/OBLOnlinePrivacyManager.c	2026-10-06 23:04:54.490802386 +0000
+@@ -28,3 +28,30 @@
+ 			hiddenSteamids = new TStringArray();
+ 	}
+ }
++
++
++// коди запрошення онлайн-гравців (steamid → 5-значний код), надсилає сервер
++class OBLInviteCodes {
++	static ref map<string, string> codes = new map<string, string>();
++
++	static void Read(ParamsReadContext ctx) {
++		if (!codes)
++			codes = new map<string, string>();
++		int count = 0;
++		if (!ctx.Read(count))
++			return;
++		for (int i = 0; i < count; i++) {
++			string steamid, code;
++			if (!ctx.Read(steamid) || !ctx.Read(code))
++				return;
++			if (steamid != "")
++				codes.Set(steamid, code);
++		}
++	}
++
++	static string Get(string steamid) {
++		if (!codes || !codes.Contains(steamid))
++			return "";
++		return codes.Get(steamid);
++	}
++}
 diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4_World/Groups/configs/OBLParty.c
 --- client_orig/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 22:08:50.537032222 +0000
-+++ client/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 22:56:47.629739394 +0000
++++ client/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 23:04:14.283141385 +0000
 @@ -12,17 +12,12 @@
  	int markerLimit = 0;
  	int plotpoleLimit = 0;
@@ -1924,7 +1958,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  				return;
  			}
  			level = level1;
-@@ -133,40 +128,6 @@
+@@ -133,39 +128,20 @@
  			MissionBaseWorld mission = MissionBaseWorld.Cast(GetGame().GetMission());
  			if (mission)
  				mission.OnGroupChanged();
@@ -1961,11 +1995,24 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
 -					delete rm;
 -					break;
 -				}
--			}
++		} else if (type == OBLPartyRPCs.POSITIONS_BATCH) {
++			int batchCount;
++			if (!ctx.Read(batchCount))
++				return;
++			for (int bi = 0; bi < batchCount; bi++) {
++				int bUid;
++				float bx, by, bz, bHealth;
++				if (!ctx.Read(bUid) || !ctx.Read(bx) || !ctx.Read(by) || !ctx.Read(bz) || !ctx.Read(bHealth))
++					return;
++				OBLPartyMember bMember = FindMemberByUID(bUid);
++				if (!bMember)
++					continue;
++				bMember.SetPosition(Vector(bx, by, bz));
++				bMember.SetHealth(bHealth);
+ 			}
  		} else if (type > OBLPartyRPCs.START_MARKER_RPC) {
  			int uid2;
- 			if (!ctx.Read(uid2))
-@@ -200,14 +161,9 @@
+@@ -200,14 +176,9 @@
  		SendRPCToServer(rpc);
  	}
  	
@@ -1981,7 +2028,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  				return member;
  		}
  		return null;
-@@ -236,18 +192,12 @@
+@@ -236,18 +207,12 @@
  		return GetSubgroupMembers(subGroup).Count();
  	}
  	
@@ -2001,7 +2048,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  				memb.Insert(member);
  		}
  		return memb;
-@@ -271,11 +221,6 @@
+@@ -271,11 +236,6 @@
  		ctx.Write(markerLimit);
  		ctx.Write(plotpoleLimit);
  		ctx.Write(showTagInChat);
@@ -2013,7 +2060,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		ctx.Write(creationDate);
  		ctx.Write(lastActivity);
  	}
-@@ -317,15 +262,6 @@
+@@ -317,15 +277,6 @@
  			return false;
  		if (!ctx.Read(showTagInChat))
  			return false;
@@ -2029,7 +2076,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		if (!ctx.Read(creationDate))
  			return false;
  		if (!ctx.Read(lastActivity))
-@@ -345,11 +281,11 @@
+@@ -345,11 +296,11 @@
  	}
  	
  	void SendErrorNotificationLOCAL(string message, float show_time = 4) {
@@ -2043,7 +2090,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  	}
  	
  	void RemoveMarker(OBLMarker marker) {
-@@ -398,7 +334,7 @@
+@@ -398,7 +349,7 @@
  			member.parentGroup = this;
  			member.InitMarker();
  		} else {
@@ -2052,7 +2099,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		}
  		
  	}
-@@ -434,7 +370,7 @@
+@@ -434,7 +385,7 @@
  				return;
  			RemoveMember(member);
  		} else {
@@ -2061,7 +2108,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		}
  	}
  	
-@@ -463,22 +399,15 @@
+@@ -463,22 +414,15 @@
  	}
  	
  	OBLMarker FindAnyMarkerByUID(int uid) {
@@ -2088,7 +2135,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		return marker;
  	}
  	
-@@ -506,62 +435,6 @@
+@@ -506,62 +450,6 @@
  	
  	void SendRPCToGroupMembers(ScriptRPC rpc, int otherRPCType = -1) {}
  	void InitNumbers() {}
@@ -3899,7 +3946,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLMarkerListPage
 +}
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:08:50.542370557 +0000
-+++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:41:44.485110888 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 23:05:04.395150991 +0000
 @@ -15,21 +15,23 @@
  	}
  	
@@ -4256,7 +4303,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		return false;
  	}
  	
-@@ -261,12 +244,12 @@
+@@ -261,17 +244,25 @@
  		int items = playerlist_online.GetNumItems();
  		int added = 0;
  		for (int i = 0; i < list.Count(); i++) {
@@ -4266,16 +4313,54 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
 -			if (OBLOnlinePrivacyManager.IsHidden(steamid))
 -				continue;
 -			Param1<string> param = new Param1<string>(steamid);
+-			if (IsSearched(name)) {
 +			SyncPlayer player = list.Get(i);
-+			string name = player.m_PlayerName;
++			if (!player)
++				continue;
 +			string steamid = player.m_UID;
 +			if (OBLOnlinePrivacyManager.IsHidden(steamid))
 +				continue;
++			// замість ніка показуємо код запрошення гравця
++			string code = OBLInviteCodes.Get(steamid);
++			string label = " #" + code;
++			if (code == "")
++				label = " #?";
++			if (steamid == MissionBaseWorld.mySteamid)
++				label = label + "  (ви)";
 +			Param1<string> param = new Param1<string>(steamid);
- 			if (IsSearched(name)) {
++			if (IsSearched(code)) {
  				if (items <= added) {
- 					playerlist_online.AddItem(" " + name, param, 0);
-@@ -294,40 +277,42 @@
+-					playerlist_online.AddItem(" " + name, param, 0);
++					playerlist_online.AddItem(label, param, 0);
+ 				} else {
+-					playerlist_online.SetItem(added, " " + name, param, 0);
++					playerlist_online.SetItem(added, label, param, 0);
+ 				}
+ 				added++;
+ 			}
+@@ -281,53 +272,57 @@
+ 		}
+ 	}
+ 	
+-	bool IsSearched(string name) {
+-		string lowerName = name + "";
+-		lowerName.ToLower();
+-		string lowerSearch = searchbox.GetText();
+-		lowerSearch.ToLower();
+-		if (lowerSearch.Length() == 0)
++	// пошук за кодом запрошення
++	bool IsSearched(string code) {
++		if (!searchbox)
++			return true;
++		string search = searchbox.GetText();
++		search.Replace(" ", "");
++		search.Replace("#", "");
++		if (search.Length() == 0)
+ 			return true;
+-		return lowerName.IndexOf(lowerSearch) != -1;
++		return code.IndexOf(search) != -1;
+ 	}
+ 	
  	void FillMembersList() {
  		OBLLogger.Debug("FillMembersList");
  		
@@ -4334,7 +4419,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  			string displayname = addName + member.name + " (" + groupname + ")";
  			param = new Param3<string, ref OBLPartyPermission, int>(steamid, perm, -1);
  			if (items <= added) {
-@@ -342,40 +327,41 @@
+@@ -342,40 +337,41 @@
  			while (grp.subGroupCount > lastSubgroup) {
  				param = new Param3<string, ref OBLPartyPermission, int>("", null, lastSubgroup);
  				if (items <= added) {
@@ -4397,7 +4482,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		}
  		return mem;
  	}
-@@ -410,16 +396,6 @@
+@@ -410,16 +406,6 @@
  		pb.GetOBLParty().KickPlayerClient(steamid);
  	}
  	
@@ -4414,7 +4499,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  	string GetSelectedPlayerSteamid() {
  		int row = playerlist_members.GetSelectedRow();
  		if (row < 0 || row >= playerlist_members.GetNumItems())
-@@ -446,10 +422,12 @@
+@@ -446,10 +432,12 @@
  		OBLLogger.Debug("InitMainWidget GrupManage Page");
  		btn_kick = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_kick"));
  		btn_leave = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_leave"));
@@ -4428,7 +4513,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		
  		searchbox = EditBoxWidget.Cast(rootWidget.FindAnyWidget("searchbox"));
  		buttonInvite = ButtonWidget.Cast(rootWidget.FindAnyWidget("buttonInvite"));
-@@ -459,4 +437,4 @@
+@@ -459,4 +447,4 @@
  		playerlist_online = TextListboxWidget.Cast(rootWidget.FindAnyWidget("playerlist_online"));
  		playerlist_members = TextListboxWidget.Cast(rootWidget.FindAnyWidget("playerlist_members"));
  	}
@@ -4724,8 +4809,8 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/PlayerList/PlayerListEntry.c 
 \ No newline at end of file
 diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scripts/5_Mission/Groups/mission/MuteConfig.c
 --- client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 22:08:50.545115730 +0000
-+++ client/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 22:41:44.485547030 +0000
-@@ -17,7 +17,7 @@
++++ client/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 23:03:18.037018977 +0000
+@@ -17,13 +17,36 @@
  	ref TStringArray badWords = new TStringArray();
  	bool enabledBadWordsCensor = false;
  	bool blockBadWordContainingMessages = false;
@@ -4734,7 +4819,45 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
  	int badWordsMuteTime = 0;
  	[NonSerialized()]
  	ref TStringArray mutedPlayersSteamids = new TStringArray();
-@@ -152,13 +152,13 @@
++	// кому який стан мута ми вже відправили — щоб слати лише зміни
++	[NonSerialized()]
++	ref TStringArray lastSentMuted = new TStringArray();
+ 	
++	// оптимізація: шле стан мута лише тим онлайн-гравцям, у кого він змінився
++	// (раніше щохвилини всім розсилалось «зняти мут з усіх» + усі мути)
+ 	void SendMuteList() {
+ 		UpdateList();
++		array<PlayerIdentity> changedIdents = new array<PlayerIdentity>();
++		GetGame().GetPlayerIndentities(changedIdents);
++		foreach (PlayerIdentity onlineIdent : changedIdents) {
++			if (!onlineIdent)
++				continue;
++			string onlineId = onlineIdent.GetPlainId();
++			bool wasMuted = lastSentMuted.Find(onlineId) != -1;
++			bool isMuted = mutedPlayersSteamids.Find(onlineId) != -1;
++			if (wasMuted != isMuted)
++				GetGame().RPCSingleParam(null, OBLPartyRPCs.OBL_GLOBAL_MUTELIST, new Param1<bool>(isMuted), true, onlineIdent);
++		}
++		lastSentMuted.Clear();
++		lastSentMuted.InsertAll(mutedPlayersSteamids);
++	}
++	
++	// повна розсилка (після перезавантаження конфігу)
++	void SendMuteListFull() {
++		UpdateList();
+ 		array<PlayerIdentity> identities = new array<PlayerIdentity>();
+ 		GetGame().GetPlayerIndentities(identities);
+ 		GetGame().RPCSingleParam(null, OBLPartyRPCs.OBL_GLOBAL_MUTELIST, new Param1<bool>(false), true); // Unmute All
+@@ -35,6 +58,8 @@
+ 				SendMute(ident); 
+ 			}
+ 		}
++		lastSentMuted.Clear();
++		lastSentMuted.InsertAll(mutedPlayersSteamids);
+ 	}
+ 	bool IsAdmin(string steamid) {
+ 		return muteAdmins.Find(steamid) != -1;
+@@ -152,13 +177,13 @@
  	if (!FileExist(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json")) {
  		PrefixGroup adminPrefix = new PrefixGroup();
  		adminPrefix.prefix = "[Admin] ";
@@ -4754,7 +4877,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
  		cfg.prefixGroups.Insert(adminPrefix);
  		cfg.badWords = new TStringArray();
  		cfg.badWords.Insert("macaco");
-@@ -170,10 +170,10 @@
+@@ -170,10 +195,10 @@
  		cfg.badWordsMuteTime = 10;
  		cfg.blockBadWordContainingMessages = false;
  		cfg.enabledBadWordsCensor = false;
@@ -4769,7 +4892,16 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
  		JsonFileLoader<MuteConfig>.JsonSaveFile(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json", cfg);
  	} else {
  		OBLLogger.Debug("JsonLoadFile ChatConfig.json");
-@@ -260,4 +260,4 @@
+@@ -191,7 +216,7 @@
+ }
+ static void ReloadMuteConfig() {
+ 	g_MuteConfig = LoadMuteConfig();
+-	g_MuteConfig.SendMuteList();
++	g_MuteConfig.SendMuteListFull();
+ 	g_MuteConfig.SendChatList();
+ }
+ class MuteAdmin {
+@@ -260,4 +285,4 @@
  		return true;
  	}
  }
@@ -4777,7 +4909,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
 +#endif
 diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/scripts/5_Mission/Groups/mission/missionGameplay.c
 --- client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c	2026-10-06 22:08:50.544545264 +0000
-+++ client/scripts/5_Mission/Groups/mission/missionGameplay.c	2026-10-06 22:56:47.632300788 +0000
++++ client/scripts/5_Mission/Groups/mission/missionGameplay.c	2026-10-06 23:04:54.491408511 +0000
 @@ -213,7 +213,7 @@
  			}
  			OBLParty syncGroup = new OBLParty();
@@ -4797,7 +4929,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			pb.GetOBLParty().OnRPCClient(type, ctx);
  		} else if (rpc_type == OBLPartyRPCs.GROUP_ADD_CLIENT_MARKER) {
  			string name_, icon_, creatorId;
-@@ -244,25 +245,27 @@
+@@ -244,25 +245,29 @@
  		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_STEAMID) {
  			Param1<string> strParam;
  			if (!ctx.Read(strParam)) {
@@ -4820,6 +4952,8 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
 -			OBLLogger.Debug("Received own invite code: " + myInviteCode);
 +			if (OBLLogger.IsDebug())
 +				OBLLogger.Debug("Received own invite code: " + myInviteCode);
++		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES) {
++			OBLInviteCodes.Read(ctx);
  		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST) {
  			OBLOnlinePrivacyManager.ReadHiddenSteamids(ctx);
  		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS) {
@@ -4830,7 +4964,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  				return;
  			}
  			groupAdmin = adminParam.param1;
-@@ -281,7 +284,8 @@
+@@ -281,7 +286,8 @@
  			if (!ctx.Read(count2))
  				return;
  			array<ref Param2<ref vector, string>> arr = new array<ref Param2<ref vector, string>>();
@@ -4840,7 +4974,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			for (int i2 = 0; i2 < count2; i2++) {
  				bool exists = false;
  				if (!ctx.Read(exists))
-@@ -294,7 +298,8 @@
+@@ -294,7 +300,8 @@
  					return;
  				arr.Insert(new Param2<ref vector, string>(Vector(x,y,z), name2));
  			}
@@ -4850,7 +4984,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			adminP = GetAdminPage();
  			if (!adminP)
  				return;
-@@ -336,7 +341,8 @@
+@@ -336,7 +343,8 @@
  				if (cfgchannel.defaultChannel)
  					def = i;
  			}
@@ -4860,7 +4994,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			if (!setDefaultChannel) {
  				currentChannel = def;
  				UpdateChannel();
-@@ -353,12 +359,17 @@
+@@ -353,12 +361,17 @@
  			int timestampServer = timeParam.param1 * 3600 + timeParam.param2 * 60 + timeParam.param3;
  			int timestampClient = hour * 3600 + min * 60 + sec;
  			serverToClientTimeOffset = timestampServer - timestampClient;
@@ -4880,7 +5014,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		OBLMarker marker = new OBLMarker();
  		marker.SetupMarker(OBLMarkerType.PRIVATE_MARKER, name, icon, position);
  		marker.SetColorInt(color);
-@@ -444,7 +455,8 @@
+@@ -444,7 +457,8 @@
  				OBLMarker.UpdateAllMarkersSlow();
  				string state = OBLMarkerVisibilityManager.Get().GetCurrentStateName();
  				pb = PlayerBase.Cast(GetGame().GetPlayer());
@@ -4890,7 +5024,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			}
  		} else if (GetUApi() && GetUApi().GetInputByName("IGroupDeleteMarker").LocalPress()) {
  			if (GetGame().GetUIManager().GetMenu() && GetGame().GetUIManager().GetMenu() == openedMapUI) {
-@@ -458,7 +470,7 @@
+@@ -458,7 +472,7 @@
  			if (switchChatChannel && switchChatChannel.LocalPress()) {
  				if (channels.Count() > 1) {
  					SwitchNextChannel();
@@ -4899,7 +5033,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  					//GetGame().Chat("Channel: " + GetCurrentChannel(), "colorAction");
  				}
  			}
-@@ -511,11 +523,12 @@
+@@ -511,11 +525,12 @@
  			return;
  		// OBL FIX: pressing the key with no pending invite gave no feedback at all
  		if (lastInvite == "") {
@@ -4914,7 +5048,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		GetGame().RPCSingleParam(null, OBLPartyRPCs.GROUP_ACCEPT_INVITE, lastInviteParam, true);
  		// OBL FIX: consume the invite so the key cannot be spammed
  		lastInvite = "";
-@@ -550,7 +563,8 @@
+@@ -550,7 +565,8 @@
  	}
  	
  	void ClearPing() {
@@ -4924,7 +5058,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		if (lastPingUID == -1)
  			return;
  		PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
-@@ -560,9 +574,8 @@
+@@ -560,9 +576,8 @@
  		OBLMarker marker = grp.FindPingMarkerByUID(lastPingUID);
  		if (marker) {
  			grp.RemoveMarker(marker);
@@ -4936,7 +5070,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		}
  	}
  	#ifndef OBL_DISABLE_CHAT
-@@ -571,6 +584,8 @@
+@@ -571,6 +586,8 @@
  	}
  	
  	string GetCurrentChannel() {
@@ -4945,7 +5079,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		ChannelCfg cfgchannel = channels.Get(currentChannel);
  		if (!cfgchannel)
  			return "Невідомо";
-@@ -578,6 +593,8 @@
+@@ -578,6 +595,8 @@
  	}
  	
  	void SendChatMessage(string message) {
@@ -4954,7 +5088,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  		if (muted && message[0] != "!") {
  			PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
  			if (!pb)
-@@ -585,9 +602,11 @@
+@@ -585,9 +604,11 @@
  			pb.MessageImportant("Ви заглушені!");
  			return;
  		}
@@ -4968,7 +5102,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/missionGameplay.c client/
  			return;
  		}
  		if (message[0] == "!") {
-@@ -623,19 +642,17 @@
+@@ -623,19 +644,17 @@
  	void UpdateChannel() {
  		if (!channels || channels.Count() <= 0)
  			return;
@@ -5392,8 +5526,17 @@ diff -ruN server_orig/scripts/4_world/groups-server/carePackageMarker.c server/s
  
 diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scripts/4_world/groups-server/config/oblparty.c
 --- server_orig/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 21:35:53.803294029 +0000
-+++ server/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 22:56:47.650454535 +0000
-@@ -24,6 +24,8 @@
++++ server/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 23:04:14.281927452 +0000
+@@ -1,8 +1,6 @@
+ modded class OBLParty {
+ 
+ 	[NonSerialized()]
+-	static int currentGroup = 0;
+-	[NonSerialized()]
+ 	static const int OBL_INVITE_CODE_MIN = 10000;
+ 	[NonSerialized()]
+ 	static const int OBL_INVITE_CODE_MAX = 99999;
+@@ -24,6 +22,8 @@
  	// OBL FIX: how long the invite banner is shown on screen (seconds).
  	[NonSerialized()]
  	static const float OBL_INVITE_BANNER_SECONDS = 8;
@@ -5402,44 +5545,53 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  	
  	override void OnLoadServer() {
  		super.OnLoadServer();
-@@ -31,6 +33,7 @@
+@@ -31,9 +31,9 @@
  			if (!member)
  				continue;
  			member.online = false;
 +			member.currentSubgroup = OBLPartyConstants.SUBGROUP_OFFLINE;
  			member.parentGroup = this;
  		}
- 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(StartUpdateDelayed, (((currentGroup++) * 733) % GROUP_UPDATE_TIMER), false);
-@@ -44,12 +47,14 @@
+-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(StartUpdateDelayed, (((currentGroup++) * 733) % GROUP_UPDATE_TIMER), false);
+ 		InitNumbers();
+ 		if (GetFreeMemberSlots() < 0) {
+ 			GetGame().AdminLog("Loaded Group has more players, than allowed: " + shortname + " (" + name + ") MemberCount: " + members.Count() + " Max: " + maxPlayers);
+@@ -42,22 +42,22 @@
+ 	
+ 	void ~OBLParty() {
  		if (GetGame()) {
- 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(StartUpdateDelayed);
- 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateGroup);
+-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(StartUpdateDelayed);
+-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateGroup);
 -			OBLLogger.Debug("Delete Group: " + shortname);
 +			if (OBLLogger.IsDebug())
 +				OBLLogger.Debug("Delete Group: " + shortname);
  		}
  	}
  	
- 	void StartUpdateDelayed() {
+-	void StartUpdateDelayed() {
 -		OBLLogger.Debug("Starting Update Delayed " + shortname);
-+		if (OBLLogger.IsDebug())
-+			OBLLogger.Debug("Starting Update Delayed " + shortname);
- 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateGroup, GROUP_UPDATE_TIMER, true);
- 	}
+-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateGroup, GROUP_UPDATE_TIMER, true);
+-	}
++	// оптимізація: «брудна» група — є незбережені зміни (вхід/вихід, активність)
++	[NonSerialized()]
++	bool saveDirty = false;
  	
-@@ -57,7 +62,8 @@
+ 	void OnPlayerOnline(PlayerBase player, PlayerIdentity identity) {
  		if (!player)
  			return;
  		lastActivity = JMDate.Now(true).GetTimestamp();
 -		OBLLogger.Debug("Player Online: " + (identity != null) + " " + (player != null), true);
++		saveDirty = true;
 +		if (OBLLogger.IsDebug())
 +			OBLLogger.Debug("Player Online: " + (identity != null) + " " + (player != null), true);
  		if (playerChars.Find(player) == -1)
  			playerChars.Insert(player);
  		OBLPartyMember member = player.GetMyGroupMarker();
-@@ -70,14 +76,16 @@
+@@ -69,15 +69,18 @@
+ 		if (player)
  			playerChars.RemoveItem(player);
  		lastActivity = JMDate.Now(true).GetTimestamp();
++		saveDirty = true;
  		bool identOk = (player && player.GetIdentity());
 -		OBLLogger.Debug("Player Offline: " + identOk + " " + (player != null));
 +		if (OBLLogger.IsDebug())
@@ -5456,7 +5608,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  			
  		RebuildCache();
  	}
-@@ -103,10 +111,12 @@
+@@ -103,10 +106,12 @@
  	}
  	
  	Param2<int, string> GetInvite(string steamid) {
@@ -5471,7 +5623,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return invite;
  			}
  		}
-@@ -189,34 +199,55 @@
+@@ -189,34 +194,55 @@
  		if (!inv)
  			return;
  		lastInvites.RemoveItem(inv);
@@ -5531,7 +5683,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  			if (markers.Count() >= markerLimit && marker.type != OBLMarkerType.GROUP_PING) {
  				SendErrorNotification(sender, "Досягнуто ліміту маркерів!");
  				return;
-@@ -225,22 +256,27 @@
+@@ -225,22 +251,27 @@
  		} else if (type == OBLPartyRPCs.REMOVE) {
  			int uid;
  			if (!ctx.Read(uid)) {
@@ -5563,7 +5715,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return;
  			}
  			if (!perms.CanSeeMarkerType(mark.type)) {
-@@ -251,83 +287,34 @@
+@@ -251,83 +282,34 @@
  		} else if (type == OBLPartyRPCs.INVITE) {
  			string invtedSteamid;
  			if (!ctx.Read(invtedSteamid)) {
@@ -5656,7 +5808,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return;
  			}
  			int permGroup = memMarker.permissionGroup;
-@@ -345,13 +332,13 @@
+@@ -345,13 +327,13 @@
  				return;
  			senderPB = PlayerBase.GetPlayerByIdentity(sender);
  			if (!senderPB) {
@@ -5672,7 +5824,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return;
  			}
  			OBLPartyMember targetMember = GetMemberBySteamid(steamid);
-@@ -361,7 +348,7 @@
+@@ -361,7 +343,7 @@
  			}
  			OBLPartyPermission targetPerms = targetMember.GetPermission();
  			if (!targetPerms) {
@@ -5681,7 +5833,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return;
  			}
  			if (type == OBLPartyRPCs.PROMOTE) {
-@@ -413,40 +400,32 @@
+@@ -413,40 +395,32 @@
  						SendInfoNotification(targetPB.GetIdentity(), OBLNotifyTexts.KickedTarget(name));
  					}
  					bool kickDeletedGroup = members.Count() <= 1;
@@ -5739,7 +5891,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				return;
  			}
  			showTagInChat = enabled;
-@@ -457,12 +436,68 @@
+@@ -457,12 +431,68 @@
  			if (!ctx.Read(uid2))
  				return;
  			OBLMarker marker2 = FindAnyMarkerByUID(uid2);
@@ -5757,10 +5909,9 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
 +			if (!perms || !perms.CanSeeMarkerType(marker2.type))
 +				return;
 +			marker2.OnMarkerRPCServer(type, ctx);
- 		}
- 	}
- 	
--	void OnLevelChanged() {
++		}
++	}
++	
 +	int GenerateFreeMarkerUID() {
 +		int newUid = Math.RandomInt(200, int.MAX - 1);
 +		for (int attempt = 0; attempt < 50 && FindAnyMarkerByUID(newUid) != null; attempt++)
@@ -5783,7 +5934,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
 +		if (!perms || !perms.canInvite) {
 +			SendErrorNotification(sender, "У вас немає прав для запрошення!");
 +			return;
-+		}
+ 		}
 +		if (!targetPB || !targetPB.GetIdentity()) {
 +			SendErrorNotification(sender, OBLNotifyTexts.PlayerNotFound());
 +			return;
@@ -5804,14 +5955,15 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
 +		}
 +		InvitePlayer(targetPB, sender.GetName());
 +		SendSuccessNotification(sender, "Запрошення надіслано гравцю " + targetPB.GetIdentity().GetName() + ".");
-+	}
-+	
+ 	}
+ 	
+-	void OnLevelChanged() {
 +	// перераховує ліміти групи й розсилає їх учасникам
 +	void SyncGroupNumbers() {
  		InitNumbers();
  		ScriptRPC upgradeRPC = CreateRPCCall(OBLPartyRPCs.UPGRADE);
  		upgradeRPC.Write(level);
-@@ -559,11 +594,11 @@
+@@ -559,11 +589,11 @@
  	}
  	
  	void AddMarkerServer(OBLMarker marker) {
@@ -5827,7 +5979,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		}
  		AddMarkerLocal(marker);
  		if (marker.type == OBLMarkerType.GROUP_PING && OBLPartyMainConfig.Get().tacticalPingLifetimeSeconds >= 0)
-@@ -574,11 +609,11 @@
+@@ -574,11 +604,11 @@
  	}
  	
  	void AddPlayerMarkerServer(OBLMarker marker) {
@@ -5843,7 +5995,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		}
  		AddMarkerLocal(marker);
  		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.ADD_CLIENT);
-@@ -601,11 +636,11 @@
+@@ -601,11 +631,11 @@
  	void RemoveMarkerServer(OBLMarker marker) {
  		if (!marker)
  			return;
@@ -5859,7 +6011,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		}
  		int uid = marker.uid;
  		bool removedMember = marker.type == OBLMarkerType.GROUP_PLAYER_MARKER;
-@@ -692,32 +727,26 @@
+@@ -692,32 +722,26 @@
  	}
  	
  	int GetNextFreeSubgroup() {
@@ -5908,7 +6060,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  	}
  	
  	int GetFreeMemberSlots() {
-@@ -737,10 +766,12 @@
+@@ -737,23 +761,47 @@
  	
  	void UpdateGroup() {
  		if (playerChars && playerChars.Count() > 0) { // Reduce Log Spam. There is nothing to update if no player is online
@@ -5923,7 +6075,46 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		}
  	}
  	
-@@ -764,8 +795,19 @@
++	// оптимізація: зміни позицій/здоров'я всієї групи йдуть ОДНИМ пакетом кожному учаснику
++	// (раніше — окремий пакет на кожного гравця для кожного учасника)
+ 	void UpdatePlayerPositionsAndHealth() {
++		array<OBLPartyMember> changed = new array<OBLPartyMember>();
+ 		foreach (PlayerBase player : playerChars) {
+ 			if (!player || !player.GetIdentity())
+ 				continue;
+ 			OBLPartyMember member = GetMemberBySteamid(player.GetIdentity().GetPlainId());
+-			if (member) {
+-				member.SetPosition(player.GetPosition());
+-				member.SetHealth(player.GetHealth());
+-			}
++			if (!member)
++				continue;
++			vector pos = player.GetPosition();
++			float hp = player.GetHealth();
++			bool posChanged = vector.Distance(pos, member.position) > 1;
++			bool hpChanged = Math.AbsFloat(hp - member.health) > 1 || (hp == 0 && member.health != 0) || (hp == 100 && member.health != 100);
++			if (!posChanged && !hpChanged)
++				continue;
++			member.position = pos;
++			member.health = hp;
++			changed.Insert(member);
++		}
++		if (changed.Count() == 0)
++			return;
++		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.POSITIONS_BATCH);
++		rpc.Write(changed.Count());
++		foreach (OBLPartyMember m : changed) {
++			rpc.Write(m.uid);
++			rpc.Write(m.position[0]);
++			rpc.Write(m.position[1]);
++			rpc.Write(m.position[2]);
++			rpc.Write(m.health);
+ 		}
++		SendRPCToGroupMembers(rpc);
+ 	}
+ 	
+ 	void SendErrorNotification(PlayerIdentity player, string message, float show_time = 4) {
+@@ -764,8 +812,19 @@
  		// OBL FIX: '%' breaks widget text formatting; clamp runaway show_time
  		if (show_time <= 0 || show_time > 15)
  			show_time = 4;
@@ -5945,7 +6136,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  	}
  	
  	void SendInfoNotification(PlayerIdentity player, string message, float show_time = 4) {
-@@ -776,8 +818,9 @@
+@@ -776,8 +835,9 @@
  		// OBL FIX: '%' breaks widget text formatting; clamp runaway show_time
  		if (show_time <= 0 || show_time > 15)
  			show_time = 4;
@@ -5957,7 +6148,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  	}
  	
  	void SyncGroupTagVisiblity() {
-@@ -789,7 +832,8 @@
+@@ -789,7 +849,8 @@
  	override void SendRPCToGroupMembers(ScriptRPC rpc, int otherRPCType = -1) {
  		if (!playerChars)
  			playerChars = new array<PlayerBase>();
@@ -5967,7 +6158,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		int type = otherRPCType;
  		if (type == -1)
  			type = OBLPartyRPCs.GROUP_RPC;
-@@ -801,12 +845,12 @@
+@@ -801,12 +862,12 @@
  			if (ident) {
  				rpc.Send(null, type, true, ident);
  				count++;
@@ -6086,7 +6277,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblpartylevel.c serve
 \ No newline at end of file
 diff -ruN server_orig/scripts/4_world/groups-server/entities/playerbase.c server/scripts/4_world/groups-server/entities/playerbase.c
 --- server_orig/scripts/4_world/groups-server/entities/playerbase.c	2026-10-06 21:35:53.803404904 +0000
-+++ server/scripts/4_world/groups-server/entities/playerbase.c	2026-10-06 22:56:47.651452569 +0000
++++ server/scripts/4_world/groups-server/entities/playerbase.c	2026-10-06 23:04:27.652094423 +0000
 @@ -20,6 +20,7 @@
  		OBLPartyMember member = GetMyGroupMarker();
  		if (member) {
@@ -6095,7 +6286,16 @@ diff -ruN server_orig/scripts/4_world/groups-server/entities/playerbase.c server
  			if (GetIdentity()) {
  				member.SetName(GetIdentity().GetName());
  				member.SetOnline(true, GetIdentity().GetId());
-@@ -106,7 +107,8 @@
+@@ -89,6 +90,8 @@
+ 		int hash = id.Hash();
+ 		identityIdHash = hash;
+ 		SetSynchDirty();
++		// два пакети навмисно: через сутність гравця і через місію — страховка на момент входу,
++		// коли персонаж на клієнті ще може бути не створений (пакет іде лише при вході/змінах групи)
+ 		ScriptRPC rpc = new ScriptRPC();
+ 		WriteOBLGroupSyncRPC(rpc);
+ 		rpc.Send(this, OBLPartyRPCs.GROUP_SYNC, true, ident);
+@@ -106,7 +109,8 @@
  			if (!ctx.Read(type))
  				return;
  			OBLParty grp = GetOBLParty();
@@ -6105,7 +6305,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/entities/playerbase.c server
  			if (grp)
  				grp.OnRPCServer(sender, type, ctx);
  			OBLLogger.Debug("OnRPCServer");
-@@ -116,8 +118,29 @@
+@@ -116,8 +120,29 @@
  	override void EEKilled(Object killer) {
  		super.EEKilled(killer);
  		OBLPartyMember member = GetMyGroupMarker();
@@ -6138,7 +6338,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/entities/playerbase.c server
  	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef) {
 diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/scripts/4_world/groups-server/groupmanager.c
 --- server_orig/scripts/4_world/groups-server/groupmanager.c	2026-10-06 21:35:53.803422382 +0000
-+++ server/scripts/4_world/groups-server/groupmanager.c	2026-10-06 22:56:47.648557465 +0000
++++ server/scripts/4_world/groups-server/groupmanager.c	2026-10-06 23:04:14.282700364 +0000
 @@ -1,7 +1,5 @@
  modded class OBLPartyManager {
  
@@ -6147,7 +6347,24 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	const int SAVE_ITERATION_COUNT = 10;
  	const int SAVE_GROUP_INTERVAL = 30 * 1000;
  	const int MIN_LENGTH_NAME = 5;
-@@ -28,12 +26,14 @@
+@@ -16,42 +14,57 @@
+ 	int currentSaveIndex = -1;
+ 	
+ 	
++	const int GROUP_UPDATE_INTERVAL = 4000;
++	
+ 	void OBLPartyManager() {
+ 		GetDayZGame().Event_OnRPC.Insert(OnRPC_GroupMgr);
+ 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SaveNextGroups, SAVE_GROUP_INTERVAL, true);
++		// оптимізація: один спільний таймер замість окремого в кожної групи
++		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateActiveGroups, GROUP_UPDATE_INTERVAL, true);
+ 	}
+ 	
+ 	void ~OBLPartyManager() {
+ 		GetDayZGame().Event_OnRPC.Remove(OnRPC_GroupMgr);
+ 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(SaveNextGroups);
++		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateActiveGroups);
+ 		SaveAllGroups();
  	}
  	
  	void SaveAllGroups() {
@@ -6163,28 +6380,47 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
 +			OBLLogger.Debug("Saved all " + allGroups.Count() + " Groups");
  	}
  	
- 	void SaveNextGroups() {
-@@ -41,7 +41,8 @@
- 			SaveAllGroups();
- 			return;
+-	void SaveNextGroups() {
+-		if (allGroups.Count() < SAVE_ITERATION_COUNT) {
+-			SaveAllGroups();
+-			return;
++	// оновлюємо лише групи, де хтось онлайн
++	void UpdateActiveGroups() {
++		for (int i = allGroups.Count() - 1; i >= 0; i--) {
++			OBLParty grp = allGroups.Get(i);
++			if (grp && grp.playerChars && grp.playerChars.Count() > 0)
++				grp.UpdateGroup();
  		}
 -		OBLLogger.Debug("Saving Next " + SAVE_ITERATION_COUNT + " Groups. Start: " + currentSaveIndex);
-+		if (OBLLogger.IsDebug())
-+			OBLLogger.Debug("Saving Next " + SAVE_ITERATION_COUNT + " Groups. Start: " + currentSaveIndex);
- 		for (int i = 0; i < SAVE_ITERATION_COUNT; i++) {
- 			if (allGroups.Count() == 0) {
- 				currentSaveIndex = -1;
-@@ -51,7 +52,8 @@
- 			OBLParty grp = allGroups.Get(currentSaveIndex);
- 			SaveGroup(grp);
+-		for (int i = 0; i < SAVE_ITERATION_COUNT; i++) {
+-			if (allGroups.Count() == 0) {
+-				currentSaveIndex = -1;
+-				return;
++	}
++	
++	// оптимізація: періодично зберігаємо лише змінені групи (до SAVE_ITERATION_COUNT за раз).
++	// Події (вступ, кік, маркер, ранг) і так зберігаються одразу; при вимкненні — зберігаються всі
++	void SaveNextGroups() {
++		int saved = 0;
++		for (int i = allGroups.Count() - 1; i >= 0 && saved < SAVE_ITERATION_COUNT; i--) {
++			if (i >= allGroups.Count())
++				continue;
++			OBLParty grp = allGroups.Get(i);
++			if (grp && grp.saveDirty) {
++				SaveGroup(grp);
++				saved++;
+ 			}
+-			currentSaveIndex = (currentSaveIndex + 1) % allGroups.Count();
+-			OBLParty grp = allGroups.Get(currentSaveIndex);
+-			SaveGroup(grp);
  		}
 -		OBLLogger.Debug("Saved " + SAVE_ITERATION_COUNT + " Groups. Next Index: " + currentSaveIndex);
-+		if (OBLLogger.IsDebug())
-+			OBLLogger.Debug("Saved " + SAVE_ITERATION_COUNT + " Groups. Next Index: " + currentSaveIndex);
++		if (saved > 0 && OBLLogger.IsDebug())
++			OBLLogger.Debug("Saved " + saved + " changed groups");
  	}
  	
  	void SerializeAllGroups(ParamsWriteContext ctx) {
-@@ -101,7 +103,8 @@
+@@ -101,7 +114,8 @@
  			return;
  		OBLParty grp = null;
  		if (rpc_type == OBLPartyRPCs.GROUP_CREATE) {
@@ -6194,7 +6430,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  			Param2<string, string> createParam;
  			PlayerBase pb = PlayerBase.GetPlayerByIdentity(sender);
  			if (!pb) {
-@@ -113,7 +116,7 @@
+@@ -113,7 +127,7 @@
  				return;
  			}
  			if (!ctx.Read(createParam)) {
@@ -6203,7 +6439,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  				return;
  			}
  			string name = createParam.param1;
-@@ -148,29 +151,30 @@
+@@ -148,29 +162,30 @@
  		} else if (rpc_type == OBLPartyRPCs.GROUP_ACCEPT_INVITE) {
  			Param1<string> groupNameParam;
  			if (!ctx.Read(groupNameParam)) {
@@ -6239,7 +6475,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  				SendErrorNotification(sender, "Внутрішня помилка 002 !");
  				return;
  			}
-@@ -182,7 +186,8 @@
+@@ -182,7 +197,8 @@
  				GetGame().AdminLog("Player Requested Group Admin List, but is not admin ! " + sender.GetPlainId());
  				return;
  			}
@@ -6249,7 +6485,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  			SendAllGroupsAdmin(sender);
  		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_DELETE) {
  			string grpShortname = "";
-@@ -228,22 +233,25 @@
+@@ -228,22 +244,25 @@
  			GetGame().AdminLog("Admin Group Name Change Request ! " + sender.GetPlainId() + " for " + grpShortname2 + " Newshortname: " + newshortname + " NewDisplayname: " + newdisplayname);
  			SendInfoNotification(sender, "Назву групи змінено");
  			RefreshGroupAdmin(sender, grp, oldshortname);
@@ -6286,7 +6522,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  			RefreshGroupAdmin(sender, grp);
  		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_JOIN) {
  			string grpShortname4 = "";
-@@ -272,7 +280,7 @@
+@@ -272,7 +291,7 @@
  			}
  			OBLPartyPermission targetPerms = member.GetPermission();
  			if (!targetPerms) {
@@ -6295,7 +6531,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  				return;
  			}
  			targetPB = OBLParty.GetPlayerBySteamid(targetSteamid);
-@@ -284,11 +292,14 @@
+@@ -284,11 +303,14 @@
  				}
  				oldshortname = grp.shortname;
  				bool deletedByKick = grp.members.Count() <= 1;
@@ -6310,7 +6546,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  			} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_DEMOTE) {
  				OBLPartyPermission newPerms = targetPerms.GetPreviousGroup();
  				if (!newPerms) {
-@@ -328,54 +339,6 @@
+@@ -328,54 +350,6 @@
  			}
  			SaveGroup(grp);
  			RefreshGroupAdmin(sender, grp);
@@ -6365,7 +6601,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  		}
  	}
  	
-@@ -475,7 +438,7 @@
+@@ -475,7 +449,7 @@
  		safeError.Replace("%", "");
  		if (show_time <= 0 || show_time > 15)
  			show_time = 4;
@@ -6374,7 +6610,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	}
  	void SendInfoNotification(PlayerIdentity player, string message, int show_time = 4) {
  		if (!player)
-@@ -485,7 +448,7 @@
+@@ -485,7 +459,7 @@
  		safeInfo.Replace("%", "");
  		if (show_time <= 0 || show_time > 15)
  			show_time = 4;
@@ -6383,7 +6619,15 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	}
  	
  	override void SaveGroup(OBLParty grp) {
-@@ -527,7 +490,7 @@
+@@ -509,6 +483,7 @@
+ 		}
+ 		string path = OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUPS_FOLDER + grp.shortname + ".json";
+ 		JsonFileLoader<OBLParty>.JsonSaveFile(path, grp);
++		grp.saveDirty = false;
+ 	}
+ 	
+ 	override void LoadAllGroups() {
+@@ -527,7 +502,7 @@
  				LoadGroup(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUPS_FOLDER + filename);
  		}
  		CloseFindFile(findHandle);
@@ -6392,7 +6636,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	}
  	
  	void LoadGroup(string path) {
-@@ -560,7 +523,7 @@
+@@ -560,7 +535,7 @@
  		if (inactivity > 0 || grp.members.Count() == 0) {
  			int now = JMDate.Now(true).GetTimestamp();
  			if (now - inactivity > grp.lastActivity || grp.members.Count() == 0) {
@@ -6401,7 +6645,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  				GetGame().AdminLog("Deleted Group " + grp.shortname + " due to inactivity !");
  				DeleteGroup(grp);
  				return;
-@@ -568,7 +531,8 @@
+@@ -568,7 +543,8 @@
  		}
  		allGroups.Insert(grp);
  		grp.OnLoadServer();
@@ -6411,7 +6655,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	}
  	
  	override OBLParty GetGroupByHash(int hash) {
-@@ -606,7 +570,6 @@
+@@ -606,7 +582,6 @@
  		super.DeleteGroup(group);
  		if (!group)
  			return;
@@ -6591,7 +6835,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/staticmarkermanager.c server
  			if (!marker3)
 diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c server/scripts/5_mission/groups-server/mission/missionserver.c
 --- server_orig/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 21:35:53.803765573 +0000
-+++ server/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 22:56:47.646570410 +0000
++++ server/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 23:04:54.492232903 +0000
 @@ -8,7 +8,6 @@
  		OBLLogger.Init();
  		OBLPartyMainConfig.Get();
@@ -6615,15 +6859,69 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		OBLStaticMarkerManager.Delete();
  		OBLPartyManager.Delete();
  		GetDayZGame().Event_OnRPC.Remove(RPC_OBL);
-@@ -143,6 +141,7 @@
+@@ -97,6 +95,39 @@
+ 		}
+ 	}
+ 
++	// коди запрошення для списку онлайн-гравців: новачку — усі, решті — лише код новачка
++	void SendInviteCodes(PlayerIdentity joined) {
++		if (!joined)
++			return;
++		TStringArray hidden = OBLParty.GetOBLHiddenOnlineSteamids();
++		array<PlayerIdentity> identities = new array<PlayerIdentity>();
++		GetGame().GetPlayerIndentities(identities);
++		ScriptRPC full = new ScriptRPC();
++		int count = 0;
++		foreach (PlayerIdentity ident : identities) {
++			if (ident && hidden.Find(ident.GetPlainId()) == -1)
++				count++;
++		}
++		full.Write(count);
++		foreach (PlayerIdentity ident2 : identities) {
++			if (!ident2 || hidden.Find(ident2.GetPlainId()) != -1)
++				continue;
++			full.Write(ident2.GetPlainId());
++			full.Write(OBLParty.GetOrCreateOBLInviteCode(ident2));
++		}
++		full.Send(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES, true, joined);
++		if (hidden.Find(joined.GetPlainId()) != -1)
++			return;
++		ScriptRPC single = new ScriptRPC();
++		single.Write(1);
++		single.Write(joined.GetPlainId());
++		single.Write(OBLParty.GetOrCreateOBLInviteCode(joined));
++		foreach (PlayerIdentity other : identities) {
++			if (other && other != joined)
++				single.Send(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES, true, other);
++		}
++	}
++	
+ 	void SendOBLOnlinePrivacyList(PlayerIdentity target = null) {
+ 		TStringArray hiddenSteamids = OBLParty.GetOBLHiddenOnlineSteamids();
+ 		ScriptRPC rpc = new ScriptRPC();
+@@ -119,6 +150,7 @@
+ 		OBLParty.GetOrCreateOBLInviteCode(identity);
+ 		player.InitGroupServer(identity);
+ 		SendOBLOnlinePrivacyList(identity);
++		SendInviteCodes(identity);
+ 
+ 		#ifndef OBL_DISABLE_CHAT
+ 		// Synchronize mute/chat state only for the joining player.
+@@ -143,10 +175,12 @@
  	#ifndef OBL_DISABLE_CHAT
  	
  	ref map<string, ref TStringSet> muteVotes = new map<string, ref TStringSet>();
 +	const int OBL_CHAT_MAX_LENGTH = 256;
  	
++	// раз на хвилину: лише знімаємо прострочені мути (шлемо тільки змінам).
++	// Список каналів більше не розсилається всім щохвилини — гравець отримує його при вході
  	void UpdateMuteList() {
  		GetMuteConfig().SendMuteList();
-@@ -156,6 +155,12 @@
+-		GetMuteConfig().SendChatList();
+ 	}
+ 	
+ 	void OnChatRPC(PlayerIdentity sender, ParamsReadContext ctx) {
+@@ -156,6 +190,12 @@
  		if (!ctx.Read(channel) || !ctx.Read(message))
  			return;
  		string name = sender.GetName();
@@ -6636,7 +6934,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		int length = message.Length();
  		if (message.Length() >= 2 && message[0] == "+" && message[1] == "!") {
  			OBLLogger.Debug("trying to read Chat command");
-@@ -169,6 +174,13 @@
+@@ -169,6 +209,13 @@
  			}
  			return;
  		}
@@ -6650,7 +6948,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		//OBLLogger.Debug("Chat Message. Channel: " + channel + " Player: " + sender.GetPlainId() + " (" + sender.GetName() + "): " + message);
  		GetGame().AdminLog("Chat Message. Channel: " + channel + " Player: " + sender.GetPlainId() + " (" + sender.GetName() + "): " + message);
  		if (GetMuteConfig().enabledBadWordsCensor) {
-@@ -202,7 +214,10 @@
+@@ -202,7 +249,10 @@
  		}
  		
  		ScriptRPC rpc = new ScriptRPC();
@@ -6662,7 +6960,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		int channelColor = 0;
  		bool globalC = false;
  		bool groupC = false;
-@@ -293,14 +308,17 @@
+@@ -293,14 +343,17 @@
  		GetGame().AdminLog("On Chat Command: " + sender.GetPlainId() + " Cmd: " + cmd + " ArgsCount: " + args.Count());
  		string printcmd = cmd + "";
  		printcmd.Replace("%", "");
@@ -6683,7 +6981,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		}
  		if (cmd == "mute") {
  			if (args.Count() < 2) {
-@@ -402,6 +420,11 @@
+@@ -402,6 +455,11 @@
  			SendSimpleChatMessage(null, "Канал \"" + chatName + "\" увімкнув " + sender.GetName() + "!", true);
  			return;
  		} else if (cmd == "votemute" || cmd == "mutevote") {
@@ -6695,7 +6993,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  			int onlinePlayers = GetOnlinePlayerCount();
  			if (onlinePlayers < GetMuteConfig().muteVoteMinPlayers) {
  				SendSimpleChatMessage(sender, "Для голосування за мут потрібно щонайменше " + GetMuteConfig().muteVoteMinPlayers + " гравців онлайн");
-@@ -420,6 +443,14 @@
+@@ -420,6 +478,14 @@
  				SendSimpleChatMessage(sender, "Не вдалося знайти гравця " + printname);
  				return;
  			}
@@ -6710,7 +7008,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  			if (GetMuteConfig().IsMuted(target.GetPlainId())) {
  				SendSimpleChatMessage(sender, "Цей гравець уже вимкнений у чаті!");
  				return;
-@@ -437,7 +468,10 @@
+@@ -437,7 +503,10 @@
  				return;
  			}
  			count = muteVoter.Count();
@@ -6722,7 +7020,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  
  			if (count >= minPlayers) {
  				MuteChatPlayer(target, GetMuteConfig().muteVoteMuteTimeMins);
-@@ -451,14 +485,16 @@
+@@ -451,14 +520,16 @@
  	
  	void UnMuteChatPlayer(PlayerIdentity ident) {
  		GetGame().AdminLog("Player Was Unmuted: " + ident.GetPlainId() + " (" + ident.GetName() + ")");
