@@ -35,7 +35,7 @@ PanelWidgetClass rootFrame {
     }
     PanelWidgetClass borderWidget {
      ignorepointer 1
-     color 0 0 0 0.3922
+     color 0.482 0.361 1 0.45
      size 1 1
      halign center_ref
      valign center_ref

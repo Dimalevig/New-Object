@@ -21,6 +21,7 @@ PanelWidgetClass Page0 {
    text "Кнопка 1"
    {
     PanelWidgetClass uaPrimary0 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 1
      halign center_ref
@@ -57,6 +58,7 @@ PanelWidgetClass Page0 {
    text "Кнопка 2"
    {
     PanelWidgetClass uaPrimary1 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 1
      halign center_ref

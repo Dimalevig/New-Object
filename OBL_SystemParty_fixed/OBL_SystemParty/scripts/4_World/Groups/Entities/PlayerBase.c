@@ -142,7 +142,7 @@ modded class PlayerBase {
 	}
 
 	override void EEKilled(Object killer) {
-		AddSimpleClientMarker("Місце смерті", "OBL_SystemParty\\gui\\icons\\skull.paa", GetPosition(), ARGB(200, 255, 0, 0), "PM" );
+		AddSimpleClientMarker("Місце смерті", "OBL_SystemParty\\gui\\icons\\skull.paa", GetPosition(), ARGB(220, 224, 70, 90), "PM" );
 		super.EEKilled(killer);		
 	}
 }

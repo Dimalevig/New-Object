@@ -9,6 +9,7 @@ FrameWidgetClass rootFrame {
  vexactsize 0
  {
   PanelWidgetClass PanelWidget0 {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 5 0
    size 0.2 0.99
@@ -53,6 +54,7 @@ FrameWidgetClass rootFrame {
        text "Оновити"
        {
         PanelWidgetClass uaPrimary10 {
+         color 0.482 0.361 1 0.45
          ignorepointer 1
          position 0 0
          size 1 1
@@ -78,6 +80,7 @@ FrameWidgetClass rootFrame {
        lines 25
        {
         PanelWidgetClass uaPrimary19 {
+         color 0.482 0.361 1 0.45
          ignorepointer 1
          position 0 0
          size 1 1
@@ -92,6 +95,7 @@ FrameWidgetClass rootFrame {
        }
       }
       PanelWidgetClass uaPrimary11 {
+       color 0.482 0.361 1 0.45
        ignorepointer 1
        position 0 60
        size 1 135
@@ -168,6 +172,7 @@ FrameWidgetClass rootFrame {
    }
   }
   PanelWidgetClass PanelWidget2 {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.21 5
    size 0.35 0.5
@@ -212,6 +217,7 @@ FrameWidgetClass rootFrame {
        lines 15
        {
         PanelWidgetClass uaPrimary111 {
+         color 0.482 0.361 1 0.45
          ignorepointer 1
          position 0 0
          size 1 1
@@ -226,6 +232,7 @@ FrameWidgetClass rootFrame {
        }
       }
       PanelWidgetClass uaPrimary18 {
+       color 0.482 0.361 1 0.45
        ignorepointer 1
        position 0 60
        size 0.5 250
@@ -364,6 +371,7 @@ FrameWidgetClass rootFrame {
          text "Встановити ліміт (0 = 6)"
          {
           PanelWidgetClass uaPrimaryMaxPlayers {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -397,6 +405,7 @@ FrameWidgetClass rootFrame {
          text "Змінити назви груп"
          {
           PanelWidgetClass uaPrimary114 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -411,7 +420,7 @@ FrameWidgetClass rootFrame {
          }
         }
         ButtonWidgetClass btnJoin {
-         color 0 1 0 1
+         color 0.357 0.89 0.651 1
          position 5 5
          size 0.45 20
          valign bottom_ref
@@ -420,9 +429,10 @@ FrameWidgetClass rootFrame {
          hexactsize 0
          vexactsize 1
          text "Приєднатися"
-         "text color" 0 1 0 1
+         "text color" 0.357 0.89 0.651 1
          {
           PanelWidgetClass uaPrimary16 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -437,7 +447,7 @@ FrameWidgetClass rootFrame {
          }
         }
         ButtonWidgetClass btnDelete {
-         color 1 0 0 1
+         color 0.878 0.275 0.353 1
          position 5 5
          size 0.5 20
          halign right_ref
@@ -447,9 +457,10 @@ FrameWidgetClass rootFrame {
          hexactsize 0
          vexactsize 1
          text "Видалити"
-         "text color" 1 0 0 1
+         "text color" 0.878 0.275 0.353 1
          {
           PanelWidgetClass uaPrimary15 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -466,6 +477,7 @@ FrameWidgetClass rootFrame {
        }
       }
       PanelWidgetClass uaPrimary110 {
+       color 0.482 0.361 1 0.45
        ignorepointer 1
        position 5 5
        size 0.49 120
@@ -506,6 +518,7 @@ FrameWidgetClass rootFrame {
          text "Понизити"
          {
           PanelWidgetClass uaPrimary13 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -529,6 +542,7 @@ FrameWidgetClass rootFrame {
          text "Підвищити"
          {
           PanelWidgetClass uaPrimary12 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -552,6 +566,7 @@ FrameWidgetClass rootFrame {
          text "Вигнати"
          {
           PanelWidgetClass uaPrimary17 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -575,6 +590,7 @@ FrameWidgetClass rootFrame {
          text "У лідери"
          {
           PanelWidgetClass uaPrimary14 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -618,6 +634,7 @@ FrameWidgetClass rootFrame {
          text "Копіювати"
          {
           PanelWidgetClass uaPrimary115 {
+           color 0.482 0.361 1 0.45
            ignorepointer 1
            position 0 0
            size 1 1
@@ -648,6 +665,7 @@ FrameWidgetClass rootFrame {
    vexactsize 0
   }
   PanelWidgetClass PanelWidget4 {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.21 5
    size 0.35 0.485

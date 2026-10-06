@@ -1,4 +1,5 @@
 PanelWidgetClass uaSecondary3 {
+ color 0.482 0.361 1 0.45
  ignorepointer 0
  position 0 0
  size 0.3 300
@@ -13,7 +14,7 @@ PanelWidgetClass uaSecondary3 {
  {
   PanelWidgetClass PanelWidget0 {
    ignorepointer 1
-   color 0.3843 0.3843 0.3843 0.7608
+   color 0.090 0.078 0.169 0.86
    size 1 1
    halign center_ref
    valign center_ref
@@ -56,7 +57,7 @@ PanelWidgetClass uaSecondary3 {
    {
     PanelWidgetClass uaSecondary7 {
      ignorepointer 1
-     color 0.2431 0.2431 0.2431 0.6902
+     color 0.090 0.078 0.169 0.86
      position 0 0
      size 1 1
      halign center_ref
@@ -212,6 +213,7 @@ PanelWidgetClass uaSecondary3 {
    text "OK"
    {
     PanelWidgetClass uaPrimary111 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 1 1
@@ -236,6 +238,7 @@ PanelWidgetClass uaSecondary3 {
    text "#cancel"
    {
     PanelWidgetClass uaPrimary110 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 1 1
@@ -295,6 +298,7 @@ PanelWidgetClass uaSecondary3 {
    text "X"
    {
     PanelWidgetClass uaPrimary113 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 1 1

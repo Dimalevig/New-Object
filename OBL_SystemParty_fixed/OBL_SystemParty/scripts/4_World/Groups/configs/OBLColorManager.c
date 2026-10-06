@@ -6,6 +6,8 @@ class OBLColorManager {
 	string changedColor = "";
 	
 	static ref ScriptInvoker Event_OnColorChange = new ScriptInvoker();
+	// службовий запис у ColorManager.json (не колір, у налаштуваннях не показується)
+	static const string PALETTE_KEY = "__oblivion_palette";
 	
 	static OBLColorManager Get() {
 		if (!g_OBLColorManager) {
@@ -22,6 +24,11 @@ class OBLColorManager {
 			OBLLogger.Debug("JsonLoadFile COLOR_MANAGER.json");
 			JsonFileLoader<array<ref Param2<string, int>>>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_COLOR_MANAGER, mgr.colorss);
 		} 
+		// нова палітра Oblivion: один раз замінюємо старі збережені кольори
+		if (mgr.GetColor(PALETTE_KEY, 0) != OBLTheme.PALETTE_VERSION) {
+			mgr.colorss.Clear();
+			mgr.SetColor(PALETTE_KEY, OBLTheme.PALETTE_VERSION);
+		}
 		mgr.SetDefaultColors();
 		mgr.ReplaceColors(mgr.colorss);
 		mgr.Save();
@@ -71,6 +78,7 @@ class OBLColorManager {
 	
 	void ResetAll() {
 		colorss.Clear();
+		SetColor(PALETTE_KEY, OBLTheme.PALETTE_VERSION);
 		SetDefaultColors();
 		InvokeOnChanged();
 	}
@@ -104,16 +112,17 @@ class OBLColorManager {
 	}
 	
 	void SetDefaultColors() {
-		GetColor("Player 3D Marker", ARGB(255, 255, 255, 255));
-		GetColor("Own Player Map Marker", ARGB(255, 255, 51, 51));
-		GetColor("Player Online", ARGB(255, 0, 255, 0));
-		GetColor("Player Offline", ARGB(125, 255, 0, 0));
-		GetColor("Ping 3D Marker", ARGB(255, 255, 255, 0));
-		GetColor("Compass", ARGB(255, 255, 255, 255));
-		GetColor("Compass Line", ARGB(255, 255, 0, 0));
-		GetColor("Playerlist entry full health", ARGB(255, 255, 255, 255));
-		GetColor("Playerlist entry zero health", ARGB(255, 255, 0, 0));
-		GetColor("Playerlist entry border", ARGB(255, 255, 255, 255));
+		// палітра Oblivion
+		GetColor("Player 3D Marker", OBLTheme.AccentLight());
+		GetColor("Own Player Map Marker", OBLTheme.Glow());
+		GetColor("Player Online", OBLTheme.Accent());
+		GetColor("Player Offline", ARGB(150, 142, 136, 172));
+		GetColor("Ping 3D Marker", OBLTheme.Glow());
+		GetColor("Compass", OBLTheme.Text());
+		GetColor("Compass Line", OBLTheme.Accent());
+		GetColor("Playerlist entry full health", OBLTheme.AccentLight());
+		GetColor("Playerlist entry zero health", OBLTheme.Danger());
+		GetColor("Playerlist entry border", ARGB(200, 123, 92, 255));
 	}
 	
 	void ResetColorToDefault(string colorStr) {
@@ -124,7 +133,8 @@ class OBLColorManager {
 	TStringArray GetColorStrings() {
 		ref TStringArray arr = new TStringArray();
 		foreach (Param2<string, int> color : colorss) {
-			arr.Insert(color.param1);
+			if (color && color.param1 != PALETTE_KEY)
+				arr.Insert(color.param1);
 		}
 		return arr;
 	}

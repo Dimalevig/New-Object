@@ -88,7 +88,7 @@ class OBLShopPage : OBLPartyPage {
 			if (item.qty > 1)
 				label = label + " x" + item.qty;
 			int row = list_items.AddItem(label, new Param1<int>(item.purchaseId), 0);
-			list_items.SetItemColor(row, 0, ARGB(255, 180, 220, 255));
+			list_items.SetItemColor(row, 0, OBLTheme.AccentLight());
 		}
 	}
 

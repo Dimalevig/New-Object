@@ -45,6 +45,7 @@ PanelWidgetClass Page5_0 {
    lines 13
    {
     PanelWidgetClass uaSecondaryShop1 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 1
      halign center_ref
@@ -68,6 +69,7 @@ PanelWidgetClass Page5_0 {
    text "Оновити склад"
    {
     PanelWidgetClass uaSecondaryShop2 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 1
      halign center_ref
@@ -91,6 +93,7 @@ PanelWidgetClass Page5_0 {
    text "Забрати"
    {
     PanelWidgetClass uaSecondaryShop3 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 1
      halign center_ref

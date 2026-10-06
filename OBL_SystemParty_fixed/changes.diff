@@ -16,6 +16,382 @@ diff -ruN client_orig/config.cpp client/config.cpp
  	};
 -};
 +};
+diff -ruN client_orig/gui/layouts/day_z_chat_input.layout client/gui/layouts/day_z_chat_input.layout
+--- client_orig/gui/layouts/day_z_chat_input.layout	2026-10-06 22:08:50.532330897 +0000
++++ client/gui/layouts/day_z_chat_input.layout	2026-10-06 22:41:01.579432262 +0000
+@@ -9,7 +9,7 @@
+  {
+   PanelWidgetClass InputEditBoxWidget0 {
+    visible 1
+-   color 0.1569 0.1569 0.1569 0.7843
++   color 0.090 0.078 0.169 0.86
+    position 0 80
+    size 0.7 28
+    halign center_ref
+diff -ruN client_orig/gui/layouts/mapmenu/mapmenu_default.layout client/gui/layouts/mapmenu/mapmenu_default.layout
+--- client_orig/gui/layouts/mapmenu/mapmenu_default.layout	2026-10-06 22:08:50.532695123 +0000
++++ client/gui/layouts/mapmenu/mapmenu_default.layout	2026-10-06 22:41:01.581452696 +0000
+@@ -1,5 +1,5 @@
+ WindowWidgetClass rootFrame {
+- color 0.047 0.161 0.035 0.702
++ color 0.051 0.043 0.102 0.88
+  position 0 0
+  size 1 1
+  halign center_ref
+@@ -13,7 +13,7 @@
+   PanelWidgetClass leftPanel {
+    clipchildren 0
+    ignorepointer 1
+-   color 0.129 0.204 0.059 0.674
++   color 0.482 0.361 1 0.85
+    position 15 22
+    size 0.23 0.907
+    halign right_ref
+@@ -92,7 +92,7 @@
+   }
+   PanelWidgetClass fullPanel {
+    ignorepointer 1
+-   color 0.184 0.247 0.102 0.674
++   color 0.482 0.361 1 0.85
+    position 0 70
+    size 0.99 0.92
+    halign center_ref
+diff -ruN client_orig/gui/layouts/mapmenu/markerlist/markerlistentry_default.layout client/gui/layouts/mapmenu/markerlist/markerlistentry_default.layout
+--- client_orig/gui/layouts/mapmenu/markerlist/markerlistentry_default.layout	2026-10-06 22:08:50.532928370 +0000
++++ client/gui/layouts/mapmenu/markerlist/markerlistentry_default.layout	2026-10-06 22:41:01.583092659 +0000
+@@ -1,5 +1,5 @@
+ PanelWidgetClass rootFrame {
+- color 0.8196 0.8196 0.8196 0.3137
++ color 0.482 0.361 1 0.45
+  size 1 30
+  hexactpos 1
+  vexactpos 1
+@@ -44,7 +44,7 @@
+      {
+       PanelWidgetClass PanelWidget2 {
+        ignorepointer 1
+-       color 1 1 1 0.0275
++       color 0.482 0.361 1 0.08
+        size 1 1
+        halign center_ref
+        valign center_ref
+@@ -90,7 +90,7 @@
+    {
+     PanelWidgetClass PanelWidget0 {
+      ignorepointer 1
+-     color 1 1 1 0.5529
++     color 0.725 0.659 1 0.6
+      size 30 30
+      halign center_ref
+      valign center_ref
+@@ -114,7 +114,7 @@
+     }
+     PanelWidgetClass PanelWidget1 {
+      ignorepointer 1
+-     color 1 1 1 0.5529
++     color 0.725 0.659 1 0.6
+      size 30 30
+      halign center_ref
+      valign center_ref
+@@ -138,7 +138,7 @@
+     }
+     PanelWidgetClass PanelWidget2 {
+      ignorepointer 1
+-     color 1 1 1 0.5529
++     color 0.725 0.659 1 0.6
+      size 30 30
+      halign center_ref
+      valign center_ref
+diff -ruN client_orig/gui/layouts/mapmenu/markerpopup_default.layout client/gui/layouts/mapmenu/markerpopup_default.layout
+--- client_orig/gui/layouts/mapmenu/markerpopup_default.layout	2026-10-06 22:08:50.533031571 +0000
++++ client/gui/layouts/mapmenu/markerpopup_default.layout	2026-10-06 22:41:01.582233229 +0000
+@@ -1,4 +1,5 @@
+ PanelWidgetClass uaSecondary3 {
++ color 0.482 0.361 1 0.45
+  ignorepointer 0
+  position 0 0
+  size 0.3 300
+@@ -13,7 +14,7 @@
+  {
+   PanelWidgetClass PanelWidget0 {
+    ignorepointer 1
+-   color 0.3843 0.3843 0.3843 0.7608
++   color 0.090 0.078 0.169 0.86
+    size 1 1
+    halign center_ref
+    valign center_ref
+@@ -56,7 +57,7 @@
+    {
+     PanelWidgetClass uaSecondary7 {
+      ignorepointer 1
+-     color 0.2431 0.2431 0.2431 0.6902
++     color 0.090 0.078 0.169 0.86
+      position 0 0
+      size 1 1
+      halign center_ref
+@@ -212,6 +213,7 @@
+    text "OK"
+    {
+     PanelWidgetClass uaPrimary111 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 1 1
+@@ -236,6 +238,7 @@
+    text "#cancel"
+    {
+     PanelWidgetClass uaPrimary110 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 1 1
+@@ -295,6 +298,7 @@
+    text "X"
+    {
+     PanelWidgetClass uaPrimary113 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 1 1
+diff -ruN client_orig/gui/layouts/mapmenu/pages/page_0_0_default.layout client/gui/layouts/mapmenu/pages/page_0_0_default.layout
+--- client_orig/gui/layouts/mapmenu/pages/page_0_0_default.layout	2026-10-06 22:08:50.533354394 +0000
++++ client/gui/layouts/mapmenu/pages/page_0_0_default.layout	2026-10-06 22:41:01.587733956 +0000
+@@ -21,6 +21,7 @@
+    text "Кнопка 1"
+    {
+     PanelWidgetClass uaPrimary0 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 1
+      halign center_ref
+@@ -57,6 +58,7 @@
+    text "Кнопка 2"
+    {
+     PanelWidgetClass uaPrimary1 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 1
+      halign center_ref
+diff -ruN client_orig/gui/layouts/mapmenu/pages/page_1_0_default.layout client/gui/layouts/mapmenu/pages/page_1_0_default.layout
+--- client_orig/gui/layouts/mapmenu/pages/page_1_0_default.layout	2026-10-06 22:08:50.533503997 +0000
++++ client/gui/layouts/mapmenu/pages/page_1_0_default.layout	2026-10-06 22:41:01.588201663 +0000
+@@ -34,7 +34,7 @@
+    {
+     PanelWidgetClass uaSecondary4 {
+      ignorepointer 1
+-     color 0.2431 0.2431 0.2431 0.6902
++     color 0.090 0.078 0.169 0.86
+      size 1 1
+      halign center_ref
+      valign center_ref
+@@ -79,7 +79,7 @@
+    {
+     PanelWidgetClass uaSecondary5 {
+      ignorepointer 1
+-     color 0.2431 0.2431 0.2431 0.6902
++     color 0.090 0.078 0.169 0.86
+      size 1 1
+      halign center_ref
+      valign center_ref
+@@ -102,6 +102,7 @@
+    text "Створити"
+    {
+     PanelWidgetClass uaPrimary11 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 1 1
+diff -ruN client_orig/gui/layouts/mapmenu/pages/page_1_1_default.layout client/gui/layouts/mapmenu/pages/page_1_1_default.layout
+--- client_orig/gui/layouts/mapmenu/pages/page_1_1_default.layout	2026-10-06 22:08:50.533576224 +0000
++++ client/gui/layouts/mapmenu/pages/page_1_1_default.layout	2026-10-06 22:41:01.588891823 +0000
+@@ -54,6 +54,7 @@
+      lines 8
+      {
+       PanelWidgetClass uaPrimary18 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 0
+        size 1 1
+@@ -88,7 +89,7 @@
+      {
+       PanelWidgetClass uaSecondary6 {
+        ignorepointer 1
+-       color 0.2431 0.2431 0.2431 0.6902
++       color 0.090 0.078 0.169 0.86
+        position 0 0
+        size 1 1
+        halign center_ref
+@@ -113,6 +114,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary17 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 0
+        size 1 1
+@@ -153,6 +155,7 @@
+      lines 8
+      {
+       PanelWidgetClass uaPrimary19 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 0
+        size 1 1
+@@ -178,6 +181,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary12 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        size 1 1
+        halign center_ref
+@@ -202,6 +206,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary13 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        size 1 1
+        halign center_ref
+@@ -226,6 +231,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary15 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        size 1 1
+        halign center_ref
+@@ -250,6 +256,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary16 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 0
+        size 1 1
+@@ -276,6 +283,7 @@
+      "disabled text color" 0.4745 0.4745 0.4745 1
+      {
+       PanelWidgetClass uaPrimary112 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 0
+        size 1 1
+diff -ruN client_orig/gui/layouts/mapmenu/pages/page_3_0_default.layout client/gui/layouts/mapmenu/pages/page_3_0_default.layout
+--- client_orig/gui/layouts/mapmenu/pages/page_3_0_default.layout	2026-10-06 22:08:50.533748260 +0000
++++ client/gui/layouts/mapmenu/pages/page_3_0_default.layout	2026-10-06 22:41:01.586821252 +0000
+@@ -9,6 +9,7 @@
+  vexactsize 0
+  {
+   PanelWidgetClass layoutSettingsPanel {
++   color 0.482 0.361 1 0.45
+    visible 0
+    ignorepointer 1
+    position 0.025 0.025
+@@ -33,6 +34,7 @@
+      "text valign" center
+     }
+     PanelWidgetClass availableLayoutsPicker {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 0.5 0.88
+      valign bottom_ref
+@@ -69,6 +71,7 @@
+      }
+     }
+     PanelWidgetClass availableLayoutsPicker0 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 0.5 0.88
+@@ -118,6 +121,7 @@
+    }
+   }
+   PanelWidgetClass colorSettingsPanel {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.025 0.025
+    size 0.45 0.45
+@@ -142,6 +146,7 @@
+      "text valign" center
+     }
+     PanelWidgetClass colorLeft {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 0.5 0.88
+      valign bottom_ref
+@@ -178,6 +183,7 @@
+      }
+     }
+     PanelWidgetClass colorRight {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 0.5 0.88
+      halign right_ref
+@@ -493,6 +499,7 @@
+    }
+   }
+   PanelWidgetClass layoutPositions {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.025 0.025
+    size 0.45 0.45
+@@ -517,6 +524,7 @@
+      "text valign" center
+     }
+     PanelWidgetClass availableLayouts {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 0.5 0.88
+      valign bottom_ref
+@@ -553,6 +561,7 @@
+      }
+     }
+     PanelWidgetClass PanelWidget0 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 0.5 0.88
+      halign right_ref
+@@ -577,6 +586,7 @@
+        "text valign" center
+       }
+       PanelWidgetClass previewPanel {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0.02 40
+        size 0.88 0.48
+@@ -712,6 +722,7 @@
+    }
+   }
+   PanelWidgetClass PanelWidget2 {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.025 0.025
+    size 0.45 0.45
+@@ -724,6 +735,7 @@
+    style Outline
+    {
+     PanelWidgetClass PanelWidget4 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 0.88
+      halign center_ref
+@@ -861,6 +873,7 @@
+      }
+     }
+     PanelWidgetClass resetButtons {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      position 0 0
+      size 1 0.22
+@@ -949,6 +962,7 @@
+    vexactsize 1
+   }
+   PanelWidgetClass PanelWidget5 {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.025 0.025
+    size 0.45 0.45
 diff -ruN client_orig/gui/layouts/mapmenu/pages/page_4_0_default.layout client/gui/layouts/mapmenu/pages/page_4_0_default.layout
 --- client_orig/gui/layouts/mapmenu/pages/page_4_0_default.layout	2026-10-06 22:08:50.534007949 +0000
 +++ client/gui/layouts/mapmenu/pages/page_4_0_default.layout	1970-01-01 00:00:00.000000000 +0000
@@ -281,10 +657,93 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_4_0_default.layout client/g
 -  }
 - }
 -}
+diff -ruN client_orig/gui/layouts/mapmenu/pages/page_5_0_default.layout client/gui/layouts/mapmenu/pages/page_5_0_default.layout
+--- client_orig/gui/layouts/mapmenu/pages/page_5_0_default.layout	2026-10-06 22:08:50.534119757 +0000
++++ client/gui/layouts/mapmenu/pages/page_5_0_default.layout	2026-10-06 22:41:01.585036455 +0000
+@@ -45,6 +45,7 @@
+    lines 13
+    {
+     PanelWidgetClass uaSecondaryShop1 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 1
+      halign center_ref
+@@ -68,6 +69,7 @@
+    text "Оновити склад"
+    {
+     PanelWidgetClass uaSecondaryShop2 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 1
+      halign center_ref
+@@ -91,6 +93,7 @@
+    text "Забрати"
+    {
+     PanelWidgetClass uaSecondaryShop3 {
++     color 0.482 0.361 1 0.45
+      ignorepointer 1
+      size 1 1
+      halign center_ref
 diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/gui/layouts/mapmenu/pages/page_6_0_default.layout
 --- client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:08:50.534200567 +0000
-+++ client/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:31:11.269790321 +0000
-@@ -255,16 +255,6 @@
++++ client/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:41:01.584502430 +0000
+@@ -9,6 +9,7 @@
+  vexactsize 0
+  {
+   PanelWidgetClass PanelWidget0 {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 5 0
+    size 0.2 0.99
+@@ -53,6 +54,7 @@
+        text "Оновити"
+        {
+         PanelWidgetClass uaPrimary10 {
++         color 0.482 0.361 1 0.45
+          ignorepointer 1
+          position 0 0
+          size 1 1
+@@ -78,6 +80,7 @@
+        lines 25
+        {
+         PanelWidgetClass uaPrimary19 {
++         color 0.482 0.361 1 0.45
+          ignorepointer 1
+          position 0 0
+          size 1 1
+@@ -92,6 +95,7 @@
+        }
+       }
+       PanelWidgetClass uaPrimary11 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 60
+        size 1 135
+@@ -168,6 +172,7 @@
+    }
+   }
+   PanelWidgetClass PanelWidget2 {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.21 5
+    size 0.35 0.5
+@@ -212,6 +217,7 @@
+        lines 15
+        {
+         PanelWidgetClass uaPrimary111 {
++         color 0.482 0.361 1 0.45
+          ignorepointer 1
+          position 0 0
+          size 1 1
+@@ -226,6 +232,7 @@
+        }
+       }
+       PanelWidgetClass uaPrimary18 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 0 60
+        size 0.5 250
+@@ -255,16 +262,6 @@
           vexactsize 1
           text "Назва:"
          }
@@ -301,7 +760,7 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
          TextWidgetClass TextWidget6 {
           ignorepointer 1
           position 5 125
-@@ -288,12 +278,12 @@
+@@ -288,12 +285,12 @@
          TextWidgetClass TextWidget8 {
           ignorepointer 1
           position 5 175
@@ -316,7 +775,7 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
          }
          TextWidgetClass TextWidget9 {
           ignorepointer 1
-@@ -325,16 +315,6 @@
+@@ -325,16 +322,6 @@
           hexactsize 0
           vexactsize 1
          }
@@ -333,7 +792,7 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
          TextWidgetClass created {
           ignorepointer 1
           position 5 125
-@@ -357,34 +337,33 @@
+@@ -357,34 +344,34 @@
          }
          TextWidgetClass playercount {
           ignorepointer 1
@@ -379,10 +838,11 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
           {
 -          PanelWidgetClass uaPrimary114 {
 +          PanelWidgetClass uaPrimaryMaxPlayers {
++           color 0.482 0.361 1 0.45
             ignorepointer 1
             position 0 0
             size 1 1
-@@ -398,40 +377,26 @@
+@@ -398,40 +385,27 @@
            }
           }
          }
@@ -430,9 +890,155 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
           {
 -          PanelWidgetClass uaPrimary113 {
 +          PanelWidgetClass uaPrimary114 {
++           color 0.482 0.361 1 0.45
             ignorepointer 1
             position 0 0
             size 1 1
+@@ -446,7 +420,7 @@
+          }
+         }
+         ButtonWidgetClass btnJoin {
+-         color 0 1 0 1
++         color 0.357 0.89 0.651 1
+          position 5 5
+          size 0.45 20
+          valign bottom_ref
+@@ -455,9 +429,10 @@
+          hexactsize 0
+          vexactsize 1
+          text "Приєднатися"
+-         "text color" 0 1 0 1
++         "text color" 0.357 0.89 0.651 1
+          {
+           PanelWidgetClass uaPrimary16 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -472,7 +447,7 @@
+          }
+         }
+         ButtonWidgetClass btnDelete {
+-         color 1 0 0 1
++         color 0.878 0.275 0.353 1
+          position 5 5
+          size 0.5 20
+          halign right_ref
+@@ -482,9 +457,10 @@
+          hexactsize 0
+          vexactsize 1
+          text "Видалити"
+-         "text color" 1 0 0 1
++         "text color" 0.878 0.275 0.353 1
+          {
+           PanelWidgetClass uaPrimary15 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -501,6 +477,7 @@
+        }
+       }
+       PanelWidgetClass uaPrimary110 {
++       color 0.482 0.361 1 0.45
+        ignorepointer 1
+        position 5 5
+        size 0.49 120
+@@ -541,6 +518,7 @@
+          text "Понизити"
+          {
+           PanelWidgetClass uaPrimary13 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -564,6 +542,7 @@
+          text "Підвищити"
+          {
+           PanelWidgetClass uaPrimary12 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -587,6 +566,7 @@
+          text "Вигнати"
+          {
+           PanelWidgetClass uaPrimary17 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -610,6 +590,7 @@
+          text "У лідери"
+          {
+           PanelWidgetClass uaPrimary14 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -653,6 +634,7 @@
+          text "Копіювати"
+          {
+           PanelWidgetClass uaPrimary115 {
++           color 0.482 0.361 1 0.45
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -683,6 +665,7 @@
+    vexactsize 0
+   }
+   PanelWidgetClass PanelWidget4 {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    position 0.21 5
+    size 0.35 0.485
+diff -ruN client_orig/gui/layouts/mapmenu/topButton_default.layout client/gui/layouts/mapmenu/topButton_default.layout
+--- client_orig/gui/layouts/mapmenu/topButton_default.layout	2026-10-06 22:08:50.534398444 +0000
++++ client/gui/layouts/mapmenu/topButton_default.layout	2026-10-06 22:41:01.580710098 +0000
+@@ -9,6 +9,7 @@
+  text "інфо"
+  {
+   PanelWidgetClass border {
++   color 0.482 0.361 1 0.45
+    ignorepointer 1
+    size 1 1
+    halign center_ref
+diff -ruN client_orig/gui/layouts/playerlist/playerlistentry_default.layout client/gui/layouts/playerlist/playerlistentry_default.layout
+--- client_orig/gui/layouts/playerlist/playerlistentry_default.layout	2026-10-06 22:08:50.534728969 +0000
++++ client/gui/layouts/playerlist/playerlistentry_default.layout	2026-10-06 22:41:01.589397364 +0000
+@@ -35,7 +35,7 @@
+     }
+     PanelWidgetClass borderWidget {
+      ignorepointer 1
+-     color 0.5569 0.5569 0.5569 0.3922
++     color 0.482 0.361 1 0.45
+      size 1 1
+      halign center_ref
+      valign center_ref
+diff -ruN client_orig/gui/layouts/playerlist/playerlistentry_small.layout client/gui/layouts/playerlist/playerlistentry_small.layout
+--- client_orig/gui/layouts/playerlist/playerlistentry_small.layout	2026-10-06 22:08:50.534840027 +0000
++++ client/gui/layouts/playerlist/playerlistentry_small.layout	2026-10-06 22:41:01.589863961 +0000
+@@ -35,7 +35,7 @@
+     }
+     PanelWidgetClass borderWidget {
+      ignorepointer 1
+-     color 0 0 0 0.3922
++     color 0.482 0.361 1 0.45
+      size 1 1
+      halign center_ref
+      valign center_ref
+diff -ruN client_orig/gui/layouts/playerlist/playerlistentry_tiny.layout client/gui/layouts/playerlist/playerlistentry_tiny.layout
+--- client_orig/gui/layouts/playerlist/playerlistentry_tiny.layout	2026-10-06 22:08:50.534918578 +0000
++++ client/gui/layouts/playerlist/playerlistentry_tiny.layout	2026-10-06 22:41:01.590149417 +0000
+@@ -35,7 +35,7 @@
+     }
+     PanelWidgetClass borderWidget {
+      ignorepointer 1
+-     color 0 0 0 0.3922
++     color 0.482 0.361 1 0.45
+      size 1 1
+      halign center_ref
+      valign center_ref
 diff -ruN client_orig/inputsOBL.xml client/inputsOBL.xml
 --- client_orig/inputsOBL.xml	2026-10-06 22:08:50.535299828 +0000
 +++ client/inputsOBL.xml	2026-10-06 22:28:18.965735188 +0000
@@ -499,6 +1105,25 @@ diff -ruN client_orig/scripts/3_Game/Groups/OBLDate.c client/scripts/3_Game/Grou
  				outStr = outStr + "0";
  			outStr = outStr + (days - 1) + "d ";
  			print = true;
+diff -ruN client_orig/scripts/3_Game/Groups/OBLTheme.c client/scripts/3_Game/Groups/OBLTheme.c
+--- client_orig/scripts/3_Game/Groups/OBLTheme.c	1970-01-01 00:00:00.000000000 +0000
++++ client/scripts/3_Game/Groups/OBLTheme.c	2026-10-06 22:41:44.460916326 +0000
+@@ -0,0 +1,15 @@
++// Палітра Oblivion (з прапора сервера). Кольори розмітки (.layout) задані тими ж значеннями.
++class OBLTheme {
++	// версія палітри: при зміні гравцям один раз скидаються кольори маркерів/HUD на нові
++	static const int PALETTE_VERSION = 1;
++
++	static int Background()  { return ARGB(225, 13, 11, 26); }    // #0D0B1A
++	static int Panel()       { return ARGB(220, 23, 20, 43); }    // #17142B
++	static int Accent()      { return ARGB(255, 123, 92, 255); }  // #7B5CFF
++	static int AccentLight() { return ARGB(255, 185, 168, 255); } // #B9A8FF
++	static int Glow()        { return ARGB(255, 199, 125, 255); } // #C77DFF
++	static int Text()        { return ARGB(255, 228, 224, 242); } // #E4E0F2
++	static int Muted()       { return ARGB(255, 142, 136, 172); } // #8E88AC
++	static int Success()     { return ARGB(255, 91, 227, 166); }  // #5BE3A6
++	static int Danger()      { return ARGB(255, 224, 70, 90); }   // #E0465A
++}
 diff -ruN client_orig/scripts/3_Game/Groups/RPCs.c client/scripts/3_Game/Groups/RPCs.c
 --- client_orig/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:08:50.535793642 +0000
 +++ client/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:31:18.575373328 +0000
@@ -537,13 +1162,13 @@ diff -ruN client_orig/scripts/3_Game/Groups/RPCs.c client/scripts/3_Game/Groups/
  	SHOP_LIST_REQUEST,        // client → server: ask for warehouse items (is_delivered=2) for this player
 diff -ruN client_orig/scripts/4_World/Groups/Entities/PlayerBase.c client/scripts/4_World/Groups/Entities/PlayerBase.c
 --- client_orig/scripts/4_World/Groups/Entities/PlayerBase.c	2026-10-06 22:08:50.538174901 +0000
-+++ client/scripts/4_World/Groups/Entities/PlayerBase.c	2026-10-06 22:28:18.972753401 +0000
++++ client/scripts/4_World/Groups/Entities/PlayerBase.c	2026-10-06 22:41:44.485963181 +0000
 @@ -142,7 +142,7 @@
  	}
  
  	override void EEKilled(Object killer) {
 -		AddSimpleClientMarker("Місце смерті", "OBL_SystemParty\\gui\\icons\\skull.paa", GetPosition(), ARGB(200, 255, 0, 0), "PM" );
-+		AddSimpleClientMarker("Місце смерті", "OBL_SystemParty\\gui\\icons\\skull.paa", GetPosition(), ARGB(200, 255, 0, 0), "PM" );
++		AddSimpleClientMarker("Місце смерті", "OBL_SystemParty\\gui\\icons\\skull.paa", GetPosition(), ARGB(220, 224, 70, 90), "PM" );
  		super.EEKilled(killer);		
  	}
 -}
@@ -716,15 +1341,75 @@ diff -ruN client_orig/scripts/4_World/Groups/classes/MissionBaseWorld.c client/s
 +}
 diff -ruN client_orig/scripts/4_World/Groups/configs/OBLColorManager.c client/scripts/4_World/Groups/configs/OBLColorManager.c
 --- client_orig/scripts/4_World/Groups/configs/OBLColorManager.c	2026-10-06 22:08:50.536596582 +0000
-+++ client/scripts/4_World/Groups/configs/OBLColorManager.c	2026-10-06 22:09:39.392681116 +0000
-@@ -114,7 +114,6 @@
- 		GetColor("Playerlist entry full health", ARGB(255, 255, 255, 255));
- 		GetColor("Playerlist entry zero health", ARGB(255, 255, 0, 0));
- 		GetColor("Playerlist entry border", ARGB(255, 255, 255, 255));
++++ client/scripts/4_World/Groups/configs/OBLColorManager.c	2026-10-06 22:41:44.483920000 +0000
+@@ -6,6 +6,8 @@
+ 	string changedColor = "";
+ 	
+ 	static ref ScriptInvoker Event_OnColorChange = new ScriptInvoker();
++	// службовий запис у ColorManager.json (не колір, у налаштуваннях не показується)
++	static const string PALETTE_KEY = "__oblivion_palette";
+ 	
+ 	static OBLColorManager Get() {
+ 		if (!g_OBLColorManager) {
+@@ -22,6 +24,11 @@
+ 			OBLLogger.Debug("JsonLoadFile COLOR_MANAGER.json");
+ 			JsonFileLoader<array<ref Param2<string, int>>>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_COLOR_MANAGER, mgr.colorss);
+ 		} 
++		// нова палітра Oblivion: один раз замінюємо старі збережені кольори
++		if (mgr.GetColor(PALETTE_KEY, 0) != OBLTheme.PALETTE_VERSION) {
++			mgr.colorss.Clear();
++			mgr.SetColor(PALETTE_KEY, OBLTheme.PALETTE_VERSION);
++		}
+ 		mgr.SetDefaultColors();
+ 		mgr.ReplaceColors(mgr.colorss);
+ 		mgr.Save();
+@@ -71,6 +78,7 @@
+ 	
+ 	void ResetAll() {
+ 		colorss.Clear();
++		SetColor(PALETTE_KEY, OBLTheme.PALETTE_VERSION);
+ 		SetDefaultColors();
+ 		InvokeOnChanged();
+ 	}
+@@ -104,17 +112,17 @@
+ 	}
+ 	
+ 	void SetDefaultColors() {
+-		GetColor("Player 3D Marker", ARGB(255, 255, 255, 255));
+-		GetColor("Own Player Map Marker", ARGB(255, 255, 51, 51));
+-		GetColor("Player Online", ARGB(255, 0, 255, 0));
+-		GetColor("Player Offline", ARGB(125, 255, 0, 0));
+-		GetColor("Ping 3D Marker", ARGB(255, 255, 255, 0));
+-		GetColor("Compass", ARGB(255, 255, 255, 255));
+-		GetColor("Compass Line", ARGB(255, 255, 0, 0));
+-		GetColor("Playerlist entry full health", ARGB(255, 255, 255, 255));
+-		GetColor("Playerlist entry zero health", ARGB(255, 255, 0, 0));
+-		GetColor("Playerlist entry border", ARGB(255, 255, 255, 255));
 -		GetColor("Alliance Marker", ARGB(255, 180, 100, 255));
++		// палітра Oblivion
++		GetColor("Player 3D Marker", OBLTheme.AccentLight());
++		GetColor("Own Player Map Marker", OBLTheme.Glow());
++		GetColor("Player Online", OBLTheme.Accent());
++		GetColor("Player Offline", ARGB(150, 142, 136, 172));
++		GetColor("Ping 3D Marker", OBLTheme.Glow());
++		GetColor("Compass", OBLTheme.Text());
++		GetColor("Compass Line", OBLTheme.Accent());
++		GetColor("Playerlist entry full health", OBLTheme.AccentLight());
++		GetColor("Playerlist entry zero health", OBLTheme.Danger());
++		GetColor("Playerlist entry border", ARGB(200, 123, 92, 255));
  	}
  	
  	void ResetColorToDefault(string colorStr) {
+@@ -125,7 +133,8 @@
+ 	TStringArray GetColorStrings() {
+ 		ref TStringArray arr = new TStringArray();
+ 		foreach (Param2<string, int> color : colorss) {
+-			arr.Insert(color.param1);
++			if (color && color.param1 != PALETTE_KEY)
++				arr.Insert(color.param1);
+ 		}
+ 		return arr;
+ 	}
 diff -ruN client_orig/scripts/4_World/Groups/configs/OBLLayoutConfig.c client/scripts/4_World/Groups/configs/OBLLayoutConfig.c
 --- client_orig/scripts/4_World/Groups/configs/OBLLayoutConfig.c	2026-10-06 22:08:50.536693618 +0000
 +++ client/scripts/4_World/Groups/configs/OBLLayoutConfig.c	2026-10-06 22:09:39.454603730 +0000
@@ -2169,7 +2854,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLMarkerListPage
 +}
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:08:50.542370557 +0000
-+++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:31:35.234411235 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:41:44.485110888 +0000
 @@ -15,21 +15,23 @@
  	}
  	
@@ -2545,7 +3230,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  			if (IsSearched(name)) {
  				if (items <= added) {
  					playerlist_online.AddItem(" " + name, param, 0);
-@@ -294,28 +277,30 @@
+@@ -294,40 +277,42 @@
  	void FillMembersList() {
  		OBLLogger.Debug("FillMembersList");
  		
@@ -2584,9 +3269,10 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
 -						playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().subGroupNames.Get(lastSubgroup) + " (" + inCount + "/" + subgroupMaxSize + ")", param, 0);
 +						playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().GetSubGroupName(lastSubgroup) + " (" + inCount + "/" + subgroupMaxSize + ")", param, 0);
  					}
- 					playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
+-					playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
++					playerlist_members.SetItemColor(added, 0, OBLTheme.Muted());
  					added++;
-@@ -323,11 +308,11 @@
+ 					lastSubgroup++;
  				}
  				addName = "  ";
  			}
@@ -2613,7 +3299,8 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
 -					playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().subGroupNames.Get(lastSubgroup) + " (0/" + subgroupMaxSize + ")", param, 0);
 +					playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().GetSubGroupName(lastSubgroup) + " (0/" + subgroupMaxSize + ")", param, 0);
  				}
- 				playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
+-				playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
++				playerlist_members.SetItemColor(added, 0, OBLTheme.Muted());
  				added++;
  				lastSubgroup++;
  			}
@@ -2702,9 +3389,53 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  	}
 -}
 +}
+diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyPage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyPage.c
+--- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyPage.c	2026-10-06 22:08:50.542581176 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyPage.c	2026-10-06 22:41:53.567586488 +0000
+@@ -63,7 +63,8 @@
+ 				float width, height, posX, posY;
+ 				buttonWidget.GetSize(width, height);
+ 				buttonWidget.GetPos(posX, posY);
+-				posX += (width + 0.005) * pageID;
++				// місце за порядком вкладок, а не за номером сторінки (інакше лишались «дірки»)
++				posX += (width + 0.005) * (topButtons.Count() - 1);
+ 				buttonWidget.SetPos(posX, posY);
+ 			}
+ 		} else {
+@@ -115,12 +116,30 @@
+ 			rootWidget.Show(true);
+ 			rootWidget.ClearFlags(WidgetFlags.IGNOREPOINTER);
+ 		}
++		SetTabActive(true);
+ 		parent.leftPanel.Show(!fullsized);
+ 		parent.mapWidget.Show(!fullsized);
+ 		parent.fullPanel.Show(fullsized);
+ 	}
+ 	
++	// підсвітка активної вкладки кольором Oblivion
++	void SetTabActive(bool active) {
++		if (!buttonWidget)
++			return;
++		Widget border = buttonWidget.FindAnyWidget("border");
++		if (active) {
++			buttonWidget.SetTextColor(OBLTheme.AccentLight());
++			if (border)
++				border.SetColor(OBLTheme.Accent());
++		} else {
++			buttonWidget.SetTextColor(OBLTheme.Text());
++			if (border)
++				border.SetColor(ARGB(115, 123, 92, 255));
++		}
++	}
++	
+ 	void OnHide() {
++		SetTabActive(false);
+ 		if (rootWidget) {
+ 			rootWidget.Show(false);
+ 			// leftPanel має clipchildren 0 — приховані сторінки, що лежать z-вище
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c	2026-10-06 22:08:50.542659282 +0000
-+++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c	2026-10-06 22:10:38.963535016 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c	2026-10-06 22:41:44.484769344 +0000
 @@ -37,10 +37,8 @@
  		super.OnShow();
  		// прибираємо попереднє повідомлення, щоб не висіло старе про помилку
@@ -2734,7 +3465,14 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLShopPage.c cli
  		}
  
  		if (!list_items)
-@@ -93,6 +94,8 @@
+@@ -87,12 +88,14 @@
+ 			if (item.qty > 1)
+ 				label = label + " x" + item.qty;
+ 			int row = list_items.AddItem(label, new Param1<int>(item.purchaseId), 0);
+-			list_items.SetItemColor(row, 0, ARGB(255, 180, 220, 255));
++			list_items.SetItemColor(row, 0, OBLTheme.AccentLight());
+ 		}
+ 	}
  
  	override bool OnClick(Widget w) {
  		if (w == btn_refresh) {
@@ -2874,7 +3612,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/PlayerList/PlayerListEntry.c 
 \ No newline at end of file
 diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scripts/5_Mission/Groups/mission/MuteConfig.c
 --- client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 22:08:50.545115730 +0000
-+++ client/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 22:16:51.077364704 +0000
++++ client/scripts/5_Mission/Groups/mission/MuteConfig.c	2026-10-06 22:41:44.485547030 +0000
 @@ -17,7 +17,7 @@
  	ref TStringArray badWords = new TStringArray();
  	bool enabledBadWordsCensor = false;
@@ -2884,9 +3622,16 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
  	int badWordsMuteTime = 0;
  	[NonSerialized()]
  	ref TStringArray mutedPlayersSteamids = new TStringArray();
-@@ -156,9 +156,9 @@
- 		adminPrefix.colorG = 0;
- 		adminPrefix.colorB = 0;
+@@ -152,13 +152,13 @@
+ 	if (!FileExist(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json")) {
+ 		PrefixGroup adminPrefix = new PrefixGroup();
+ 		adminPrefix.prefix = "[Admin] ";
+-		adminPrefix.colorR = 255;
+-		adminPrefix.colorG = 0;
+-		adminPrefix.colorB = 0;
++		adminPrefix.colorR = 224;
++		adminPrefix.colorG = 70;
++		adminPrefix.colorB = 90;
  		adminPrefix.members.Insert("00000000000000000");
 -		adminPrefix.members.Insert("інші SteamID");
 -		cfg.muteAdmins.Insert("00000000000000000");
@@ -2906,9 +3651,9 @@ diff -ruN client_orig/scripts/5_Mission/Groups/mission/MuteConfig.c client/scrip
 -		cfg.channels.Insert(ChannelCfg.Init("Глобальний", 3, 180, 252, true, false, false, true));
 -		cfg.channels.Insert(ChannelCfg.Init("Група", 3, 252, 15, false, true, false, false));
 +		cfg.badWordsBlockedMessage = "Ваше повідомлення містить заборонені слова!";
-+		cfg.channels.Insert(ChannelCfg.Init("Прямий", 255, 255, 255, false, false, true, false));
-+		cfg.channels.Insert(ChannelCfg.Init("Глобальний", 3, 180, 252, true, false, false, true));
-+		cfg.channels.Insert(ChannelCfg.Init("Група", 3, 252, 15, false, true, false, false));
++		cfg.channels.Insert(ChannelCfg.Init("Прямий", 228, 224, 242, false, false, true, false));
++		cfg.channels.Insert(ChannelCfg.Init("Глобальний", 185, 168, 255, true, false, false, true));
++		cfg.channels.Insert(ChannelCfg.Init("Група", 91, 227, 166, false, true, false, false));
  		JsonFileLoader<MuteConfig>.JsonSaveFile(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json", cfg);
  	} else {
  		OBLLogger.Debug("JsonLoadFile ChatConfig.json");

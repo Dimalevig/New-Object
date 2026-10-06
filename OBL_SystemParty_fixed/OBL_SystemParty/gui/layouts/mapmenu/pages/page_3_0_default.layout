@@ -9,6 +9,7 @@ PanelWidgetClass rootFrame {
  vexactsize 0
  {
   PanelWidgetClass layoutSettingsPanel {
+   color 0.482 0.361 1 0.45
    visible 0
    ignorepointer 1
    position 0.025 0.025
@@ -33,6 +34,7 @@ PanelWidgetClass rootFrame {
      "text valign" center
     }
     PanelWidgetClass availableLayoutsPicker {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 0.5 0.88
      valign bottom_ref
@@ -69,6 +71,7 @@ PanelWidgetClass rootFrame {
      }
     }
     PanelWidgetClass availableLayoutsPicker0 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 0.5 0.88
@@ -118,6 +121,7 @@ PanelWidgetClass rootFrame {
    }
   }
   PanelWidgetClass colorSettingsPanel {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.025 0.025
    size 0.45 0.45
@@ -142,6 +146,7 @@ PanelWidgetClass rootFrame {
      "text valign" center
     }
     PanelWidgetClass colorLeft {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 0.5 0.88
      valign bottom_ref
@@ -178,6 +183,7 @@ PanelWidgetClass rootFrame {
      }
     }
     PanelWidgetClass colorRight {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 0.5 0.88
      halign right_ref
@@ -493,6 +499,7 @@ PanelWidgetClass rootFrame {
    }
   }
   PanelWidgetClass layoutPositions {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.025 0.025
    size 0.45 0.45
@@ -517,6 +524,7 @@ PanelWidgetClass rootFrame {
      "text valign" center
     }
     PanelWidgetClass availableLayouts {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 0.5 0.88
      valign bottom_ref
@@ -553,6 +561,7 @@ PanelWidgetClass rootFrame {
      }
     }
     PanelWidgetClass PanelWidget0 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 0.5 0.88
      halign right_ref
@@ -577,6 +586,7 @@ PanelWidgetClass rootFrame {
        "text valign" center
       }
       PanelWidgetClass previewPanel {
+       color 0.482 0.361 1 0.45
        ignorepointer 1
        position 0.02 40
        size 0.88 0.48
@@ -712,6 +722,7 @@ PanelWidgetClass rootFrame {
    }
   }
   PanelWidgetClass PanelWidget2 {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.025 0.025
    size 0.45 0.45
@@ -724,6 +735,7 @@ PanelWidgetClass rootFrame {
    style Outline
    {
     PanelWidgetClass PanelWidget4 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      size 1 0.88
      halign center_ref
@@ -861,6 +873,7 @@ PanelWidgetClass rootFrame {
      }
     }
     PanelWidgetClass resetButtons {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 1 0.22
@@ -949,6 +962,7 @@ PanelWidgetClass rootFrame {
    vexactsize 1
   }
   PanelWidgetClass PanelWidget5 {
+   color 0.482 0.361 1 0.45
    ignorepointer 1
    position 0.025 0.025
    size 0.45 0.45

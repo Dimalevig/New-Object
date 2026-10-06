@@ -63,7 +63,8 @@ class OBLPartyPage {
 				float width, height, posX, posY;
 				buttonWidget.GetSize(width, height);
 				buttonWidget.GetPos(posX, posY);
-				posX += (width + 0.005) * pageID;
+				// місце за порядком вкладок, а не за номером сторінки (інакше лишались «дірки»)
+				posX += (width + 0.005) * (topButtons.Count() - 1);
 				buttonWidget.SetPos(posX, posY);
 			}
 		} else {
@@ -115,12 +116,30 @@ class OBLPartyPage {
 			rootWidget.Show(true);
 			rootWidget.ClearFlags(WidgetFlags.IGNOREPOINTER);
 		}
+		SetTabActive(true);
 		parent.leftPanel.Show(!fullsized);
 		parent.mapWidget.Show(!fullsized);
 		parent.fullPanel.Show(fullsized);
 	}
 	
+	// підсвітка активної вкладки кольором Oblivion
+	void SetTabActive(bool active) {
+		if (!buttonWidget)
+			return;
+		Widget border = buttonWidget.FindAnyWidget("border");
+		if (active) {
+			buttonWidget.SetTextColor(OBLTheme.AccentLight());
+			if (border)
+				border.SetColor(OBLTheme.Accent());
+		} else {
+			buttonWidget.SetTextColor(OBLTheme.Text());
+			if (border)
+				border.SetColor(ARGB(115, 123, 92, 255));
+		}
+	}
+	
 	void OnHide() {
+		SetTabActive(false);
 		if (rootWidget) {
 			rootWidget.Show(false);
 			// leftPanel має clipchildren 0 — приховані сторінки, що лежать z-вище

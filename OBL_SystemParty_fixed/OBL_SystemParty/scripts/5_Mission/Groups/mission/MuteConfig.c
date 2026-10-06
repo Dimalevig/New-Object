@@ -152,9 +152,9 @@ static MuteConfig LoadMuteConfig() {
 	if (!FileExist(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json")) {
 		PrefixGroup adminPrefix = new PrefixGroup();
 		adminPrefix.prefix = "[Admin] ";
-		adminPrefix.colorR = 255;
-		adminPrefix.colorG = 0;
-		adminPrefix.colorB = 0;
+		adminPrefix.colorR = 224;
+		adminPrefix.colorG = 70;
+		adminPrefix.colorB = 90;
 		adminPrefix.members.Insert("00000000000000000");
 		adminPrefix.members.Insert("інші SteamID");
 		cfg.muteAdmins.Insert("00000000000000000");
@@ -171,9 +171,9 @@ static MuteConfig LoadMuteConfig() {
 		cfg.blockBadWordContainingMessages = false;
 		cfg.enabledBadWordsCensor = false;
 		cfg.badWordsBlockedMessage = "Ваше повідомлення містить заборонені слова!";
-		cfg.channels.Insert(ChannelCfg.Init("Прямий", 255, 255, 255, false, false, true, false));
-		cfg.channels.Insert(ChannelCfg.Init("Глобальний", 3, 180, 252, true, false, false, true));
-		cfg.channels.Insert(ChannelCfg.Init("Група", 3, 252, 15, false, true, false, false));
+		cfg.channels.Insert(ChannelCfg.Init("Прямий", 228, 224, 242, false, false, true, false));
+		cfg.channels.Insert(ChannelCfg.Init("Глобальний", 185, 168, 255, true, false, false, true));
+		cfg.channels.Insert(ChannelCfg.Init("Група", 91, 227, 166, false, true, false, false));
 		JsonFileLoader<MuteConfig>.JsonSaveFile(OBLPartyConstants.SAVE_PREFIX + "ChatConfig.json", cfg);
 	} else {
 		OBLLogger.Debug("JsonLoadFile ChatConfig.json");

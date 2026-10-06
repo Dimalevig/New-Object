@@ -1,5 +1,5 @@
 WindowWidgetClass rootFrame {
- color 0.047 0.161 0.035 0.702
+ color 0.051 0.043 0.102 0.88
  position 0 0
  size 1 1
  halign center_ref
@@ -13,7 +13,7 @@ WindowWidgetClass rootFrame {
   PanelWidgetClass leftPanel {
    clipchildren 0
    ignorepointer 1
-   color 0.129 0.204 0.059 0.674
+   color 0.482 0.361 1 0.85
    position 15 22
    size 0.23 0.907
    halign right_ref
@@ -92,7 +92,7 @@ WindowWidgetClass rootFrame {
   }
   PanelWidgetClass fullPanel {
    ignorepointer 1
-   color 0.184 0.247 0.102 0.674
+   color 0.482 0.361 1 0.85
    position 0 70
    size 0.99 0.92
    halign center_ref

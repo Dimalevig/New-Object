@@ -302,7 +302,7 @@ class OBLPartyManagePage : OBLPartyPage {
 					} else {
 						playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().GetSubGroupName(lastSubgroup) + " (" + inCount + "/" + subgroupMaxSize + ")", param, 0);
 					}
-					playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
+					playerlist_members.SetItemColor(added, 0, OBLTheme.Muted());
 					added++;
 					lastSubgroup++;
 				}
@@ -331,7 +331,7 @@ class OBLPartyManagePage : OBLPartyPage {
 				} else {
 					playerlist_members.SetItem(added, " " + OBLPartyMainConfig.Get().GetSubGroupName(lastSubgroup) + " (0/" + subgroupMaxSize + ")", param, 0);
 				}
-				playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
+				playerlist_members.SetItemColor(added, 0, OBLTheme.Muted());
 				added++;
 				lastSubgroup++;
 			}

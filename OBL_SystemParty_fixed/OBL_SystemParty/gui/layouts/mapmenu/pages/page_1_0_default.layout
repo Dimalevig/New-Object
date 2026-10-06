@@ -34,7 +34,7 @@ PanelWidgetClass Page1_0 {
    {
     PanelWidgetClass uaSecondary4 {
      ignorepointer 1
-     color 0.2431 0.2431 0.2431 0.6902
+     color 0.090 0.078 0.169 0.86
      size 1 1
      halign center_ref
      valign center_ref
@@ -79,7 +79,7 @@ PanelWidgetClass Page1_0 {
    {
     PanelWidgetClass uaSecondary5 {
      ignorepointer 1
-     color 0.2431 0.2431 0.2431 0.6902
+     color 0.090 0.078 0.169 0.86
      size 1 1
      halign center_ref
      valign center_ref
@@ -102,6 +102,7 @@ PanelWidgetClass Page1_0 {
    text "Створити"
    {
     PanelWidgetClass uaPrimary11 {
+     color 0.482 0.361 1 0.45
      ignorepointer 1
      position 0 0
      size 1 1
