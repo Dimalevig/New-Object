@@ -54,6 +54,9 @@ modded class MissionServer {
 	override void RPC_OBL(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) {
 		if (g_GameShuttingDown)
         	return;
+		// оптимізація: через цей обробник проходять УСІ RPC сервера — чужі відкидаємо одразу
+		if (!OBLRpc.IsOurs(rpc_type))
+			return;
 		
 		super.RPC_OBL(sender, target, rpc_type, ctx);
 		

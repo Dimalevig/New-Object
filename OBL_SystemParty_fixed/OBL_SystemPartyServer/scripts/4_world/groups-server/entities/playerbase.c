@@ -147,8 +147,13 @@ modded class PlayerBase {
 	
 	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef) {
 		super.EEHitBy(damageResult, damageType, source, component, dmgZone, ammo, modelPos, speedCoef);
+		// оптимізація: одразу шлемо лише відчутну зміну (від 10 HP) або смерть;
+		// дрібні зміни доїдуть у спільному пакеті групи за ≤4 с (у бою — набагато менше пакетів)
 		OBLPartyMember member = GetMyGroupMarker();
-		if (member)
-			member.SetHealth(GetHealth());
+		if (!member)
+			return;
+		float hp = GetHealth();
+		if (hp <= 0 || Math.AbsFloat(hp - member.health) >= 10)
+			member.SetHealth(hp);
 	}
 }

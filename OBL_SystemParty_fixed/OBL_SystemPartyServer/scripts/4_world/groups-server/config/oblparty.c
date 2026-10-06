@@ -32,6 +32,11 @@ modded class OBLParty {
 			member.currentSubgroup = OBLPartyConstants.SUBGROUP_OFFLINE;
 			member.parentGroup = this;
 		}
+		// OBL FIX: маркери групи теж мають знати свою групу (інакше їх переміщення не розсилалось)
+		foreach (OBLMarker groupMarker : markers) {
+			if (groupMarker)
+				groupMarker.parentGroup = this;
+		}
 		InitNumbers();
 		if (GetFreeMemberSlots() < 0) {
 			GetGame().AdminLog("Loaded Group has more players, than allowed: " + shortname + " (" + name + ") MemberCount: " + members.Count() + " Max: " + maxPlayers);
@@ -571,6 +576,9 @@ modded class OBLParty {
 				OBLLogger.Debug("Marker Info: " + (marker.name) + " " + marker.icon + " " + marker.type);
 		}
 		AddMarkerLocal(marker);
+		// маркери групи зберігаються у файл (пінги — ні)
+		if (marker.type == OBLMarkerType.GROUP_MARKER)
+			saveDirty = true;
 		if (marker.type == OBLMarkerType.GROUP_PING && OBLPartyMainConfig.Get().tacticalPingLifetimeSeconds >= 0)
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(RemovePingMarkerServer, OBLPartyMainConfig.Get().tacticalPingLifetimeSeconds * 1000, false, marker.uid);
 		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.ADD);
@@ -614,6 +622,8 @@ modded class OBLParty {
 		}
 		int uid = marker.uid;
 		bool removedMember = marker.type == OBLMarkerType.GROUP_PLAYER_MARKER;
+		if (marker.type == OBLMarkerType.GROUP_MARKER)
+			saveDirty = true;
 		RemoveMarkerLocal(marker);
 		if (removedMember && (!members || members.Count() == 0)) {
 			OBLPartyManager.Get().DeleteGroup(this);

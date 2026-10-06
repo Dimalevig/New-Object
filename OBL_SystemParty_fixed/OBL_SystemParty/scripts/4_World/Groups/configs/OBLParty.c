@@ -252,6 +252,7 @@ class OBLParty {
 			OBLPartyMember member = new OBLPartyMember();
 			if (!member.ReadFromCtx(ctx))
 				return false;
+			member.parentGroup = this;
 			members.Insert(member);
 		}
 		count = 0;
@@ -261,6 +262,7 @@ class OBLParty {
 			OBLMarker marker = new OBLMarker();
 			if (!marker.ReadFromCtx(ctx))
 				return false;
+			marker.parentGroup = this;
 			markers.Insert(marker);
 		}
 		if (!ctx.Read(level))
@@ -337,9 +339,12 @@ class OBLParty {
 	void AddMarkerLocal(OBLMarker marker) {
 		if (marker.type == OBLMarkerType.GROUP_PING) {
 			pings.Insert(marker);
+			marker.parentGroup = this;
 			marker.InitMarker();
 		} else if (marker.type == OBLMarkerType.GROUP_MARKER) {
 			markers.Insert(marker);
+			// OBL FIX: без цього сервер не знав, кому розсилати переміщення маркера
+			marker.parentGroup = this;
 			marker.InitMarker();
 		} else if (marker.type == OBLMarkerType.GROUP_PLAYER_MARKER) {
 			OBLPartyMember member = OBLPartyMember.Cast(marker);

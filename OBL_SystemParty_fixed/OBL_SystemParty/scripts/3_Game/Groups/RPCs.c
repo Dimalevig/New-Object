@@ -72,6 +72,14 @@ enum OBLPartyRPCs {
 	SHOP_LIST_REQUEST,        // client → server: ask for warehouse items (is_delivered=2) for this player
 	SHOP_LIST_SYNC,           // server → client: list of warehouse items
 	SHOP_CLAIM_REQUEST,       // client → server: claim a warehouse item by purchase_id (set is_delivered=0)
-	SHOP_CLAIM_RESULT         // server → client: claim result (ok + message)
+	SHOP_CLAIM_RESULT,        // server → client: claim result (ok + message)
+	END_OBL_RPC               // межа діапазону RPC моду (не RPC) — нові додавати ПЕРЕД нею
 
+}
+
+// швидка перевірка: чи належить RPC цьому моду (відсіює всі чужі RPC одним порівнянням)
+class OBLRpc {
+	static bool IsOurs(int rpc_type) {
+		return rpc_type > OBLPartyRPCs.START_CONFIG_RPC && rpc_type < OBLPartyRPCs.END_OBL_RPC;
+	}
 }

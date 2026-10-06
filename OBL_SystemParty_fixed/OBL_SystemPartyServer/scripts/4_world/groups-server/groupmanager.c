@@ -110,7 +110,7 @@ modded class OBLPartyManager {
 	}
 	
 	void OnRPC_GroupMgr(PlayerIdentity sender, Object object, int rpc_type, ParamsReadContext ctx) {
-		if (!sender)
+		if (!sender || !OBLRpc.IsOurs(rpc_type))
 			return;
 		OBLParty grp = null;
 		if (rpc_type == OBLPartyRPCs.GROUP_CREATE) {

@@ -245,6 +245,10 @@ class OBLMarker {
 	}
 	
 	void OBLMarker() {
+		// оптимізація: список allMarkers потрібен лише клієнту (малювання 3D/компаса);
+		// на виділеному сервері він тільки ріс і повільно чистився при кожному видаленні
+		if (GetGame() && GetGame().IsDedicatedServer())
+			return;
 		AddToAllList();
 	}
 	

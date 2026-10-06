@@ -54,7 +54,20 @@ class OBLStaticMarkerManager {
 		return mgr;
 	}
 	
+	// оптимізація: кілька змін поспіль (івент створює/прибирає маркери) склеюються
+	// в одну розсилку повного списку всім гравцям
+	[NonSerialized()]
+	bool refreshPending = false;
+	
 	void SendMarkerRefreshRPC() {
+		if (refreshPending)
+			return;
+		refreshPending = true;
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(DoMarkerRefresh, 500, false);
+	}
+	
+	void DoMarkerRefresh() {
+		refreshPending = false;
 		RPC_OBL(null, null, OBLPartyRPCs.CONFIG_SYNC_STATIC_MARKERS);
 	}
 	

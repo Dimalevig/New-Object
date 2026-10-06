@@ -47,6 +47,8 @@ modded class OBLMarker {
 				return;
 			vector vec = Vector(x,y,z);
 			SetPosition(vec);
+			if (parentGroup && type == OBLMarkerType.GROUP_MARKER)
+				parentGroup.saveDirty = true;
 		}
 	}
 }
