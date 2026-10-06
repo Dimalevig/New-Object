@@ -56,8 +56,8 @@ enum OBLPartyRPCs {
 	OBL_GLOBAL_MUTELIST,
 	OBL_GLOBAL_CHANNELS,
 	CONFIG_SYNC_INVITE_CODE,
-	CONFIG_SYNC_ONLINE_PRIVACY,
-	CONFIG_SYNC_ONLINE_PRIVACY_LIST,
+	CONFIG_SYNC_ONLINE_PRIVACY,      // не використовується (приховування онлайну видалено), слот для нумерації
+	CONFIG_SYNC_ONLINE_PRIVACY_LIST, // не використовується
 	// колишні RPC альянсів (видалені); слоти лишаються, щоб номери RPC магазину не змінились
 	GROUP_ADMIN_MAX_PLAYERS,  // client → server: адмін задає ліміт гравців групи (0 = за замовчуванням)
 	MEMBER_DOWNED,            // server → client: тіммейт у нокауті (true/false)

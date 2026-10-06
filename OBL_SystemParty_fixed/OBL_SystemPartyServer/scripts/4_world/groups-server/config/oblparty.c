@@ -9,8 +9,6 @@ modded class OBLParty {
 	[NonSerialized()]
 	static ref map<string, string> bxdInviteCodeOwners = new map<string, string>();
 	[NonSerialized()]
-	static ref TStringArray bxdHiddenOnlineSteamids = new TStringArray();
-	[NonSerialized()]
 	const int GROUP_UPDATE_TIMER = 4000;
 	[NonSerialized()]
 	ref array<PlayerBase> playerChars = new array<PlayerBase>();
@@ -166,29 +164,6 @@ modded class OBLParty {
 			bxdInviteCodeOwners = new map<string, string>();
 	}
 
-	static void SetOBLOnlinePrivacy(string steamid, bool hidden) {
-		EnsureOBLOnlinePrivacyList();
-		if (steamid == "")
-			return;
-		int index = bxdHiddenOnlineSteamids.Find(steamid);
-		if (hidden) {
-			if (index == -1)
-				bxdHiddenOnlineSteamids.Insert(steamid);
-		} else if (index != -1) {
-			bxdHiddenOnlineSteamids.Remove(index);
-		}
-	}
-
-	static TStringArray GetOBLHiddenOnlineSteamids() {
-		EnsureOBLOnlinePrivacyList();
-		return bxdHiddenOnlineSteamids;
-	}
-
-	static void EnsureOBLOnlinePrivacyList() {
-		if (!bxdHiddenOnlineSteamids)
-			bxdHiddenOnlineSteamids = new TStringArray();
-	}
-	
 	void AcceptInvite(string steamid, PlayerBase pb) {
 		Param2<int, string> inv = GetInvite(steamid);
 		if (!inv)

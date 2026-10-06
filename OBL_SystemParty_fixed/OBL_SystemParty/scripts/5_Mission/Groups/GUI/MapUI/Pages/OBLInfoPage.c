@@ -133,7 +133,7 @@ class OBLInfoPage : OBLPartyPage {
 				int visibleCount = 0;
 				for (int i = 0; i < ClientData.m_PlayerList.m_PlayerList.Count(); i++) {
 					SyncPlayer syncPlayer = ClientData.m_PlayerList.m_PlayerList.Get(i);
-					if (syncPlayer && !OBLOnlinePrivacyManager.IsHidden(syncPlayer.m_UID))
+					if (syncPlayer)
 						visibleCount++;
 				}
 				return visibleCount;

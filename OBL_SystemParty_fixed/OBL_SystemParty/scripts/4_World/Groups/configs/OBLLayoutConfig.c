@@ -2,7 +2,6 @@ class OBLLayoutConfig {
 	
 	int playerlistLayoutIndex = 0;
 	bool streamerModeEnabled = false;
-	bool hideOnlineStatus = false;
 	
 	static ref OBLLayoutConfig g_OBLLayoutConfig;
 	static ref ScriptInvoker Event_OnLayoutChanged = new ScriptInvoker();
@@ -25,10 +24,6 @@ class OBLLayoutConfig {
 		}
 		OBLLogger.Debug("JsonLoadFile OBLLayoutConfig.json");
 		JsonFileLoader<OBLLayoutConfig>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_LAYOUT_MANAGER_TEMP, mgr);
-		// OBL FIX: the "Приховати мій онлайн" checkbox was removed. Force any
-		// previously saved value off, otherwise a player who had it enabled
-		// would stay invisible forever with no UI left to switch it back.
-		mgr.hideOnlineStatus = false;
 		return mgr;
 	}
 	
@@ -40,7 +35,6 @@ class OBLLayoutConfig {
 		OBLLayoutConfig cfg = OBLLayoutConfig.Get();
 		cfg.playerlistLayoutIndex = 0;
 		cfg.streamerModeEnabled = false;
-		cfg.hideOnlineStatus = false;
 		InvokeOnLayoutChanged();
 	}
 	

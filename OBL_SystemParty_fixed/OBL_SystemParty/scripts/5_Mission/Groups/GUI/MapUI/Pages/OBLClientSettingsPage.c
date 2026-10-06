@@ -463,9 +463,6 @@ class OBLClientSettingsPage : OBLPartyPage {
 			OBLPositionManager.Get().ResetAll();
 			OBLLayoutConfig.ResetAll();
 			OBLMarkerVisibilityManager.Get().ResetPingToDefault();
-			MissionGameplay mission = MissionGameplay.Cast(GetGame().GetMission());
-			if (mission)
-				mission.SendOnlinePrivacyRPC();
 			ReloadAll(true);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(OBLLayoutConfig.InvokeOnLayoutChanged);
 			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Усі налаштування скинуто до значень за замовчуванням!", OBLTheme.ICON_SUCCESS);
@@ -480,9 +477,6 @@ class OBLClientSettingsPage : OBLPartyPage {
 			OBLPositionManager.Reload();
 			OBLLayoutConfig.Reload();
 			OBLMarkerVisibilityManager.Get().ResetPingToLast();
-			MissionGameplay missionReload = MissionGameplay.Cast(GetGame().GetMission());
-			if (missionReload)
-				missionReload.SendOnlinePrivacyRPC();
 			ReloadAll(true);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(OBLLayoutConfig.InvokeOnLayoutChanged);
 			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Налаштування перезавантажено!", OBLTheme.ICON_SUCCESS);

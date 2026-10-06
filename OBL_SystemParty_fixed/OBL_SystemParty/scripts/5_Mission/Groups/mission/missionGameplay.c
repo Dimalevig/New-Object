@@ -33,7 +33,6 @@ modded class MissionGameplay {
 			GetGame().RPCSingleParam(null, OBLPartyRPCs.CONFIG_SYNC_STEAMID, new Param1<bool>(true), true);
 			GetGame().RPCSingleParam(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODE, new Param1<bool>(true), true);
 			GetGame().RPCSingleParam(null, OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS, new Param1<bool>(true), true);
-			SendOnlinePrivacyRPC();
 		}
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(OBLMarker.UpdateAllMarkersSlow, 1000, true);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateTimeAcceleration, 60000, true);
@@ -262,8 +261,6 @@ modded class MissionGameplay {
 				OBLLogger.Debug("Received own invite code: " + myInviteCode);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES) {
 			OBLInviteCodes.Read(ctx);
-		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST) {
-			OBLOnlinePrivacyManager.ReadHiddenSteamids(ctx);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS) {
 			Param1<bool> adminParam;
 			if (!ctx.Read(adminParam)) {
@@ -499,11 +496,6 @@ modded class MissionGameplay {
 		return GetGame() && GetGame().GetUIManager() && !GetGame().GetUIManager().GetMenu();
 	}
 
-	void SendOnlinePrivacyRPC() {
-		if (!GetGame() || !GetGame().IsMultiplayer())
-			return;
-		GetGame().RPCSingleParam(null, OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY, new Param1<bool>(OBLLayoutConfig.Get().hideOnlineStatus), true);
-	}
 	
 	void ToggleCompass() {
 		if (OBLPartyMainConfig.Get().enableCompassHud) {

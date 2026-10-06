@@ -248,8 +248,6 @@ class OBLPartyManagePage : OBLPartyPage {
 			if (!player)
 				continue;
 			string steamid = player.m_UID;
-			if (OBLOnlinePrivacyManager.IsHidden(steamid))
-				continue;
 			// замість ніка показуємо код запрошення гравця
 			string code = OBLInviteCodes.Get(steamid);
 			string label = " #" + code;

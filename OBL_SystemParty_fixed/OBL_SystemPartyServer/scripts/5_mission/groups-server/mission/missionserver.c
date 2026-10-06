@@ -73,14 +73,6 @@ modded class MissionServer {
 				return;
 			string inviteCode = OBLParty.GetOrCreateOBLInviteCode(sender);
 			GetGame().RPCSingleParam(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODE, new Param1<string>(inviteCode), true, sender);
-		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY) {
-			if (!sender)
-				return;
-			Param1<bool> privacyParam;
-			if (!ctx.Read(privacyParam))
-				return;
-			OBLParty.SetOBLOnlinePrivacy(sender.GetPlainId(), privacyParam.param1);
-			SendOBLOnlinePrivacyList();
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS) {
 			if (!sender)
 				return;
@@ -99,25 +91,22 @@ modded class MissionServer {
 	void SendInviteCodes(PlayerIdentity joined) {
 		if (!joined)
 			return;
-		TStringArray hidden = OBLParty.GetOBLHiddenOnlineSteamids();
 		array<PlayerIdentity> identities = new array<PlayerIdentity>();
 		GetGame().GetPlayerIndentities(identities);
 		ScriptRPC full = new ScriptRPC();
 		int count = 0;
 		foreach (PlayerIdentity ident : identities) {
-			if (ident && hidden.Find(ident.GetPlainId()) == -1)
+			if (ident)
 				count++;
 		}
 		full.Write(count);
 		foreach (PlayerIdentity ident2 : identities) {
-			if (!ident2 || hidden.Find(ident2.GetPlainId()) != -1)
+			if (!ident2)
 				continue;
 			full.Write(ident2.GetPlainId());
 			full.Write(OBLParty.GetOrCreateOBLInviteCode(ident2));
 		}
 		full.Send(null, OBLPartyRPCs.CONFIG_SYNC_INVITE_CODES, true, joined);
-		if (hidden.Find(joined.GetPlainId()) != -1)
-			return;
 		ScriptRPC single = new ScriptRPC();
 		single.Write(1);
 		single.Write(joined.GetPlainId());
@@ -128,20 +117,6 @@ modded class MissionServer {
 		}
 	}
 	
-	void SendOBLOnlinePrivacyList(PlayerIdentity target = null) {
-		TStringArray hiddenSteamids = OBLParty.GetOBLHiddenOnlineSteamids();
-		ScriptRPC rpc = new ScriptRPC();
-		rpc.Write(hiddenSteamids.Count());
-		for (int i = 0; i < hiddenSteamids.Count(); i++) {
-			rpc.Write(hiddenSteamids.Get(i));
-		}
-		if (target) {
-			rpc.Send(null, OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST, true, target);
-		} else {
-			rpc.Send(null, OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST, true);
-		}
-	}
-	
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity) {
 		super.InvokeOnConnect(player, identity);
 		if (!player || !identity)
@@ -149,7 +124,6 @@ modded class MissionServer {
 
 		OBLParty.GetOrCreateOBLInviteCode(identity);
 		player.InitGroupServer(identity);
-		SendOBLOnlinePrivacyList(identity);
 		SendInviteCodes(identity);
 
 		#ifndef OBL_DISABLE_CHAT
