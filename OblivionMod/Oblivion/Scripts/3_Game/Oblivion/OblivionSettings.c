@@ -28,6 +28,33 @@ class OblivionRadiatorRepairSettings
 	}
 }
 
+class OblivionMetalPlatesSettings
+{
+	bool Enabled         = true;
+	int  PlatesFromDoor  = 2;  // пластин з дверей
+	int  PlatesFromTrunk = 3;  // пластин з кришки багажника
+	int  PlatesFromHood  = 4;  // пластин з капота
+	int  HacksawDamage   = 20; // скільки здоров'я знімає з пилки за один розпил
+
+	void Write(ParamsWriteContext ctx)
+	{
+		ctx.Write(Enabled);
+		ctx.Write(PlatesFromDoor);
+		ctx.Write(PlatesFromTrunk);
+		ctx.Write(PlatesFromHood);
+		ctx.Write(HacksawDamage);
+	}
+
+	bool Read(ParamsReadContext ctx)
+	{
+		return ctx.Read(Enabled)
+			&& ctx.Read(PlatesFromDoor)
+			&& ctx.Read(PlatesFromTrunk)
+			&& ctx.Read(PlatesFromHood)
+			&& ctx.Read(HacksawDamage);
+	}
+}
+
 // Серверні налаштування, файл <профіль сервера>/Oblivion/settings.json.
 // Клієнт отримує копію при підключенні (OBLIVION_RPC_SETTINGS), щоб умови дій збігались із сервером.
 // Кожна нова механіка додає сюди свій блок.
@@ -35,6 +62,7 @@ class OblivionSettings
 {
 	int ConfigVersion = 1;
 	ref OblivionRadiatorRepairSettings RadiatorRepair = new OblivionRadiatorRepairSettings();
+	ref OblivionMetalPlatesSettings    MetalPlates    = new OblivionMetalPlatesSettings();
 
 	private static ref OblivionSettings s_Instance;
 
@@ -62,6 +90,8 @@ class OblivionSettings
 
 		if (!settings.RadiatorRepair)
 			settings.RadiatorRepair = new OblivionRadiatorRepairSettings();
+		if (!settings.MetalPlates)
+			settings.MetalPlates = new OblivionMetalPlatesSettings();
 
 		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);
@@ -71,12 +101,13 @@ class OblivionSettings
 	void WriteSync(ParamsWriteContext ctx)
 	{
 		RadiatorRepair.Write(ctx);
+		MetalPlates.Write(ctx);
 	}
 
 	static void ReadSync(ParamsReadContext ctx)
 	{
 		OblivionSettings settings = new OblivionSettings();
-		if (settings.RadiatorRepair.Read(ctx))
+		if (settings.RadiatorRepair.Read(ctx) && settings.MetalPlates.Read(ctx))
 			s_Instance = settings;
 	}
 }
