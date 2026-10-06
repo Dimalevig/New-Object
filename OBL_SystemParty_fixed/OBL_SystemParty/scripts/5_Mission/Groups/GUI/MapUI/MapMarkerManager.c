@@ -136,9 +136,11 @@ class OBLMapMarkerManager {
 				arr.Insert(circle);
 			}
 		}
-		OBLLogger.Debug("Circle Layers: " + circles.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Circle Layers: " + circles.Count());
 		foreach (int layer, array<MapMarkerWrapperCircle> circ : circles) {
-			OBLLogger.Debug("Layer: " + layer + " Circles: " + circ.Count());
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Layer: " + layer + " Circles: " + circ.Count());
 			foreach (MapMarkerWrapperCircle cir : circ) {
 				cir.SetOtherCircles(circ);
 			}
@@ -398,13 +400,15 @@ class MapMarkerWrapperCircle : MapMarkerWrapper {
 			float d_2 = Math.Sqrt((x2_1 - circle.position[0]) * (x2_1 - circle.position[0]) + (y2_1 - circle.position[2]) * (y2_1 - circle.position[2]));
 			
 			if (d_2 < d_1) {
-				OBLLogger.Debug("Changing Angles " + angle1 + " and " + angle2);
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Changing Angles " + angle1 + " and " + angle2);
 				float temp = angle1;
 				angle1 = angle2;
 				angle2 = temp;
 			}*/
 			
-			OBLLogger.Debug("Angles for " + position + ": " + angle1 + " " + angle2 + " " + y1 + " " + x1 + "   " + y2 + " " + x2);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Angles for " + position + ": " + angle1 + " " + angle2 + " " + y1 + " " + x1 + "   " + y2 + " " + x2);
 			
 			if (angle1 < angle2) {
 				intersectingAngles.Insert(new Param2<float, float>(angle1, angle2));
@@ -449,11 +453,13 @@ class MapMarkerWrapperCircle : MapMarkerWrapper {
 		}
 		OBLLogger.Debug("Rearranged Angles from:");
 		foreach (Param2<float, float> parm : intersectingAngles) {
-			OBLLogger.Debug("    " + parm.param1 + " " + parm.param2);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("    " + parm.param1 + " " + parm.param2);
 		}
 		OBLLogger.Debug("to:");
 		foreach (Param2<float, float> rec : recalculated) {
-			OBLLogger.Debug("    " + rec.param1 + " " + rec.param2);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("    " + rec.param1 + " " + rec.param2);
 		}
 		intersectingAngles = recalculated;
 	}
@@ -561,7 +567,8 @@ class MapMarkerWrapperOBLMarker : MapMarkerWrapper {
 		if (!iconPane)
 			return;
 		marker = marker2;
-		OBLLogger.Debug("Marker Layout: " + GetLayout());	
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Marker Layout: " + GetLayout());
 		widget = GetGame().GetWorkspace().CreateWidgets(GetLayout(), iconPane);
 		if (widget) {
 			widget.Show(true);

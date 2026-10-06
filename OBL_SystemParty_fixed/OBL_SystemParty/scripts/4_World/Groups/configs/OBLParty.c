@@ -85,14 +85,14 @@ class OBLParty {
 		if (type == OBLPartyRPCs.ADD) {
 			OBLMarker marker = new OBLMarker();
 			if (!marker.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to receive new Marker from Server !");
+				OBLLogger.Warn("Failed to receive new Marker from Server !");
 				return;
 			}
 			AddMarkerLocal(marker);
 		} else if (type == OBLPartyRPCs.REMOVE) {
 			int uid;
 			if (!ctx.Read(uid)) {
-				OBLLogger.Debug("Failed to receive new Marker ID from Server !");
+				OBLLogger.Warn("Failed to receive new Marker ID from Server !");
 				return;
 			}
 			OBLMarker mark = FindAnyMarkerByUID(uid);
@@ -102,21 +102,21 @@ class OBLParty {
 		} else if (type == OBLPartyRPCs.CHANGE_TAG_VISIBILITY) {
 			bool enabled;
 			if (!ctx.Read(enabled)) {
-				OBLLogger.Debug("Failed to receive Tag Visibility from Server !");
+				OBLLogger.Warn("Failed to receive Tag Visibility from Server !");
 				return;
 			}
 			showTagInChat = enabled;
 		} else if (type == OBLPartyRPCs.ADD_CLIENT) {
 			OBLPartyMember member = new OBLPartyMember();
 			if (!member.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to receive new Member from Server !");
+				OBLLogger.Warn("Failed to receive new Member from Server !");
 				return;
 			}
 			AddMarkerLocal(member);
 		} else if (type == OBLPartyRPCs.UPGRADE) {
 			int level1, maxPlayers1, subGroupCount1, subGroupSize1, maxMarkers1, plotpoleLimit1;
 			if (!ctx.Read(level1) || !ctx.Read(maxPlayers1) || !ctx.Read(subGroupCount1) || !ctx.Read(subGroupSize1) || !ctx.Read(maxMarkers1) || !ctx.Read(plotpoleLimit1)) {
-				OBLLogger.Debug("Failed to Read Upgrade Info");
+				OBLLogger.Warn("Failed to Read Upgrade Info");
 				return;
 			}
 			level = level1;
@@ -334,7 +334,7 @@ class OBLParty {
 			member.parentGroup = this;
 			member.InitMarker();
 		} else {
-			OBLLogger.Debug("Trying to add Marker to Group which is no Group Marker type. Type Got: " + marker.type);
+			OBLLogger.Warn("Trying to add Marker to Group which is no Group Marker type. Type Got: " + marker.type);
 		}
 		
 	}
@@ -370,7 +370,7 @@ class OBLParty {
 				return;
 			RemoveMember(member);
 		} else {
-			OBLLogger.Debug("Trying to remove Marker form Group which is no Group Marker type. Type Got: " + marker.type);
+			OBLLogger.Warn("Trying to remove Marker form Group which is no Group Marker type. Type Got: " + marker.type);
 		}
 	}
 	
@@ -399,13 +399,15 @@ class OBLParty {
 	}
 	
 	OBLMarker FindAnyMarkerByUID(int uid) {
-		OBLLogger.Debug("Finding any Marker with UID: " + uid + " Markers: " + markers.Count() + " Members: " + members.Count() + " Pings: " + pings.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Finding any Marker with UID: " + uid + " Markers: " + markers.Count() + " Members: " + members.Count() + " Pings: " + pings.Count());
 		OBLMarker marker = FindMarkerByUID(uid);
 		if (!marker)
 			marker = FindMemberByUID(uid);
 		if (!marker)
 			marker = FindPingMarkerByUID(uid);
-		OBLLogger.Debug("Found Marker: " + marker);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Found Marker: " + marker);
 		return marker;
 	}
 	

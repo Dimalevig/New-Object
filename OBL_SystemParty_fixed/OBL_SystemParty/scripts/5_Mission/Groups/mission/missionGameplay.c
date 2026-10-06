@@ -213,7 +213,7 @@ modded class MissionGameplay {
 			}
 			OBLParty syncGroup = new OBLParty();
 			if (!syncGroup.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to receive Group from Mission RPC !");
+				OBLLogger.Warn("Failed to receive Group from Mission RPC !");
 				return;
 			}
 			OBLLogger.Debug("Successfully received Group from Mission RPC");
@@ -231,7 +231,8 @@ modded class MissionGameplay {
 			int type = 0;
 			if (!ctx.Read(type))
 				return;
-			OBLLogger.Debug("Received Group RPC and Found Group. " + type);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Received Group RPC and Found Group. " + type);
 			pb.GetOBLParty().OnRPCClient(type, ctx);
 		} else if (rpc_type == OBLPartyRPCs.GROUP_ADD_CLIENT_MARKER) {
 			string name_, icon_, creatorId;
@@ -244,25 +245,27 @@ modded class MissionGameplay {
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_STEAMID) {
 			Param1<string> strParam;
 			if (!ctx.Read(strParam)) {
-				OBLLogger.Debug("Failed to receive own Steamid !");
+				OBLLogger.Warn("Failed to receive own Steamid !");
 				return;
 			}
 			mySteamid = strParam.param1;
-			OBLLogger.Debug("Received own Steamid: " + mySteamid);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Received own Steamid: " + mySteamid);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_INVITE_CODE) {
 			Param1<string> codeParam;
 			if (!ctx.Read(codeParam)) {
-				OBLLogger.Debug("Failed to receive own invite code !");
+				OBLLogger.Warn("Failed to receive own invite code !");
 				return;
 			}
 			myInviteCode = codeParam.param1;
-			OBLLogger.Debug("Received own invite code: " + myInviteCode);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Received own invite code: " + myInviteCode);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ONLINE_PRIVACY_LIST) {
 			OBLOnlinePrivacyManager.ReadHiddenSteamids(ctx);
 		} else if (rpc_type == OBLPartyRPCs.CONFIG_SYNC_ADMIN_STATUS) {
 			Param1<bool> adminParam;
 			if (!ctx.Read(adminParam)) {
-				OBLLogger.Debug("Failed to Read Admin RPC");
+				OBLLogger.Warn("Failed to Read Admin RPC");
 				return;
 			}
 			groupAdmin = adminParam.param1;
@@ -281,7 +284,8 @@ modded class MissionGameplay {
 			if (!ctx.Read(count2))
 				return;
 			array<ref Param2<ref vector, string>> arr = new array<ref Param2<ref vector, string>>();
-			OBLLogger.Debug("Reading " + count2 + " Flag Positions from the Server ...");
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Reading " + count2 + " Flag Positions from the Server ...");
 			for (int i2 = 0; i2 < count2; i2++) {
 				bool exists = false;
 				if (!ctx.Read(exists))
@@ -294,7 +298,8 @@ modded class MissionGameplay {
 					return;
 				arr.Insert(new Param2<ref vector, string>(Vector(x,y,z), name2));
 			}
-			OBLLogger.Debug("Read " + arr.Count() + " valid Flag Positions");
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Read " + arr.Count() + " valid Flag Positions");
 			adminP = GetAdminPage();
 			if (!adminP)
 				return;
@@ -336,7 +341,8 @@ modded class MissionGameplay {
 				if (cfgchannel.defaultChannel)
 					def = i;
 			}
-			OBLLogger.Debug("Received " + channels.Count() + " Channels.");
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Received " + channels.Count() + " Channels.");
 			if (!setDefaultChannel) {
 				currentChannel = def;
 				UpdateChannel();
@@ -353,12 +359,14 @@ modded class MissionGameplay {
 			int timestampServer = timeParam.param1 * 3600 + timeParam.param2 * 60 + timeParam.param3;
 			int timestampClient = hour * 3600 + min * 60 + sec;
 			serverToClientTimeOffset = timestampServer - timestampClient;
-			OBLLogger.Debug("Servertime offset received: " + serverToClientTimeOffset);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Servertime offset received: " + serverToClientTimeOffset);
 		}
 	}
 
 	void AddClientMarkerFromServer(string name, string icon, vector position, int color, string creatorId = "Server") {
-		OBLLogger.Debug("Received Client Marker from Server: " + name + " Icon: " + icon + " color: " + color);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Received Client Marker from Server: " + name + " Icon: " + icon + " color: " + color);
 		// OBL FIX: death markers ("PM") piled up forever — keep only the latest one
 		if (creatorId == "PM")
 			OBLPrivateMarkerManager.Get().RemoveMarkersLike(name, icon);
@@ -519,7 +527,8 @@ modded class MissionGameplay {
 			return;
 		}
 		Param1<string> lastInviteParam = new Param1<string>(lastInvite);
-		OBLLogger.Debug("Accepted Invite for " + lastInvite);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Accepted Invite for " + lastInvite);
 		GetGame().RPCSingleParam(null, OBLPartyRPCs.GROUP_ACCEPT_INVITE, lastInviteParam, true);
 		// OBL FIX: consume the invite so the key cannot be spammed
 		lastInvite = "";
@@ -554,7 +563,8 @@ modded class MissionGameplay {
 	}
 	
 	void ClearPing() {
-		OBLLogger.Debug("Removing Last Ping: " + lastPingUID);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Removing Last Ping: " + lastPingUID);
 		if (lastPingUID == -1)
 			return;
 		PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
@@ -564,9 +574,8 @@ modded class MissionGameplay {
 		OBLMarker marker = grp.FindPingMarkerByUID(lastPingUID);
 		if (marker) {
 			grp.RemoveMarker(marker);
-			string printname = marker.name + "";
-			printname.Replace("%", "");
-			OBLLogger.Debug("Removing Marker Ping: " + printname);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Removing Marker Ping: " + (marker.name));
 		}
 	}
 	#ifndef OBL_DISABLE_CHAT
@@ -597,7 +606,7 @@ modded class MissionGameplay {
 		if (currentChannel >= 0 && currentChannel < channels.Count())
 			cfgchannel = channels.Get(currentChannel);
 		if (!cfgchannel) {
-			OBLLogger.Debug("Failed to get Channel Config for Channel " + currentChannel);
+			OBLLogger.Warn("Failed to get Channel Config for Channel " + currentChannel);
 			return;
 		}
 		if (message[0] == "!") {

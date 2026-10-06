@@ -1,17 +1,20 @@
 class OBLFile<Class T> {
 
     static void SaveToJson(string subPath, T data, bool onlyServer = false) {
-        OBLLogger.Debug("init SaveJson: " + subPath);
+        if (OBLLogger.IsDebug())
+        	OBLLogger.Debug("init SaveJson: " + subPath);
         OBLFilePlus.DebugJson();
 
         if (onlyServer && GetGame().IsClient()) {
-            OBLLogger.Debug("Error: SaveJson, not authorized for client: " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Error: SaveJson, not authorized for client: " + subPath);
             return;
         }
 
         string basePath = OBLPartyConstants.SAVE_PREFIX;
         if (data == null) {
-            OBLLogger.Debug("Error: Ao salvar em : " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Error: Ao salvar em : " + subPath);
             return;
         }
 
@@ -19,17 +22,20 @@ class OBLFile<Class T> {
     }
 
     static bool LoadFromJson(string subPath, out T data, bool onlyServer = false) {
-        OBLLogger.Debug("SaveToJson: " + subPath);
+        if (OBLLogger.IsDebug())
+        	OBLLogger.Debug("SaveToJson: " + subPath);
         OBLFilePlus.DebugJson();
 
         if (onlyServer && GetGame().IsClient()) {
-            OBLLogger.Debug("Error: LoadJson, not authorized for client: " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Error: LoadJson, not authorized for client: " + subPath);
             return false;
         }
 
         string basePath = OBLPartyConstants.SAVE_PREFIX;
         if (!FileExist(basePath + subPath)) {
-            OBLLogger.Debug("Arquivo não existe: " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Arquivo não existe: " + subPath);
             return false;
         }
 
@@ -59,9 +65,11 @@ class OBLFilePlus {
         string basePath = OBLPartyConstants.SAVE_PREFIX;
         if (FileExist(basePath + subPath)) {
             DeleteFile(basePath + subPath);
-            OBLLogger.Debug("Arquivo deletado: " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Arquivo deletado: " + subPath);
         } else {
-            OBLLogger.Debug("Arquivo não deletado: " + subPath);
+            if (OBLLogger.IsDebug())
+            	OBLLogger.Debug("Arquivo não deletado: " + subPath);
         }
     }
 

@@ -33,7 +33,9 @@ class OBLPartyMainConfig {
 	bool enableInfoPanelIngameTime = true;
 	bool enableInfoPanelRealTime = true;
 	bool disableInfoPanelModCreatorMention = false;
-	bool disableLoggerDebug = false;
+	bool disableLoggerDebug = false; // застаріле, не використовується (див. enableDebugLog)
+	// докладний налагоджувальний лог сервера (script.log). На живому сервері тримайте вимкненим
+	bool enableDebugLog = false;
 	ref TStringArray adminSteamids = new TStringArray();
 	float offlinePlayer3dMarkerDistance = 20.0;
 	ref TStringArray subGroupNames = new TStringArray();
@@ -82,7 +84,8 @@ class OBLPartyMainConfig {
 	}
 	
 	static void UpgradeConfigFile(OBLPartyMainConfig cfg) {
-		OBLLogger.Debug("Upgrading MainConfig from Version " + cfg.configVersion + " to Version " + CURRENT_VERSION);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Upgrading MainConfig from Version " + cfg.configVersion + " to Version " + CURRENT_VERSION);
 		if (cfg.configVersion < 3) {
 			cfg.layoutStyles = new array<ref LayoutStyleEntry>();
 			LayoutStyleEntry lEntry = new LayoutStyleEntry();
@@ -419,7 +422,7 @@ class OBLPartyMainConfig {
 			rpc.Send(null, OBLPartyRPCs.CONFIG_SYNC_MAIN, true, sender);
 		} else {
 			if (!ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Unable to read Main Config from Server !");
+				OBLLogger.Warn("Unable to read Main Config from Server !");
 				return;
 			}
 			OBLLogger.Debug("Successfully Received Main Config from Server");
@@ -465,9 +468,11 @@ class OBLPartyMainConfig {
 	}
 	
 	void PrintMarkerConfigEntries() {
-		OBLLogger.Debug("Marker config Entires: " + markerConfig.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Marker config Entires: " + markerConfig.Count());
 		foreach (MarkerConfigEntry entry : markerConfig) {
-			OBLLogger.Debug("" + entry.type + " " + entry.maxDistance + " " + entry.display3d + " "  + entry.displayDistance + " "  + entry.displayMap);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("" + entry.type + " " + entry.maxDistance + " " + entry.display3d + " "  + entry.displayDistance + " "  + entry.displayMap);
 		}
 	}
 }

@@ -55,7 +55,8 @@ class OBLLayoutConfig {
 	
 	void SetStreamerMode(bool enabled) {
 		this.streamerModeEnabled = enabled;
-		OBLLogger.Debug("Streamer Mode changed to: " + enabled);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Streamer Mode changed to: " + enabled);
 		Event_StreamerModeChanged.Invoke(enabled);
 	}
 	
@@ -106,7 +107,8 @@ class OBLLayoutConfig {
 			case "Map Page 6 0":
 				return "OBL_SystemParty/gui/layouts/mapmenu/pages/page_6_0_default.layout";
 		}
-		OBLLogger.Debug("Current Layout of " + name + " not found !");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Current Layout of " + name + " not found !");
 		return "";
 	}
 	

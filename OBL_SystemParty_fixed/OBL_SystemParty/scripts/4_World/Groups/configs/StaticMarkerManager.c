@@ -137,7 +137,7 @@ class OBLStaticMarkerManagerClient {
 	void RPC_OBL(PlayerIdentity sender, ParamsReadContext ctx) {
 		int count;
 		if (!ctx.Read(count)) {
-			OBLLogger.Debug("Unable to receive Static Markers from Server !");
+			OBLLogger.Warn("Unable to receive Static Markers from Server !");
 			return;
 		}
 		DeleteStaticMarkers();
@@ -146,11 +146,12 @@ class OBLStaticMarkerManagerClient {
 			if (mark.ReadFromCtx(ctx)) {
 				staticMarkers.Insert(mark);
 			} else {
-				OBLLogger.Debug("Failed to read received Markers from Server. Index: " + i);
+				OBLLogger.Warn("Failed to read received Markers from Server. Index: " + i);
 				return;
 			}
 		}
-		OBLLogger.Debug("Received Static Markers from Server: " + staticMarkers.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Received Static Markers from Server: " + staticMarkers.Count());
 		InitAllMarkers();
 	}
 	

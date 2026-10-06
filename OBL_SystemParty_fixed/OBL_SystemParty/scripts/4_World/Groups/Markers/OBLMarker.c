@@ -141,7 +141,8 @@ class OBLMarker {
 			bottomWidget = mainWidget.FindAnyWidget("bottom");
 			
 			if (GetIcon().Length() > 0) {
-				OBLLogger.Debug("Loading Image: " + GetIcon());
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Loading Image: " + GetIcon());
 				iconWidget.LoadImageFile(0, GetIcon());
 			} else {
 				iconWidget.Show(false);
@@ -158,9 +159,8 @@ class OBLMarker {
 			SetColor(true);
 		}
 		SetVisibleOnScreen(false);
-		string printname = name + "";
-		printname.Replace("%", "");
-		OBLLogger.Debug("Init Marker " + printname + ". Created Layout: " + (mainWidget != null));
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Init Marker " + (name) + ". Created Layout: " + (mainWidget != null));
 		UpdateMarkerSlow();
 		if (OBLPartyMainConfig.Get().enableCompassHud)
 			InitCompassWidget();
@@ -178,7 +178,8 @@ class OBLMarker {
 			compassIconWidget = ImageWidget.Cast(compassWidget.FindAnyWidget("icon"));
 			compassNameWidget = TextWidget.Cast(compassWidget.FindAnyWidget("name"));
 			if (GetIcon().Length() > 0) {
-				OBLLogger.Debug("Loading Image: " + GetIcon());
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Loading Image: " + GetIcon());
 				compassIconWidget.LoadImageFile(0, GetIcon());
 			} else {
 				compassIconWidget.Show(false);
@@ -276,7 +277,8 @@ class OBLMarker {
 	}
 	
 	void ~OBLMarker() {
-		OBLLogger.Debug("Removed Marker: " + name);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Removed Marker: " + name);
 		if (allMarkers) {
 			allMarkers.RemoveItem(this);
 		}
@@ -336,7 +338,8 @@ class OBLMarker {
 			rpc.Write(r);
 			rpc.Write(g);
 			rpc.Write(b);
-			OBLLogger.Debug("Sending Color Change: " + a + " " + r + " " + g + " " + b);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Sending Color Change: " + a + " " + r + " " + g + " " + b);
 			SendMarkerRPC(rpc);
 			return true;
 		}
@@ -597,9 +600,9 @@ class OBLMarker {
 			rpc.Send(null, OBLPartyRPCs.MARKER_RPC, true);
 		} else {
 			if (!parentGroup)
-				OBLLogger.Debug("Failed to send Marker RPC for Marker: " + type + " No Parent Group ! ");
+				OBLLogger.Warn("Failed to send Marker RPC for Marker: " + type + " No Parent Group ! ");
 			else
-				OBLLogger.Debug("Failed to send Marker RPC for Marker: " + type + " Parent Group: " + parentGroup.shortname);
+				OBLLogger.Warn("Failed to send Marker RPC for Marker: " + type + " Parent Group: " + parentGroup.shortname);
 		}
 	}
 	

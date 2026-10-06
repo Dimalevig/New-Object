@@ -54,7 +54,8 @@ class OBLPartyPage {
 		
 		if (!topButtons.Contains(pageID)) {
 			layoutPath = OBLLayoutConfig.Get().GetCurrentLayout("Map Top Button");
-			OBLLogger.Debug("Creating new Top Button for PageID: " + pageID + " with Layout " + layoutPath);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Creating new Top Button for PageID: " + pageID + " with Layout " + layoutPath);
 			Widget btnWid = GetGame().GetWorkspace().CreateWidgets(layoutPath, parent.topPanel);
 			buttonWidget = ButtonWidget.Cast(btnWid);
 			if (buttonWidget) {
@@ -68,7 +69,8 @@ class OBLPartyPage {
 				buttonWidget.SetPos(posX, posY);
 			}
 		} else {
-			OBLLogger.Debug("Getting Top Button for PageID: " + pageID + " with Layout " + layoutPath);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Getting Top Button for PageID: " + pageID + " with Layout " + layoutPath);
 			buttonWidget = topButtons.Get(pageID);
 		}
 		return true;

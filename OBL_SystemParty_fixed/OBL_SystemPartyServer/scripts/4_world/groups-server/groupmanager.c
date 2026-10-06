@@ -26,12 +26,14 @@ modded class OBLPartyManager {
 	}
 	
 	void SaveAllGroups() {
-		OBLLogger.Debug("Saving all " + allGroups.Count() + " Groups");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Saving all " + allGroups.Count() + " Groups");
 		for (int i = allGroups.Count() - 1; i >= 0; i--) {
 			OBLParty grp = allGroups.Get(i);
 			SaveGroup(grp);
 		}
-		OBLLogger.Debug("Saved all " + allGroups.Count() + " Groups");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Saved all " + allGroups.Count() + " Groups");
 	}
 	
 	void SaveNextGroups() {
@@ -39,7 +41,8 @@ modded class OBLPartyManager {
 			SaveAllGroups();
 			return;
 		}
-		OBLLogger.Debug("Saving Next " + SAVE_ITERATION_COUNT + " Groups. Start: " + currentSaveIndex);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Saving Next " + SAVE_ITERATION_COUNT + " Groups. Start: " + currentSaveIndex);
 		for (int i = 0; i < SAVE_ITERATION_COUNT; i++) {
 			if (allGroups.Count() == 0) {
 				currentSaveIndex = -1;
@@ -49,7 +52,8 @@ modded class OBLPartyManager {
 			OBLParty grp = allGroups.Get(currentSaveIndex);
 			SaveGroup(grp);
 		}
-		OBLLogger.Debug("Saved " + SAVE_ITERATION_COUNT + " Groups. Next Index: " + currentSaveIndex);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Saved " + SAVE_ITERATION_COUNT + " Groups. Next Index: " + currentSaveIndex);
 	}
 	
 	void SerializeAllGroups(ParamsWriteContext ctx) {
@@ -99,7 +103,8 @@ modded class OBLPartyManager {
 			return;
 		OBLParty grp = null;
 		if (rpc_type == OBLPartyRPCs.GROUP_CREATE) {
-			OBLLogger.Debug("Group Create RPC received. " + rpc_type);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Group Create RPC received. " + rpc_type);
 			Param2<string, string> createParam;
 			PlayerBase pb = PlayerBase.GetPlayerByIdentity(sender);
 			if (!pb) {
@@ -111,7 +116,7 @@ modded class OBLPartyManager {
 				return;
 			}
 			if (!ctx.Read(createParam)) {
-				OBLLogger.Debug("Failed to receive Group Create Param");
+				OBLLogger.Warn("Failed to receive Group Create Param");
 				return;
 			}
 			string name = createParam.param1;
@@ -146,29 +151,30 @@ modded class OBLPartyManager {
 		} else if (rpc_type == OBLPartyRPCs.GROUP_ACCEPT_INVITE) {
 			Param1<string> groupNameParam;
 			if (!ctx.Read(groupNameParam)) {
-				OBLLogger.Debug("Unable to read Groupname from Invite Accept");
+				OBLLogger.Warn("Unable to read Groupname from Invite Accept");
 				return;
 			}
 			OBLParty targetGroup = GetGroupByShortName(groupNameParam.param1);
 			if (!targetGroup) {
-				OBLLogger.Debug("Player Accepted Invite to an unknown Group: " + groupNameParam.param1 + " " + sender.GetPlainId());
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Player Accepted Invite to an unknown Group: " + groupNameParam.param1 + " " + sender.GetPlainId());
 				SendErrorNotification(sender, "Групу не знайдено!");
 				return;
 			}
 			if (!targetGroup.CanAcceptInvite(sender.GetPlainId())) {
-				OBLLogger.Debug("Player Accepted Invite which was not valid: " + groupNameParam.param1 + " " + sender.GetPlainId());
+				OBLLogger.Warn("Player Accepted Invite which was not valid: " + groupNameParam.param1 + " " + sender.GetPlainId());
 				SendErrorNotification(sender, "Запрошення не знайдено або воно недійсне!");
 				return;
 			}
 			if (targetGroup.IsFull()) {
-				OBLLogger.Debug("Player tried to join full group: " + groupNameParam.param1 + " " + sender.GetPlainId());
+				OBLLogger.Warn("Player tried to join full group: " + groupNameParam.param1 + " " + sender.GetPlainId());
 				SendErrorNotification(sender, OBLNotifyTexts.GroupFull());
 				return;
 			}
 			
 			pb = PlayerBase.GetPlayerByIdentity(sender);
 			if (!pb) {
-				OBLLogger.Debug("Player Not found ! Error 002");
+				OBLLogger.Warn("Player Not found ! Error 002");
 				SendErrorNotification(sender, "Внутрішня помилка 002 !");
 				return;
 			}
@@ -180,7 +186,8 @@ modded class OBLPartyManager {
 				GetGame().AdminLog("Player Requested Group Admin List, but is not admin ! " + sender.GetPlainId());
 				return;
 			}
-			OBLLogger.Debug("All Groups Requested by " + sender.GetPlainId());
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("All Groups Requested by " + sender.GetPlainId());
 			SendAllGroupsAdmin(sender);
 		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_DELETE) {
 			string grpShortname = "";
@@ -273,7 +280,7 @@ modded class OBLPartyManager {
 			}
 			OBLPartyPermission targetPerms = member.GetPermission();
 			if (!targetPerms) {
-				OBLLogger.Debug("Failed to get Target's Permissions !");
+				OBLLogger.Warn("Failed to get Target's Permissions !");
 				return;
 			}
 			targetPB = OBLParty.GetPlayerBySteamid(targetSteamid);
@@ -483,7 +490,7 @@ modded class OBLPartyManager {
 				LoadGroup(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUPS_FOLDER + filename);
 		}
 		CloseFindFile(findHandle);
-		OBLLogger.Debug("Loaded Groups: " + allGroups.Count());
+		OBLLogger.Info("Loaded Groups: " + allGroups.Count());
 	}
 	
 	void LoadGroup(string path) {
@@ -516,7 +523,7 @@ modded class OBLPartyManager {
 		if (inactivity > 0 || grp.members.Count() == 0) {
 			int now = JMDate.Now(true).GetTimestamp();
 			if (now - inactivity > grp.lastActivity || grp.members.Count() == 0) {
-				OBLLogger.Debug("Deleted Group " + grp.shortname + " due to inactivity !");
+				OBLLogger.Info("Deleted Group " + grp.shortname + " due to inactivity !");
 				GetGame().AdminLog("Deleted Group " + grp.shortname + " due to inactivity !");
 				DeleteGroup(grp);
 				return;
@@ -524,7 +531,8 @@ modded class OBLPartyManager {
 		}
 		allGroups.Insert(grp);
 		grp.OnLoadServer();
-		OBLLogger.Debug("Loaded Group " + grp.shortname);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Loaded Group " + grp.shortname);
 	}
 	
 	override OBLParty GetGroupByHash(int hash) {

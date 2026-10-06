@@ -22,7 +22,8 @@ class OBLMarkerListEntry {
 		this.type = type_;
 		spacer = true;
 		spacername = namee;
-		OBLLogger.Debug("Creating Spacer with layout: " + GetMarkerListLayout());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Creating Spacer with layout: " + GetMarkerListLayout());
 		mainWidget = GetGame().GetWorkspace().CreateWidgets(GetMarkerListLayout(), parent);
 		btn_0 = ButtonWidget.Cast(mainWidget.FindAnyWidget("btn_0"));
 		btn_1 = ButtonWidget.Cast(mainWidget.FindAnyWidget("btn_1"));
@@ -44,7 +45,8 @@ class OBLMarkerListEntry {
 	
 	void InitMarker(Widget parent, OBLMarker mmarker, OBLPartyUI groupui) {
 		this.groupUI = groupui;
-		OBLLogger.Debug("Creating Marker with layout: " + GetMarkerListLayout());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Creating Marker with layout: " + GetMarkerListLayout());
 		mainWidget = GetGame().GetWorkspace().CreateWidgets(GetMarkerListLayout(), parent);
 		btn_0 = ButtonWidget.Cast(mainWidget.FindAnyWidget("btn_0"));
 		btn_1 = ButtonWidget.Cast(mainWidget.FindAnyWidget("btn_1"));

@@ -45,7 +45,8 @@ class OBLPlayerListEntry {
 			Show(false);
 			return;
 		}
-		OBLLogger.Debug("Update Playerlits Widget " + member.name);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Update Playerlits Widget " + member.name);
 		Show(true);
 		if (healthbar) {
 			healthbar.SetCurrent(member.health);

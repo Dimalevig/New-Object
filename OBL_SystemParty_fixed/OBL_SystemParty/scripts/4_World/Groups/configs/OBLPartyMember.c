@@ -50,7 +50,8 @@ class OBLPartyMember : OBLMarker {
 	void FindPlayerBase() {
 		//ref array<Man> players = ClientData.m_PlayerBaseList;
 		ref array<PlayerBase> players = PlayerBase.bxd_player_list;
-		OBLLogger.Debug("Check PlayerBase: " + name + ". List Size: " + PlayerBase.bxd_player_list.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Check PlayerBase: " + name + ". List Size: " + PlayerBase.bxd_player_list.Count());
 		int hashidhash = hashedId.Hash(); // Second Identifier as a backup plan if the Identity gets deleted from Helicopter Mod
 		foreach (PlayerBase player : players) {
 			if (player && player.IsAlive() && player.GetIdentity()) {

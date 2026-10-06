@@ -46,7 +46,8 @@ class OBLInfoPage : OBLPartyPage {
 		if (modcreator && OBLPartyMainConfig.Get().disableInfoPanelModCreatorMention) {
 			modcreator.Show(false);
 		}
-		OBLLogger.Debug("Initialized Buttons: " + leftButtons.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Initialized Buttons: " + leftButtons.Count());
 		SetButtonContent();
 		UpdateInfoCounter();
 		if (btnCpyPlayerCoords && !OBLPartyMainConfig.Get().enableInfoPanelCursorCoordinates)
@@ -195,7 +196,8 @@ class OBLInfoPage : OBLPartyPage {
 	
 	void OnStreamerModeChange(bool enabled) {
 		bool show = !enabled;
-		OBLLogger.Debug("OnStreamerModeChange InfoPage: " + enabled);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnStreamerModeChange InfoPage: " + enabled);
 		foreach (ButtonWidget btn : leftButtons) {
 			if (btn)
 				btn.Show(show);

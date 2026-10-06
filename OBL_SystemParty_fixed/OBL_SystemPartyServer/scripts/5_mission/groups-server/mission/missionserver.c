@@ -16,7 +16,7 @@ modded class MissionServer {
 		GetMuteConfig();
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateMuteList, 60000, true);
 		#endif
-		OBLLogger.Debug("Group System Config Loading finished");
+		OBLLogger.Info("Group System Config Loading finished");
 	}
 	
 	void ~MissionServer() {
@@ -308,14 +308,17 @@ modded class MissionServer {
 		GetGame().AdminLog("On Chat Command: " + sender.GetPlainId() + " Cmd: " + cmd + " ArgsCount: " + args.Count());
 		string printcmd = cmd + "";
 		printcmd.Replace("%", "");
-		OBLLogger.Debug("On Chat Command: " + sender.GetPlainId() + " Cmd: " + printcmd + " ArgsCount: " + args.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("On Chat Command: " + sender.GetPlainId() + " Cmd: " + printcmd + " ArgsCount: " + args.Count());
 		if (!HasPermission(sender, cmd)) {
 			SendSimpleChatMessage(sender, "У вас немає прав для цієї команди!");
 			return;
 		}
-		OBLLogger.Debug("CMD: " + printcmd);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("CMD: " + printcmd);
 		foreach (string arg : args) {
-			OBLLogger.Debug("Arg: " + arg);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Arg: " + arg);
 		}
 		if (cmd == "mute") {
 			if (args.Count() < 2) {
@@ -482,14 +485,16 @@ modded class MissionServer {
 	
 	void UnMuteChatPlayer(PlayerIdentity ident) {
 		GetGame().AdminLog("Player Was Unmuted: " + ident.GetPlainId() + " (" + ident.GetName() + ")");
-		OBLLogger.Debug("Player Was Unmuted: " + ident.GetPlainId() + " (" + ident.GetName() + ")");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Player Was Unmuted: " + ident.GetPlainId() + " (" + ident.GetName() + ")");
 		GetMuteConfig().UnMutePlayer(ident.GetPlainId());
 		GetMuteConfig().SaveConfig();
 	}
 	
 	void MuteChatPlayer(PlayerIdentity ident, int minutes) {
 		GetGame().AdminLog("Player Was Muted: " + ident.GetPlainId() + " (" + ident.GetName() + ") for " + minutes + " Minutes");
-		OBLLogger.Debug("Player Was Muted: " + ident.GetPlainId() + " (" + ident.GetName() + ") for " + minutes + " Minutes");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Player Was Muted: " + ident.GetPlainId() + " (" + ident.GetName() + ") for " + minutes + " Minutes");
 		GetMuteConfig().MutePlayer(ident.GetPlainId(), minutes);
 		GetMuteConfig().SaveConfig();
 	}

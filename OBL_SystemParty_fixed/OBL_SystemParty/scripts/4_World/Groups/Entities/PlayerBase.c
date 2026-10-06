@@ -111,7 +111,7 @@ modded class PlayerBase {
 			}
 			OBLParty grp = new OBLParty();
 			if (!grp.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to receive Group from Server !");
+				OBLLogger.Warn("Failed to receive Group from Server !");
 				return;
 			}
 			OBLLogger.Debug("Successfully received Group from Server");
@@ -120,7 +120,7 @@ modded class PlayerBase {
 		} else if (rpc_type == OBLPartyRPCs.GROUP_INVITE) {
 			Param1<string> shortnameParam;
 			if (!ctx.Read(shortnameParam)) {
-				OBLLogger.Debug("Failed to receive Shortname of Group Invite !");
+				OBLLogger.Warn("Failed to receive Shortname of Group Invite !");
 				return;
 			}
 			MissionBaseWorld mission = MissionBaseWorld.Cast(GetGame().GetMission());
@@ -132,7 +132,8 @@ modded class PlayerBase {
 				OBLLogger.Debug("Group invite expired / cleared by server");
 				return;
 			}
-			OBLLogger.Debug("Recevied Invite to Group " + mission.lastInvite);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Recevied Invite to Group " + mission.lastInvite);
 		}
 	}
 	

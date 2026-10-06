@@ -75,11 +75,15 @@ class OBLPartyPermission {
 	}
 	
 	void PrintPermission() {
-		OBLLogger.Debug(permName + " Temp ? " + tempGroup + " (" + UID + ") < " + previousGroupUID + " > " + nextGroupUID + " : " + inheritGroupUID);
-		OBLLogger.Debug("canUpgrade: " + canUpgrade + " canPromote: " + canPromote + " canDemote: " + canDemote + " canInvite: " + canInvite + " canPackPlotpole: " + canPackPlotpole + " canDoBasebuilding: " + canDoBasebuilding);
-		OBLLogger.Debug("promotePower: " + promotePower + " demotePower: " + demotePower + " promoteNeedPower: " + promoteNeedPower + " demoteNeedPower: " + demoteNeedPower);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug(permName + " Temp ? " + tempGroup + " (" + UID + ") < " + previousGroupUID + " > " + nextGroupUID + " : " + inheritGroupUID);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("canUpgrade: " + canUpgrade + " canPromote: " + canPromote + " canDemote: " + canDemote + " canInvite: " + canInvite + " canPackPlotpole: " + canPackPlotpole + " canDoBasebuilding: " + canDoBasebuilding);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("promotePower: " + promotePower + " demotePower: " + demotePower + " promoteNeedPower: " + promoteNeedPower + " demoteNeedPower: " + demoteNeedPower);
 		foreach (Param2<int, bool> markerPerms : markerPermissions) {
-			OBLLogger.Debug("Marker Perm: " + markerPerms.param1 + " : " + markerPerms.param2);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Marker Perm: " + markerPerms.param1 + " : " + markerPerms.param2);
 		}
 	}
 	
@@ -304,7 +308,8 @@ class OBLPartyPermissions {
 		if (!ctx.Read(count))
 			return false;
 		allGroups.Clear();
-		OBLLogger.Debug("Reading " + count + " Permission Groups");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Reading " + count + " Permission Groups");
 		for (int i = 0; i < count; i++) {
 			OBLPartyPermission perm = new OBLPartyPermission();
 			if (!perm.ReadFromCtx(ctx))
@@ -321,12 +326,13 @@ class OBLPartyPermissions {
 			rpc.Send(null, OBLPartyRPCs.CONFIG_SYNC_PERMISSIONS, true, sender);
 		} else {
 			if (!ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Unable to read Permissions Config from Server !");
+				OBLLogger.Warn("Unable to read Permissions Config from Server !");
 				OBLLogger.Debug("Groups received: ");
 				PrintAllPermissionGroups();
 				return;
 			}
-			OBLLogger.Debug("Successfully Received Permissions Config from Server Entries: " + allGroups.Count());
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Successfully Received Permissions Config from Server Entries: " + allGroups.Count());
 			PrintAllPermissionGroups();
 		}
 	}

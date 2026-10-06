@@ -167,7 +167,8 @@ modded class ItemBase {
 		if (marker) {
 			m_OBLEventMarkerUID = marker.uid;
 			if (OBLEventMarkerConfig.Get().debugLog == 1)
-				OBLLogger.Debug("[EventMarker] " + GetType() + " -> \"" + m_OBLEventMarkerRule.markerName + "\" UID=" + m_OBLEventMarkerUID + " pos=" + GetPosition());
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("[EventMarker] " + GetType() + " -> \"" + m_OBLEventMarkerRule.markerName + "\" UID=" + m_OBLEventMarkerUID + " pos=" + GetPosition());
 		}
 	}
 

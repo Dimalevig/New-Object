@@ -110,9 +110,10 @@ class OBLWidgetUtils {
 			int value = FromIndex(i) + 8192;
 			int index = ToIndex(value);
 			if (index != i) {
-				OBLLogger.Debug("Failed test for Value: " + i + " Got: " + value + " and Index: " + index);
+				OBLLogger.Warn("Failed test for Value: " + i + " Got: " + value + " and Index: " + index);
 			} else {
-				OBLLogger.Debug("Test Passed for Value: " + i + " Got: " + value + " and Index: " + index);
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Test Passed for Value: " + i + " Got: " + value + " and Index: " + index);
 			}
 		}
 	}

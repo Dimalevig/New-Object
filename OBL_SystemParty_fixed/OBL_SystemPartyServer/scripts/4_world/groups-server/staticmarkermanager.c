@@ -27,12 +27,13 @@ modded class OBLStaticMarkerManager {
 				return;
 			string steamid = sender.GetPlainId();
 			if (OBLPartyMainConfig.Get().adminSteamids.Find(steamid) == -1) {
-				OBLLogger.Debug("Player " + steamid + " tried to add Global Marker without Permission !");
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Player " + steamid + " tried to add Global Marker without Permission !");
 				return;
 			}
 			OBLMarker mark = new OBLMarker();
 			if (!mark.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to read Global Marker from " + steamid);
+				OBLLogger.Warn("Failed to read Global Marker from " + steamid);
 				return;
 			}
 			OBLServerMarker serverMark = new OBLServerMarker();
@@ -52,12 +53,13 @@ modded class OBLStaticMarkerManager {
 				return;
 			steamid = sender.GetPlainId();
 			if (OBLPartyMainConfig.Get().adminSteamids.Find(steamid) == -1) {
-				OBLLogger.Debug("Player " + steamid + " tried to remove Global Marker without Permission !");
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Player " + steamid + " tried to remove Global Marker without Permission !");
 				return;
 			}
 			int uid = 0;
 			if (!ctx.Read(uid)) {
-				OBLLogger.Debug("Failed to read UID for Global Marker Remove from " + steamid);
+				OBLLogger.Warn("Failed to read UID for Global Marker Remove from " + steamid);
 				return;
 			}
 			OBLServerMarker marker3 = FindMarker(uid, staticMarkers);

@@ -52,7 +52,8 @@ class OBLMarkerListPage : OBLPartyPage {
 	
 	void UpdateMarkerListManager() {
 		int count = GetMarkerCount();
-		OBLLogger.Debug("GroupUI: UpdateMarkerListManager " + (markerListManger != null) + " " + count);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("GroupUI: UpdateMarkerListManager " + (markerListManger != null) + " " + count);
 		if (markerListManger)
 			markerListManger.UpdateEntries(parent, count != lastMarkerCount);
 		lastMarkerCount = count;

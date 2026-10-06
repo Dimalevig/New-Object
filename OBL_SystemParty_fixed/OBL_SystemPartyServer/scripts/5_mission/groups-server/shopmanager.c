@@ -205,7 +205,8 @@ class OBLShopManager {
 		KeepCallback(cb);
 		ctx.GET(cb, path);
 		// OBL FIX: не пишемо в лог URL з секретним ключем
-		OBLLogger.Debug("[Shop] LIST request for " + steamId + " -> " + ApiUrl());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("[Shop] LIST request for " + steamId + " -> " + ApiUrl());
 	}
 
 	void OnListResponse(string steamId, string data) {
@@ -215,7 +216,7 @@ class OBLShopManager {
 		bool ok = js.ReadFromString(resp, data, err);
 
 		if (!ok) {
-			OBLLogger.Debug("[Shop] LIST parse failed: " + err + " raw=" + data);
+			OBLLogger.Warn("[Shop] LIST parse failed: " + err + " raw=" + data);
 			// показуємо сире повідомлення з сайту, якщо є коротке
 			string shortRaw = data;
 			if (shortRaw.Length() > 80)
@@ -226,7 +227,7 @@ class OBLShopManager {
 		}
 
 		if (resp.status != "success") {
-			OBLLogger.Debug("[Shop] LIST status!=success raw=" + data);
+			OBLLogger.Warn("[Shop] LIST status!=success raw=" + data);
 			string sr = data;
 			if (sr.Length() > 90)
 				sr = sr.Substring(0, 90);
@@ -242,7 +243,7 @@ class OBLShopManager {
 	}
 
 	void OnListError(string steamId, int errorCode) {
-		OBLLogger.Debug("[Shop] LIST http error " + errorCode + " for " + steamId);
+		OBLLogger.Warn("[Shop] LIST http error " + errorCode + " for " + steamId);
 		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
 		SendListSync(steamId, null);
 	}
@@ -279,7 +280,8 @@ class OBLShopManager {
 		OBLShopClaimCallback cb = new OBLShopClaimCallback(steamId);
 		KeepCallback(cb);
 		ctx.GET(cb, path);
-		OBLLogger.Debug("[Shop] CLAIM request for " + steamId + " purchase " + purchaseId);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("[Shop] CLAIM request for " + steamId + " purchase " + purchaseId);
 	}
 
 	void OnClaimResponse(string steamId, string data) {
@@ -289,7 +291,7 @@ class OBLShopManager {
 		if (!js.ReadFromString(resp, data, err)) {
 			m_pendingClaims.Remove(steamId);
 			m_claimRetries.Remove(steamId);
-			OBLLogger.Debug("[Shop] CLAIM parse failed: " + err + " raw=" + data);
+			OBLLogger.Warn("[Shop] CLAIM parse failed: " + err + " raw=" + data);
 			SendClaimResult(steamId, false, "Помилка читання відповіді складу.");
 			return;
 		}
@@ -306,7 +308,7 @@ class OBLShopManager {
 	}
 
 	void OnClaimError(string steamId, int errorCode) {
-		OBLLogger.Debug("[Shop] CLAIM http error " + errorCode + " for " + steamId);
+		OBLLogger.Warn("[Shop] CLAIM http error " + errorCode + " for " + steamId);
 		// код 7 = тимчасовий збій зʼєднання/таймаут REST. Пробуємо ще раз (1 раз).
 		int retries = 0;
 		if (m_claimRetries.Contains(steamId))

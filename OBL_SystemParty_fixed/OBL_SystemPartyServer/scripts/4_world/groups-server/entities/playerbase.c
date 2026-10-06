@@ -107,7 +107,8 @@ modded class PlayerBase {
 			if (!ctx.Read(type))
 				return;
 			OBLParty grp = GetOBLParty();
-			OBLLogger.Debug("Received Group RPC Type: " + type + " Group: " + (grp != null));
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Received Group RPC Type: " + type + " Group: " + (grp != null));
 			if (grp)
 				grp.OnRPCServer(sender, type, ctx);
 			OBLLogger.Debug("OnRPCServer");

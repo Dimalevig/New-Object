@@ -25,7 +25,8 @@ class OBLPositionManager {
 			OBLLogger.Debug("JsonLoadFile OBLPositionManager.json");
 			JsonFileLoader<array<ref OBLWidgetPosition>>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_POSITION_MANAGER, positionss);
 		}
-		OBLLogger.Debug("Loaded Positions: " + positionss.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Loaded Positions: " + positionss.Count());
 		mgr.SetDefaultPositions();
 		mgr.ReplacePositions(positionss);
 		mgr.Save();

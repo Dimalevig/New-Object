@@ -1,64 +1,64 @@
-class OBLLogger {    
-    
-    private static const int LOG_FATAL = 1;
-	private static const int LOG_ERROR = 2;
-	private static const int LOG_ADMIN = 3;
-	private static const int LOG_INFO = 4;
-	private static const int LOG_DEBUG = 5;
-	private static const int LOG_VERBOSE = 6;
-	private static const int LOG_SPAM = 7;
+// Логер системи груп.
+//  Error / Warn / Info — пишуться завжди (коротко, з префіксом [OBL]).
+//  Debug — лише коли на сервері в MainConfig.json стоїть "enableDebugLog": 1.
+//  Перед дорогими повідомленнями перевіряйте OBLLogger.IsDebug(), щоб не збирати рядок даремно.
+class OBLLogger {
 
-    private static bool logToScriptlog;
-	private static bool disableLogger = true;
+	private static bool debugEnabled = false;
+	// захист від засмічення логу: не більше WARN_LIMIT попереджень за WARN_WINDOW_MS
+	private static const int WARN_LIMIT = 60;
+	private static const int WARN_WINDOW_MS = 60000;
+	private static int warnWindowStart = 0;
+	private static int warnCount = 0;
+	private static int warnSuppressed = 0;
 
 	static int Init() {
-		Print("[Init] --- OBLLogger[DEBUG] ---");
 		SetupLogger();
+		Print("[OBL] Логер запущено. Налагодження: " + debugEnabled);
 		return 1;
 	}
 
 	private static void SetupLogger() {
-		disableLogger = OBLPartyMainConfig.Get().disableLoggerDebug;
-		if (GetGame() && GetGame().IsClient()) {
-			disableLogger = true;
-		}
+		debugEnabled = false;
+		if (GetGame() && GetGame().IsServer())
+			debugEnabled = OBLPartyMainConfig.Get().enableDebugLog;
 	}
 
-    static void Debug(string message, bool disable_ = true) {
-        if (disableLogger || disable_) {
+	static bool IsDebug() {
+		return debugEnabled;
+	}
+
+	// другий параметр лишився для сумісності зі старими викликами — ігнорується
+	static void Debug(string message, bool unused = false) {
+		if (!debugEnabled)
+			return;
+		Print("[OBL][DEBUG] " + message);
+	}
+
+	static void Info(string message) {
+		Print("[OBL][INFO] " + message);
+	}
+
+	static void Warn(string message) {
+		int now = 0;
+		if (GetGame())
+			now = GetGame().GetTime();
+		if (now - warnWindowStart > WARN_WINDOW_MS) {
+			if (warnSuppressed > 0)
+				Print("[OBL][WARN] ... ще " + warnSuppressed + " попереджень пропущено (захист від спаму)");
+			warnWindowStart = now;
+			warnCount = 0;
+			warnSuppressed = 0;
+		}
+		if (warnCount >= WARN_LIMIT) {
+			warnSuppressed++;
 			return;
 		}
-        logToScriptlog = !disableLogger;
-		Log(message, LOG_DEBUG, disableLogger);
+		warnCount++;
+		Print("[OBL][WARN] " + message);
 	}
 
-    private static string Log(string message, int logLevel, bool disable) {
-		if (disable) {
-			return "";
-		}
-
-		string logLevelStr;
-		if (logLevel == LOG_FATAL) {
-			logLevelStr = "FATAL";
-		} else if (logLevel == LOG_ERROR) {
-			logLevelStr = "ERROR";
-		} else if (logLevel == LOG_ADMIN) {
-			logLevelStr = "ADMIN";
-		} else if (logLevel == LOG_INFO) {
-			logLevelStr = "INFO ";
-		} else if (logLevel == LOG_DEBUG) {
-			logLevelStr = "DEBUG";
-		} else if (logLevel == LOG_VERBOSE) {
-			logLevelStr = "VERB ";
-		} else if (logLevel == LOG_SPAM) {
-			logLevelStr = "SPAM ";
-		} else {
-			logLevelStr = "Unknown";
-		}
-		string finalMessage = " [" + logLevelStr + "]" + message;
-		if (logToScriptlog) {
-			Print("" + finalMessage);
-		}
-		return finalMessage;
+	static void Error(string message) {
+		Print("[OBL][ERROR] " + message);
 	}
 }

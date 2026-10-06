@@ -47,12 +47,14 @@ modded class OBLParty {
 		if (GetGame()) {
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(StartUpdateDelayed);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateGroup);
-			OBLLogger.Debug("Delete Group: " + shortname);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Delete Group: " + shortname);
 		}
 	}
 	
 	void StartUpdateDelayed() {
-		OBLLogger.Debug("Starting Update Delayed " + shortname);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Starting Update Delayed " + shortname);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateGroup, GROUP_UPDATE_TIMER, true);
 	}
 	
@@ -60,7 +62,8 @@ modded class OBLParty {
 		if (!player)
 			return;
 		lastActivity = JMDate.Now(true).GetTimestamp();
-		OBLLogger.Debug("Player Online: " + (identity != null) + " " + (player != null), true);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Player Online: " + (identity != null) + " " + (player != null), true);
 		if (playerChars.Find(player) == -1)
 			playerChars.Insert(player);
 		OBLPartyMember member = player.GetMyGroupMarker();
@@ -73,14 +76,16 @@ modded class OBLParty {
 			playerChars.RemoveItem(player);
 		lastActivity = JMDate.Now(true).GetTimestamp();
 		bool identOk = (player && player.GetIdentity());
-		OBLLogger.Debug("Player Offline: " + identOk + " " + (player != null));
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Player Offline: " + identOk + " " + (player != null));
 		RebuildCache();
 	}
 	
 	void OnPlayerRespawn(PlayerBase player, PlayerIdentity ident) {
 		if (player)
 			playerChars.RemoveItem(player);
-		OBLLogger.Debug("Player Respawn: " + (ident != null) + " " + (player != null));
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Player Respawn: " + (ident != null) + " " + (player != null));
 			
 		RebuildCache();
 	}
@@ -106,10 +111,12 @@ modded class OBLParty {
 	}
 	
 	Param2<int, string> GetInvite(string steamid) {
-		OBLLogger.Debug("Searching for invite in " + lastInvites.Count() + " invites");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Searching for invite in " + lastInvites.Count() + " invites");
 		foreach (Param2<int, string> invite : lastInvites) {
 			if (invite && invite.param2 == steamid) {
-				OBLLogger.Debug("Found invite for " + steamid + " : " + invite.param1);
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("Found invite for " + steamid + " : " + invite.param1);
 				return invite;
 			}
 		}
@@ -207,28 +214,28 @@ modded class OBLParty {
 	
 	void OnRPCServer(PlayerIdentity sender, int type, ParamsReadContext ctx) {
 		if (!sender) {
-			OBLLogger.Debug("Group RPC without sender ignored. Type: " + type);
+			OBLLogger.Warn("Group RPC without sender ignored. Type: " + type);
 			return;
 		}
 		if (type == OBLPartyRPCs.ADD) {
 			OBLMarker marker = new OBLMarker();
 			if (!marker.ReadFromCtx(ctx)) {
-				OBLLogger.Debug("Failed to read Marker to add !");
+				OBLLogger.Warn("Failed to read Marker to add !");
 				return;
 			}
 			PlayerBase senderPB = PlayerBase.GetPlayerByIdentity(sender);
 			if (!senderPB) {
-				OBLLogger.Debug("Failed to get Sender's Player Object !");
+				OBLLogger.Warn("Failed to get Sender's Player Object !");
 				return;
 			}
 			OBLPartyPermission perms = senderPB.GetPermission();
 			if (!perms) {
-				OBLLogger.Debug("Failed to get Sender's Permissions !");
+				OBLLogger.Warn("Failed to get Sender's Permissions !");
 				return;
 			}
 			// OBL FIX: clients may only create group markers / pings (never member markers)
 			if (marker.type != OBLMarkerType.GROUP_MARKER && marker.type != OBLMarkerType.GROUP_PING) {
-				OBLLogger.Debug("Rejected Marker add with invalid type " + marker.type + " from " + sender.GetPlainId());
+				OBLLogger.Warn("Rejected Marker add with invalid type " + marker.type + " from " + sender.GetPlainId());
 				return;
 			}
 			if (!perms.CanSeeMarkerType(marker.type)) {
@@ -249,27 +256,27 @@ modded class OBLParty {
 		} else if (type == OBLPartyRPCs.REMOVE) {
 			int uid;
 			if (!ctx.Read(uid)) {
-				OBLLogger.Debug("Failed to receive new Marker ID from Client !");
+				OBLLogger.Warn("Failed to receive new Marker ID from Client !");
 				return;
 			}
 			senderPB = PlayerBase.GetPlayerByIdentity(sender);
 			if (!senderPB) {
-				OBLLogger.Debug("Failed to get Sender's Player Object !");
+				OBLLogger.Warn("Failed to get Sender's Player Object !");
 				return;
 			}
 			perms = senderPB.GetPermission();
 			if (!perms) {
-				OBLLogger.Debug("Failed to get Sender's Permissions !");
+				OBLLogger.Warn("Failed to get Sender's Permissions !");
 				return;
 			}
 			OBLMarker mark = FindAnyMarkerByUID(uid);
 			if (!mark) {
-				OBLLogger.Debug("Failed to find Any Marker with uid: " + uid);
+				OBLLogger.Warn("Failed to find Any Marker with uid: " + uid);
 				return;
 			}
 			// OBL FIX: removing a member marker kicked that member (even the leader) without any rank check
 			if (mark.type != OBLMarkerType.GROUP_MARKER && mark.type != OBLMarkerType.GROUP_PING) {
-				OBLLogger.Debug("Rejected Marker remove of type " + mark.type + " from " + sender.GetPlainId());
+				OBLLogger.Warn("Rejected Marker remove of type " + mark.type + " from " + sender.GetPlainId());
 				return;
 			}
 			if (!perms.CanSeeMarkerType(mark.type)) {
@@ -280,17 +287,17 @@ modded class OBLParty {
 		} else if (type == OBLPartyRPCs.INVITE) {
 			string invtedSteamid;
 			if (!ctx.Read(invtedSteamid)) {
-				OBLLogger.Debug("Failed to Receive Invite Steamid !");
+				OBLLogger.Warn("Failed to Receive Invite Steamid !");
 				return;
 			}
 			senderPB = PlayerBase.GetPlayerByIdentity(sender);
 			if (!senderPB) {
-				OBLLogger.Debug("Failed to get Sender's Player Object !");
+				OBLLogger.Warn("Failed to get Sender's Player Object !");
 				return;
 			}
 			perms = senderPB.GetPermission();
 			if (!perms) {
-				OBLLogger.Debug("Failed to get Sender's Permissions !");
+				OBLLogger.Warn("Failed to get Sender's Permissions !");
 				return;
 			}
 			invtedSteamid = ResolveOBLInviteCode(invtedSteamid);
@@ -302,12 +309,12 @@ modded class OBLParty {
 		} else if (type == OBLPartyRPCs.LEAVE) {
 			PlayerBase pb = PlayerBase.GetPlayerByIdentity(sender);
 			if (!pb) {
-				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
+				OBLLogger.Warn("Unable to find Player Object of " + sender.GetPlainId());
 				return;
 			}
 			OBLPartyMember memMarker = pb.GetMyGroupMarker();
 			if (!memMarker) {
-				OBLLogger.Debug("Unable to find Marker of " + sender.GetPlainId());
+				OBLLogger.Warn("Unable to find Marker of " + sender.GetPlainId());
 				return;
 			}
 			int permGroup = memMarker.permissionGroup;
@@ -325,13 +332,13 @@ modded class OBLParty {
 				return;
 			senderPB = PlayerBase.GetPlayerByIdentity(sender);
 			if (!senderPB) {
-				OBLLogger.Debug("Failed to get Sender's Player Object !");
+				OBLLogger.Warn("Failed to get Sender's Player Object !");
 				return;
 			}
 			targetPB = GetPlayerBySteamid(steamid);
 			perms = senderPB.GetPermission();
 			if (!perms) {
-				OBLLogger.Debug("Failed to get Sender's Permissions !");
+				OBLLogger.Warn("Failed to get Sender's Permissions !");
 				return;
 			}
 			OBLPartyMember targetMember = GetMemberBySteamid(steamid);
@@ -341,7 +348,7 @@ modded class OBLParty {
 			}
 			OBLPartyPermission targetPerms = targetMember.GetPermission();
 			if (!targetPerms) {
-				OBLLogger.Debug("Failed to get Target's Permissions !");
+				OBLLogger.Warn("Failed to get Target's Permissions !");
 				return;
 			}
 			if (type == OBLPartyRPCs.PROMOTE) {
@@ -408,7 +415,7 @@ modded class OBLParty {
 		} else if (type == OBLPartyRPCs.CHANGE_TAG_VISIBILITY) {
 			bool enabled;
 			if (!ctx.Read(enabled)) {
-				OBLLogger.Debug("Unable to read enabled From Client !");
+				OBLLogger.Warn("Unable to read enabled From Client !");
 				return;
 			}
 			// OBL FIX: only the leader may change it (same rule the client UI uses)
@@ -587,11 +594,11 @@ modded class OBLParty {
 	}
 	
 	void AddMarkerServer(OBLMarker marker) {
-		OBLLogger.Debug("Adding Marker Server: " + marker + " Group: " + shortname);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Adding Marker Server: " + marker + " Group: " + shortname);
 		if (marker) {
-			string printname = marker.name + "";
-			printname.Replace("%", "");
-			OBLLogger.Debug("Marker Info: " + printname + " " + marker.icon + " " + marker.type);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Marker Info: " + (marker.name) + " " + marker.icon + " " + marker.type);
 		}
 		AddMarkerLocal(marker);
 		if (marker.type == OBLMarkerType.GROUP_PING && OBLPartyMainConfig.Get().tacticalPingLifetimeSeconds >= 0)
@@ -602,11 +609,11 @@ modded class OBLParty {
 	}
 	
 	void AddPlayerMarkerServer(OBLMarker marker) {
-		OBLLogger.Debug("Adding Player Marker Server: " + marker);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Adding Player Marker Server: " + marker);
 		if (marker) {
-			string printname = marker.name + "";
-			printname.Replace("%", "");
-			OBLLogger.Debug("Marker Info: " + printname + " " + marker.icon + " " + marker.type);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Marker Info: " + (marker.name) + " " + marker.icon + " " + marker.type);
 		}
 		AddMarkerLocal(marker);
 		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.ADD_CLIENT);
@@ -629,11 +636,11 @@ modded class OBLParty {
 	void RemoveMarkerServer(OBLMarker marker) {
 		if (!marker)
 			return;
-		OBLLogger.Debug("Removing Marker Server: " + marker);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Removing Marker Server: " + marker);
 		if (marker) {
-			string printname = marker.name + "";
-			printname.Replace("%", "");
-			OBLLogger.Debug("Marker Info: " + printname + " " + marker.icon + " " + marker.type);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Marker Info: " + (marker.name) + " " + marker.icon + " " + marker.type);
 		}
 		int uid = marker.uid;
 		bool removedMember = marker.type == OBLMarkerType.GROUP_PLAYER_MARKER;
@@ -759,10 +766,12 @@ modded class OBLParty {
 	
 	void UpdateGroup() {
 		if (playerChars && playerChars.Count() > 0) { // Reduce Log Spam. There is nothing to update if no player is online
-			OBLLogger.Debug("Update Group: " + shortname);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Update Group: " + shortname);
 			UpdatePlayerList();
 			UpdatePlayerPositionsAndHealth();
-			OBLLogger.Debug("Finished Update Group: " + shortname);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Finished Update Group: " + shortname);
 		}
 	}
 	
@@ -786,7 +795,8 @@ modded class OBLParty {
 		// OBL FIX: '%' breaks widget text formatting; clamp runaway show_time
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
-		OBLLogger.Debug("Sending Error Notification to " + player.GetPlainId() + ": " + printmessage);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Sending Error Notification to " + player.GetPlainId() + ": " + printmessage);
 		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, printmessage, OBLTheme.ICON_ERROR);
 	}
 	
@@ -808,7 +818,8 @@ modded class OBLParty {
 		// OBL FIX: '%' breaks widget text formatting; clamp runaway show_time
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
-		OBLLogger.Debug("Sending Info Notification to " + player.GetPlainId() + ": " + printmessage);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Sending Info Notification to " + player.GetPlainId() + ": " + printmessage);
 		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, printmessage, OBLTheme.ICON_INFO);
 	}
 	
@@ -821,7 +832,8 @@ modded class OBLParty {
 	override void SendRPCToGroupMembers(ScriptRPC rpc, int otherRPCType = -1) {
 		if (!playerChars)
 			playerChars = new array<PlayerBase>();
-		OBLLogger.Debug("Sending RPC To Group Members: " + playerChars.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Sending RPC To Group Members: " + playerChars.Count());
 		int type = otherRPCType;
 		if (type == -1)
 			type = OBLPartyRPCs.GROUP_RPC;
@@ -833,12 +845,12 @@ modded class OBLParty {
 			if (ident) {
 				rpc.Send(null, type, true, ident);
 				count++;
-				string printname = ident.GetName() + "";
-				printname.Replace("%", "");
-				OBLLogger.Debug("RPC Tpye: " + type + " Sent to " + printname + " " + ident.GetPlainId());
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("RPC Tpye: " + type + " Sent to " + (ident.GetName()) + " " + ident.GetPlainId());
 			}
 		}
-		OBLLogger.Debug("RPC was sent to " + count + " Players");
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("RPC was sent to " + count + " Players");
 	}
 	
 	void ResendGroupInfo() {

@@ -45,7 +45,8 @@ class OBLMarkerVisibilityManager {
 		OBLLogger.Debug("JsonLoadFile OBLMarkerVisibilityManager.json");
 		JsonFileLoader<OBLMarkerVisibilityManager>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_PRIVATE_MARKER_STATES, mgr);
 		if (mgr.version != CURRENT_VERSION) {
-			OBLLogger.Debug("Upgrading Visibility Manager Version from " + mgr.version + " to " + CURRENT_VERSION);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Upgrading Visibility Manager Version from " + mgr.version + " to " + CURRENT_VERSION);
 			mgr.UpgradeVersion(mgr.version, CURRENT_VERSION);
 			mgr.Save();
 		}

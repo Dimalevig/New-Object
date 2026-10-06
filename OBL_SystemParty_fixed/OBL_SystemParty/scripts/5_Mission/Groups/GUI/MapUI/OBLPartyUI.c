@@ -33,7 +33,8 @@ class OBLPartyUI : UIScriptedMenu {
 	}
 	
 	void OnStreamerModeChange(bool enabled) {
-		OBLLogger.Debug("OnStreamerModeChange OBLPartyUI: " + enabled);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnStreamerModeChange OBLPartyUI: " + enabled);
 		if (!layoutRoot)
 			return;
 		ImageWidget serverLogo = ImageWidget.Cast(layoutRoot.FindAnyWidget("logo"));
@@ -100,14 +101,16 @@ class OBLPartyUI : UIScriptedMenu {
 		super.Init();
 		initializedLayout = GetMapLayout();
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets(initializedLayout);
-		OBLLogger.Debug("Created Root Layout ? " + (layoutRoot != null) + " Path: " + initializedLayout);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Created Root Layout ? " + (layoutRoot != null) + " Path: " + initializedLayout);
 		if (!layoutRoot)
 			return null;
 
 		leftPanel = layoutRoot.FindAnyWidget("leftPanel");
 		fullPanel = layoutRoot.FindAnyWidget("fullPanel");
 		topPanel = layoutRoot.FindAnyWidget("topPanel");
-		OBLLogger.Debug("Found Left Panel ? " + (leftPanel != null) + " Found Full Panel ? " + (fullPanel != null) + " Found Top Panel ? " + (topPanel != null));
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Found Left Panel ? " + (leftPanel != null) + " Found Full Panel ? " + (fullPanel != null) + " Found Top Panel ? " + (topPanel != null));
 		if (!leftPanel || !fullPanel || !topPanel)
 			return null;
 		
@@ -119,7 +122,8 @@ class OBLPartyUI : UIScriptedMenu {
 	}
 	
 	void InitPageRest() {
-		OBLLogger.Debug("initializedRest: " + initializedRest);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("initializedRest: " + initializedRest);
 		if (initializedRest)
 			return;
 		mapMarkerManager = new OBLMapMarkerManager(mapWidget);
@@ -561,19 +565,23 @@ class OBLPartyUI : UIScriptedMenu {
 	override bool OnDrag(Widget w, int x, int y) {
 		if (mapMarkerManager)
 			mapMarkerManager.OnDragStart(w);
-		OBLLogger.Debug("OnDrag: " + w);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnDrag: " + w);
 		return true;
 	}
 	override bool OnDragging(Widget w, int x, int y, Widget reciever) {
-		OBLLogger.Debug("OnDragging: " + w);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnDragging: " + w);
 		return true;
 	}
 	override bool OnDraggingOver(Widget w, int x, int y, Widget reciever) {
-		OBLLogger.Debug("OnDraggingOver: " + w);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnDraggingOver: " + w);
 		return true;
 	}
 	override bool OnDrop(Widget w, int x, int y, Widget reciever) {
-		OBLLogger.Debug("OnDrop: " + w + " at: " + x + "," + y);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("OnDrop: " + w + " at: " + x + "," + y);
 		if (!mapWidget)
 			return true;
 		vector worldpos = mapWidget.ScreenToMap(Vector(x + 10,y + 10,0));

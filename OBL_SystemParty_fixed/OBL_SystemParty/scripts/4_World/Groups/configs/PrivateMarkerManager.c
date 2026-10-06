@@ -27,7 +27,8 @@ class OBLPrivateMarkerManager {
 	}
 	
 	static OBLPrivateMarkerManager Load(string server) {
-		OBLLogger.Debug("Loading Private Markers for Server " + server);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Loading Private Markers for Server " + server);
 		OBLPrivateMarkerManager mgr;
 		if (!FileExist(OBLPartyConstants.SAVE_PREFIX))
 			MakeDirectory(OBLPartyConstants.SAVE_PREFIX);

@@ -66,7 +66,8 @@ class OBLPlayerList {
 		int index = OBLPositionManager.Get().GetIndex("PlayerList");
 		OBLWidgetUtils.SetWidgetAlignmentIndex(listWidget, index);
 		OBLWidgetUtils.SetWidgetPositionIndex(listWidget, pos, index);
-		OBLLogger.Debug("Updated Position to: " + pos);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Updated Position to: " + pos);
 	}
 	
 	void UpdateVisibility() {
@@ -135,7 +136,8 @@ class OBLPlayerList {
 		}
 		int mySubGroup = myMarker.currentSubgroup;
 		array<ref OBLPartyMember> members = grp.GetSubgroupMembers(mySubGroup);
-		OBLLogger.Debug("Group Members: " + members.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Group Members: " + members.Count());
 		if (members.Count() != entries.Count())
 			return 1;
 		bool changedHealth = false;
@@ -180,11 +182,13 @@ class OBLPlayerList {
 	}
 
 	void UpdateEntries(bool force = false) {
-		OBLLogger.Debug("UpdateEntries. Force ? " + force + " Count: " + entries.Count());
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("UpdateEntries. Force ? " + force + " Count: " + entries.Count());
 		if (!mainWidget)
 			return;
 		int update = ShouldUpdateList();
-		OBLLogger.Debug("Update: " + update);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Update: " + update);
 		if (update == 0 && !force)
 			return;
 		if (update == 1 || force) {

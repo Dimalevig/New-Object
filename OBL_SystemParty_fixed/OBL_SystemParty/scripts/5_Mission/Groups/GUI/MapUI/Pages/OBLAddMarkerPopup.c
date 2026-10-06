@@ -130,9 +130,8 @@ class OBLAddMarkerPopup {
 	}
 	
 	void AddMarker(vector pos, int visibility, string name, string icon, int colorR, int colorG, int colorB, int colorA) {
-		string printname = name + "";
-		printname.Replace("%", "");
-		OBLLogger.Debug("AddMarker: " + pos + " " + visibility + " " + printname + " " + icon);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("AddMarker: " + pos + " " + visibility + " " + (name) + " " + icon);
 		OBLMarker marker = new OBLMarker();
 		OBLMarkerType type = OBLMarkerType.GROUP_MARKER;
 		if (visibility == 0) {
@@ -179,7 +178,8 @@ class OBLAddMarkerPopup {
 		vector pos = Vector(x,y,0);
 		addPosition = parent.mapWidget.ScreenToMap(pos);
 		addPopup.Show(true);
-		OBLLogger.Debug("Showing Add Popup " + x + " " + y + " MapPos: " + addPosition);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Showing Add Popup " + x + " " + y + " MapPos: " + addPosition);
 		btn_add_delete.Show(deleteMode);
 		edit_marker = marker;
 		if (deleteMode) {
@@ -267,19 +267,20 @@ class OBLAddMarkerPopup {
 	void DeleteMarkerUnderMouse() {
 		int x, y;
 		GetMousePos(x,y);
-		OBLLogger.Debug("DeleteMarkerUnderMouse. Pos: " + x + "," + y);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("DeleteMarkerUnderMouse. Pos: " + x + "," + y);
 		vector mousePos = Vector(x + 10,y + 10,0);
 		vector mapPos = parent.mapWidget.ScreenToMap(mousePos);
-		OBLLogger.Debug("MapPos: " + mapPos);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("MapPos: " + mapPos);
 		OBLMarker marker = FindMarkerInRadius(mapPos);
 		RequestMarkerDelete(marker);
 	}
 	
 	void RequestMarkerDelete(OBLMarker marker) {
 		if (marker) {
-			string printname = marker.name + "";
-			printname.Replace("%", "");
-			OBLLogger.Debug("Removing Marker: " + printname + " " + marker.icon);
+			if (OBLLogger.IsDebug())
+				OBLLogger.Debug("Removing Marker: " + (marker.name) + " " + marker.icon);
 			if (marker.type == OBLMarkerType.PRIVATE_MARKER) {
 				OBLPrivateMarkerManager.Get().RemoveMarker(marker);
 			} else if (marker.type == OBLMarkerType.GROUP_MARKER) {
@@ -307,7 +308,8 @@ class OBLAddMarkerPopup {
 					continue;
 				float dist = Math.Sqrt((marker.position[0] - center[0]) * (marker.position[0] - center[0]) + (marker.position[2] - center[2]) * (marker.position[2] - center[2]));
 				if (dist < bestDist) {
-					OBLLogger.Debug("New Best Marker: " + marker + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
+					if (OBLLogger.IsDebug())
+						OBLLogger.Debug("New Best Marker: " + marker + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
 					bestMarker = marker;
 					bestDist = dist;
 				}
@@ -318,7 +320,8 @@ class OBLAddMarkerPopup {
 				continue;
 			dist = Math.Sqrt((marker2.position[0] - center[0]) * (marker2.position[0] - center[0]) + (marker2.position[2] - center[2]) * (marker2.position[2] - center[2]));
 			if (dist < bestDist) {
-				OBLLogger.Debug("New Best Marker: " + marker2 + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
+				if (OBLLogger.IsDebug())
+					OBLLogger.Debug("New Best Marker: " + marker2 + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
 				bestMarker = marker2;
 				bestDist = dist;
 			}
@@ -329,13 +332,15 @@ class OBLAddMarkerPopup {
 					continue;
 				dist = Math.Sqrt((serverMark1.position[0] - center[0]) * (serverMark1.position[0] - center[0]) + (serverMark1.position[2] - center[2]) * (serverMark1.position[2] - center[2]));
 				if (dist < bestDist) {
-					OBLLogger.Debug("New Best Marker: " + serverMark1 + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
+					if (OBLLogger.IsDebug())
+						OBLLogger.Debug("New Best Marker: " + serverMark1 + " OLD: " + bestMarker + " Dist: " + dist + " OLD: " + bestDist);
 					bestMarker = serverMark1;
 					bestDist = dist;
 				}
 			}
 		}
-		OBLLogger.Debug("Best Marker: " + bestMarker + " Dist: " + bestDist);
+		if (OBLLogger.IsDebug())
+			OBLLogger.Debug("Best Marker: " + bestMarker + " Dist: " + bestDist);
 		return bestMarker;
 	}
 
