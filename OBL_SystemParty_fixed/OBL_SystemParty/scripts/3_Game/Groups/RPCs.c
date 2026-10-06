@@ -20,7 +20,7 @@ enum OBLPartyRPCs {
 	GROUP_ADMIN_PROMOTE,
 	GROUP_ADMIN_DEMOTE,
 	GROUP_ADMIN_TOLEADER,
-	GROUP_ADMIN_LEVEL,
+	GROUP_ADMIN_LEVEL,         // не використовується (рівні видалено), слот лишається для нумерації
 	GROUP_ADMIN_JOIN,
 	GROUP_ADMIN_FLAGS,
 	GROUP_SYNC,

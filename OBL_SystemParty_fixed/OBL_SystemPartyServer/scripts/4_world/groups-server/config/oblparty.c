@@ -393,35 +393,8 @@ modded class OBLParty {
 				}
 			}
 		} else if (type == OBLPartyRPCs.UPGRADE) {
-			senderPB = PlayerBase.GetPlayerByIdentity(sender);
-			if (!senderPB) {
-				OBLLogger.Debug("Failed to get Sender's Player Object !");
-				return;
-			}
-			perms = senderPB.GetPermission();
-			if (!perms) {
-				OBLLogger.Debug("Failed to get Sender's Permissions !");
-				return;
-			}
-			if (!perms.canUpgrade) {
-				SendErrorNotification(sender, "У вас немає прав для покращення!");
-				return;
-			}
-			pb = PlayerBase.GetPlayerByIdentity(sender);
-			if (!pb) {
-				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
-				return;
-			}
-			// OBL FIX: level used to grow forever (no next-level check)
-			if (!OBLPartyLevels.Get().FindLevelByUID(level + 1)) {
-				SendErrorNotification(sender, "Досягнуто максимального рівня");
-				return;
-			}
-			GetGame().AdminLog("Player " + sender.GetPlainId() + " (" + sender.GetName() + ") upgraded Group. Name: " + name + " Tag: " + shortname );
-			level++;
-			OnLevelChanged();
-			OBLPartyManager.Get().SaveGroup(this);
-			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(level));
+			// рівнів груп більше немає
+			return;
 		} else if (type == OBLPartyRPCs.CHANGE_TAG_VISIBILITY) {
 			bool enabled;
 			if (!ctx.Read(enabled)) {
@@ -506,7 +479,8 @@ modded class OBLParty {
 		SendInfoNotification(sender, "Запрошення надіслано гравцю " + targetPB.GetIdentity().GetName() + ".");
 	}
 	
-	void OnLevelChanged() {
+	// перераховує ліміти групи й розсилає їх учасникам
+	void SyncGroupNumbers() {
 		InitNumbers();
 		ScriptRPC upgradeRPC = CreateRPCCall(OBLPartyRPCs.UPGRADE);
 		upgradeRPC.Write(level);
@@ -749,18 +723,13 @@ modded class OBLParty {
 	
 	override void InitNumbers() {
 		super.InitNumbers();
-		OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(level);
-		if (!lvl)
-			lvl = OBLPartyLevels.Get().GetHighestLevel();
+		// рівнів немає: фіксовані ліміти
+		level = 0;
 		maxPlayers = GetMaxPlayersLimit();
 		subGroupCount = OBLPartyConstants.SUBGROUP_COUNT;
 		subGroupSize = maxPlayers;
-		markerLimit = OBLPartyMainConfig.Get().groupMarkerLimit;
-		plotpoleLimit = 0;
-		if (lvl) {
-			markerLimit += lvl.groupMarkerLimitAdded;
-			plotpoleLimit = lvl.groupPlotpolesLimitAdded;
-		}
+		markerLimit = OBLPartyConstants.GROUP_MARKER_LIMIT;
+		plotpoleLimit = OBLPartyConstants.GROUP_PLOTPOLE_LIMIT;
 	}
 	
 	int GetFreeMemberSlots() {

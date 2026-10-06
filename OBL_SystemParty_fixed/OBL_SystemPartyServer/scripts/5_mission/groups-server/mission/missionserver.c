@@ -8,7 +8,6 @@ modded class MissionServer {
 		OBLLogger.Init();
 		OBLPartyMainConfig.Get();
 		OBLPartyPermissions.Get();
-		OBLPartyLevels.Get();
 		OBLStaticMarkerManager.Get();
 		OBLPartyManager.Get();
 		OBLShopManager.Get();
@@ -23,7 +22,6 @@ modded class MissionServer {
 	void ~MissionServer() {
 		OBLPartyMainConfig.Delete();
 		OBLPartyPermissions.Delete();
-		OBLPartyLevels.Delete();
 		OBLStaticMarkerManager.Delete();
 		OBLPartyManager.Delete();
 		GetDayZGame().Event_OnRPC.Remove(RPC_OBL);

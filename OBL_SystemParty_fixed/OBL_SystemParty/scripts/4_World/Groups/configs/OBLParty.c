@@ -161,11 +161,6 @@ class OBLParty {
 		SendRPCToServer(rpc);
 	}
 	
-	void UpgradeGroupClient() {
-		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.UPGRADE);
-		SendRPCToServer(rpc);
-	}
-	
 	OBLPartyMember GetMemberBySteamid(string steamid) {
 		foreach (OBLPartyMember member : members) {
 			if (member && member.steamid == steamid)

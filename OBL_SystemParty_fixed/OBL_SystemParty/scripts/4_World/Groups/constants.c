@@ -2,7 +2,6 @@ class OBLPartyConstants {
 	const string SAVE_PREFIX = "$profile:OBLParty/";
 	const string SAVE_SUFFIX_GROUP_PERMISSIONS = "Permissions.json";
 	const string SAVE_SUFFIX_MAIN_CONFIG = "MainConfig.json";
-	const string SAVE_SUFFIX_GROUP_LEVELS = "Levels.json";
 	const string SAVE_SUFFIX_STATIC_MARKER = "StaticMarkers.json";
 	const string SAVE_SUFFIX_PRIVATE_MARKER = "PrivateMarkers.json";
 	const string SAVE_SUFFIX_PRIVATE_MARKER_STATES = "PrivateMarkerDisplaystates.json";
@@ -21,4 +20,7 @@ class OBLPartyConstants {
 	// розмір групи: 6 за замовчуванням, адмін може задати до 15
 	const int DEFAULT_MAX_PLAYERS = 6;
 	const int MAX_PLAYERS_LIMIT = 15;
+	// маркерів групи (пінги не рахуються)
+	const int GROUP_MARKER_LIMIT = 30;
+	const int GROUP_PLOTPOLE_LIMIT = 2;
 }

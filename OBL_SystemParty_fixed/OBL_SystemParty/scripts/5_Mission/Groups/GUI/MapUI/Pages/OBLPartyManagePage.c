@@ -107,14 +107,7 @@ class OBLPartyManagePage : OBLPartyPage {
 		} else if (w == btn_kick) {
 			KickSelectedPlayer();
 			return true;
-		} 
-		// else if (w == btn_upgrade) {
-		// 	pb = PlayerBase.Cast(GetGame().GetPlayer());
-		// 	if (!pb || !pb.GetOBLParty())
-		// 		return true;
-		// 	pb.GetOBLParty().UpgradeGroupClient();
-		// 	return true;
-		// }
+		}
 		return false;
 	}
 	
@@ -204,7 +197,6 @@ class OBLPartyManagePage : OBLPartyPage {
 		OBLPartyPermission myPerms = pb.GetPermission();
 		if (!myPerms)
 			return;
-		// btn_upgrade.Enable(myPerms.canUpgrade);
 		int selected = playerlist_members.GetSelectedRow();
 		if (selected < 0 || selected >= playerlist_members.GetNumItems()) {
 			btn_kick.Enable(false);
@@ -430,7 +422,6 @@ class OBLPartyManagePage : OBLPartyPage {
 		OBLLogger.Debug("InitMainWidget GrupManage Page");
 		btn_kick = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_kick"));
 		btn_leave = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_leave"));
-		// btn_upgrade = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_upgrade"));
 		btn_promote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_promote"));
 		btn_demote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_demote"));
 		// гравці більше не обирають підгрупу вручну — кнопку ховаємо

@@ -283,8 +283,25 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_4_0_default.layout client/g
 -}
 diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/gui/layouts/mapmenu/pages/page_6_0_default.layout
 --- client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:08:50.534200567 +0000
-+++ client/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:27:31.282418467 +0000
-@@ -288,12 +288,12 @@
++++ client/gui/layouts/mapmenu/pages/page_6_0_default.layout	2026-10-06 22:31:11.269790321 +0000
+@@ -255,16 +255,6 @@
+          vexactsize 1
+          text "Назва:"
+         }
+-        TextWidgetClass TextWidget5 {
+-         ignorepointer 1
+-         position 5 75
+-         size 0.45 20
+-         hexactpos 1
+-         vexactpos 1
+-         hexactsize 0
+-         vexactsize 1
+-         text "Рівень:"
+-        }
+         TextWidgetClass TextWidget6 {
+          ignorepointer 1
+          position 5 125
+@@ -288,12 +278,12 @@
          TextWidgetClass TextWidget8 {
           ignorepointer 1
           position 5 175
@@ -299,53 +316,123 @@ diff -ruN client_orig/gui/layouts/mapmenu/pages/page_6_0_default.layout client/g
          }
          TextWidgetClass TextWidget9 {
           ignorepointer 1
-@@ -357,13 +357,45 @@
+@@ -325,16 +315,6 @@
+          hexactsize 0
+          vexactsize 1
+         }
+-        TextWidgetClass level {
+-         ignorepointer 1
+-         position 5 75
+-         size 0.5 20
+-         halign right_ref
+-         hexactpos 1
+-         vexactpos 1
+-         hexactsize 0
+-         vexactsize 1
+-        }
+         TextWidgetClass created {
+          ignorepointer 1
+          position 5 125
+@@ -357,34 +337,33 @@
          }
          TextWidgetClass playercount {
           ignorepointer 1
+-         position 5 175
+-         size 0.5 20
+-         halign right_ref
+-         hexactpos 1
 +         position 0.22 175
 +         size 0.15 20
 +         hexactpos 0
-+         vexactpos 1
-+         hexactsize 0
-+         vexactsize 1
-+        }
+          vexactpos 1
+          hexactsize 0
+          vexactsize 1
+         }
+-        TextWidgetClass markercount {
+-         ignorepointer 1
+-         position 5 200
+-         size 0.5 20
+-         halign right_ref
+-         hexactpos 1
 +        EditBoxWidgetClass maxPlayersInput {
 +         ignorepointer 0
 +         position 0.38 175
 +         size 0.12 20
 +         hexactpos 0
-+         vexactpos 1
-+         hexactsize 0
-+         vexactsize 1
-+        }
+          vexactpos 1
+          hexactsize 0
+          vexactsize 1
+         }
+-        ButtonWidgetClass btnChangeGroupNames {
+-         position 5 50
+-         size 0.97 20
 +        ButtonWidgetClass btnSetMaxPlayers {
-          position 5 175
--         size 0.5 20
++         position 5 175
 +         size 0.47 20
-          halign right_ref
++         halign right_ref
           hexactpos 1
           vexactpos 1
           hexactsize 0
           vexactsize 1
+-         text "Змінити назви груп"
 +         text "Встановити ліміт (0 = 6)"
-+         {
+          {
+-          PanelWidgetClass uaPrimary114 {
 +          PanelWidgetClass uaPrimaryMaxPlayers {
-+           ignorepointer 1
-+           position 0 0
-+           size 1 1
-+           halign center_ref
-+           valign center_ref
-+           hexactpos 1
-+           vexactpos 1
-+           hexactsize 0
-+           vexactsize 0
-+           style Outline
-+          }
-+         }
+            ignorepointer 1
+            position 0 0
+            size 1 1
+@@ -398,40 +377,26 @@
+           }
+          }
          }
-         TextWidgetClass markercount {
-          ignorepointer 1
+-        ButtonWidgetClass btnLevelUp {
+-         position 5 100
+-         size 0.45 20
++        TextWidgetClass markercount {
++         ignorepointer 1
++         position 5 200
++         size 0.5 20
++         halign right_ref
+          hexactpos 1
+          vexactpos 1
+          hexactsize 0
+          vexactsize 1
+-         text "Підвищити рівень"
+-         {
+-          PanelWidgetClass uaPrimary112 {
+-           ignorepointer 1
+-           position 0 0
+-           size 1 1
+-           halign center_ref
+-           valign center_ref
+-           hexactpos 1
+-           vexactpos 1
+-           hexactsize 0
+-           vexactsize 0
+-           style Outline
+-          }
+-         }
+         }
+-        ButtonWidgetClass btnLevelDown {
+-         position 5 100
+-         size 0.5 20
+-         halign right_ref
++        ButtonWidgetClass btnChangeGroupNames {
++         position 5 50
++         size 0.97 20
+          hexactpos 1
+          vexactpos 1
+          hexactsize 0
+          vexactsize 1
+-         text "Понизити рівень"
++         text "Змінити назви груп"
+          {
+-          PanelWidgetClass uaPrimary113 {
++          PanelWidgetClass uaPrimary114 {
+            ignorepointer 1
+            position 0 0
+            size 1 1
 diff -ruN client_orig/inputsOBL.xml client/inputsOBL.xml
 --- client_orig/inputsOBL.xml	2026-10-06 22:08:50.535299828 +0000
 +++ client/inputsOBL.xml	2026-10-06 22:28:18.965735188 +0000
@@ -414,7 +501,16 @@ diff -ruN client_orig/scripts/3_Game/Groups/OBLDate.c client/scripts/3_Game/Grou
  			print = true;
 diff -ruN client_orig/scripts/3_Game/Groups/RPCs.c client/scripts/3_Game/Groups/RPCs.c
 --- client_orig/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:08:50.535793642 +0000
-+++ client/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:26:31.668476271 +0000
++++ client/scripts/3_Game/Groups/RPCs.c	2026-10-06 22:31:18.575373328 +0000
+@@ -20,7 +20,7 @@
+ 	GROUP_ADMIN_PROMOTE,
+ 	GROUP_ADMIN_DEMOTE,
+ 	GROUP_ADMIN_TOLEADER,
+-	GROUP_ADMIN_LEVEL,
++	GROUP_ADMIN_LEVEL,         // не використовується (рівні видалено), слот лишається для нумерації
+ 	GROUP_ADMIN_JOIN,
+ 	GROUP_ADMIN_FLAGS,
+ 	GROUP_SYNC,
 @@ -58,14 +58,15 @@
  	CONFIG_SYNC_INVITE_CODE,
  	CONFIG_SYNC_ONLINE_PRIVACY,
@@ -643,7 +739,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLLayoutConfig.c client/sc
  			case "Map Page 6 0":
 diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4_World/Groups/configs/OBLParty.c
 --- client_orig/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 22:08:50.537032222 +0000
-+++ client/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 22:26:31.668918963 +0000
++++ client/scripts/4_World/Groups/configs/OBLParty.c	2026-10-06 22:31:11.268256661 +0000
 @@ -12,17 +12,12 @@
  	int markerLimit = 0;
  	int plotpoleLimit = 0;
@@ -705,8 +801,15 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		} else if (type > OBLPartyRPCs.START_MARKER_RPC) {
  			int uid2;
  			if (!ctx.Read(uid2))
-@@ -207,7 +168,7 @@
+@@ -200,14 +161,9 @@
+ 		SendRPCToServer(rpc);
+ 	}
  	
+-	void UpgradeGroupClient() {
+-		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.UPGRADE);
+-		SendRPCToServer(rpc);
+-	}
+-	
  	OBLPartyMember GetMemberBySteamid(string steamid) {
  		foreach (OBLPartyMember member : members) {
 -			if (member.steamid == steamid)
@@ -714,7 +817,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  				return member;
  		}
  		return null;
-@@ -236,18 +197,12 @@
+@@ -236,18 +192,12 @@
  		return GetSubgroupMembers(subGroup).Count();
  	}
  	
@@ -734,7 +837,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  				memb.Insert(member);
  		}
  		return memb;
-@@ -271,11 +226,6 @@
+@@ -271,11 +221,6 @@
  		ctx.Write(markerLimit);
  		ctx.Write(plotpoleLimit);
  		ctx.Write(showTagInChat);
@@ -746,7 +849,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		ctx.Write(creationDate);
  		ctx.Write(lastActivity);
  	}
-@@ -317,15 +267,6 @@
+@@ -317,15 +262,6 @@
  			return false;
  		if (!ctx.Read(showTagInChat))
  			return false;
@@ -762,7 +865,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		if (!ctx.Read(creationDate))
  			return false;
  		if (!ctx.Read(lastActivity))
-@@ -469,15 +410,6 @@
+@@ -469,15 +405,6 @@
  			marker = FindMemberByUID(uid);
  		if (!marker)
  			marker = FindPingMarkerByUID(uid);
@@ -778,7 +881,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  		OBLLogger.Debug("Found Marker: " + marker);
  		return marker;
  	}
-@@ -506,62 +438,6 @@
+@@ -506,62 +433,6 @@
  	
  	void SendRPCToGroupMembers(ScriptRPC rpc, int otherRPCType = -1) {}
  	void InitNumbers() {}
@@ -845,7 +948,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLParty.c client/scripts/4
  }
 diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client/scripts/4_World/Groups/configs/OBLPartyMainConfig.c
 --- client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c	2026-10-06 22:08:50.537181542 +0000
-+++ client/scripts/4_World/Groups/configs/OBLPartyMainConfig.c	2026-10-06 22:28:04.991108539 +0000
++++ client/scripts/4_World/Groups/configs/OBLPartyMainConfig.c	2026-10-06 22:31:11.268010292 +0000
 @@ -22,7 +22,6 @@
  	bool enablePlayerList = true;
  	bool enablePlayerListDistance = true;
@@ -854,7 +957,15 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  	bool enableShop = true;
  	string shopApiUrl = "https://oblivion-store.vn.ua";
  	int shopServerId = 1;
-@@ -78,6 +77,8 @@
+@@ -35,7 +34,6 @@
+ 	bool enableInfoPanelRealTime = true;
+ 	bool disableInfoPanelModCreatorMention = false;
+ 	bool disableLoggerDebug = false;
+-	int groupMarkerLimit = 20;
+ 	ref TStringArray adminSteamids = new TStringArray();
+ 	float offlinePlayer3dMarkerDistance = 20.0;
+ 	ref TStringArray subGroupNames = new TStringArray();
+@@ -78,6 +76,8 @@
  			OBLFile<OBLPartyMainConfig>.SaveToJson(OBLPartyConstants.SAVE_SUFFIX_MAIN_CONFIG, cfg);
  		}
  		EnsureButtonConfig(cfg);
@@ -863,7 +974,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		return cfg;
  	}
  	
-@@ -116,9 +117,6 @@
+@@ -116,9 +116,6 @@
  		if (cfg.configVersion < 7) {
  			EnsureButtonConfig(cfg);
  		}
@@ -873,7 +984,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		if (cfg.configVersion < 9) {
  			cfg.enableShop = true;
  			cfg.shopApiUrl = "https://oblivion-store.vn.ua";
-@@ -204,7 +202,6 @@
+@@ -204,7 +201,6 @@
  		def.enableInfoPanelRealTime = true;
  		def.disableInfoPanelModCreatorMention = false;
  		def.disableLoggerDebug = false;
@@ -881,7 +992,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		def.enableShop = true;
  		def.shopApiUrl = "https://oblivion-store.vn.ua";
  		def.shopServerId = 1;
-@@ -213,14 +210,6 @@
+@@ -213,14 +209,6 @@
  		def.adminSteamids.Insert("00000000000000000");
  		def.subGroupNames.Insert("Онлайн");
  		def.subGroupNames.Insert("Офлайн");
@@ -896,7 +1007,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.SERVER_STATIC, -1, true, true, true, false));
  		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.SERVER_DYNAMIC, -1, true, true, true, false));
  		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.GROUP_PING, -1, true, false, false, true));
-@@ -310,7 +299,6 @@
+@@ -310,7 +298,6 @@
  			btnCfg.WriteToCtx(ctx);
  		}
  		ctx.Write(groupCreationCost);
@@ -904,7 +1015,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		ctx.Write(enableShop);
  	}
  	
-@@ -420,8 +408,6 @@
+@@ -420,8 +407,6 @@
  		if (!ctx.Read(groupCreationCost))
  			return false;
  		// Append-only fields (v9+): if old server doesn't send them, keep defaults.
@@ -913,7 +1024,7 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/OBLPartyMainConfig.c client
  		if (!ctx.Read(enableShop))
  			return true;
  		return true;
-@@ -449,6 +435,13 @@
+@@ -449,6 +434,13 @@
  		return null;
  	}
  	
@@ -1202,8 +1313,16 @@ diff -ruN client_orig/scripts/4_World/Groups/configs/StaticMarkerManager.c clien
 +}
 diff -ruN client_orig/scripts/4_World/Groups/constants.c client/scripts/4_World/Groups/constants.c
 --- client_orig/scripts/4_World/Groups/constants.c	2026-10-06 22:08:50.538085442 +0000
-+++ client/scripts/4_World/Groups/constants.c	2026-10-06 22:28:18.972339550 +0000
-@@ -14,4 +14,11 @@
++++ client/scripts/4_World/Groups/constants.c	2026-10-06 22:31:35.227910395 +0000
+@@ -2,7 +2,6 @@
+ 	const string SAVE_PREFIX = "$profile:OBLParty/";
+ 	const string SAVE_SUFFIX_GROUP_PERMISSIONS = "Permissions.json";
+ 	const string SAVE_SUFFIX_MAIN_CONFIG = "MainConfig.json";
+-	const string SAVE_SUFFIX_GROUP_LEVELS = "Levels.json";
+ 	const string SAVE_SUFFIX_STATIC_MARKER = "StaticMarkers.json";
+ 	const string SAVE_SUFFIX_PRIVATE_MARKER = "PrivateMarkers.json";
+ 	const string SAVE_SUFFIX_PRIVATE_MARKER_STATES = "PrivateMarkerDisplaystates.json";
+@@ -14,4 +13,14 @@
  	const string SAVE_SUFFIX_CLANCLOTHING_CONFIG = "ClanClothing.json";
  	const string SAVE_SUFFIX_GROUPS_FOLDER = "Partys/";
  	const string SAVE_SUFFIX_GROUPSDELETED_FOLDER = "Partys_Deleted/";
@@ -1214,6 +1333,9 @@ diff -ruN client_orig/scripts/4_World/Groups/constants.c client/scripts/4_World/
 +	// розмір групи: 6 за замовчуванням, адмін може задати до 15
 +	const int DEFAULT_MAX_PLAYERS = 6;
 +	const int MAX_PLAYERS_LIMIT = 15;
++	// маркерів групи (пінги не рахуються)
++	const int GROUP_MARKER_LIMIT = 30;
++	const int GROUP_PLOTPOLE_LIMIT = 2;
  }
 \ No newline at end of file
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/Chat/Chat.c client/scripts/5_Mission/Groups/GUI/Chat/Chat.c
@@ -1586,29 +1708,40 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAddMarkerPopup
  		image_Icon.LoadImageFile(0, image);
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c	2026-10-06 22:08:50.541158784 +0000
-+++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c	2026-10-06 22:27:31.283030841 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c	2026-10-06 22:31:11.269410772 +0000
 @@ -2,9 +2,9 @@
  	
  	private ref array<ref OBLParty> groups = new array<ref OBLParty>();
  	
 -	EditBoxWidget shortname, name, searchInput;
-+	EditBoxWidget shortname, name, searchInput, maxPlayersInput;
- 	TextWidget level, created, lastactive, playercount, markercount, steamid, rank;
+-	TextWidget level, created, lastactive, playercount, markercount, steamid, rank;
 -	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnLevelUp, btnLevelDown;
-+	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnLevelUp, btnLevelDown, btnSetMaxPlayers;
++	EditBoxWidget shortname, name, searchInput, maxPlayersInput;
++	TextWidget created, lastactive, playercount, markercount, steamid, rank;
++	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnSetMaxPlayers;
  	TextListboxWidget groupsList, memberList;
  	CheckBoxWidget chckbxShortnames, chckbxNames, chckbxMemberNames, chckbxSteamids, chckbx_show_territorry_flags;
  	MapWidget mapWidget;
-@@ -59,6 +59,8 @@
+@@ -40,7 +40,6 @@
+ 		shortname = EditBoxWidget.Cast(rootWidget.FindAnyWidget("shortname"));
+ 		name = EditBoxWidget.Cast(rootWidget.FindAnyWidget("name"));
+ 		
+-		level = TextWidget.Cast(rootWidget.FindAnyWidget("level"));
+ 		created = TextWidget.Cast(rootWidget.FindAnyWidget("created"));
+ 		lastactive = TextWidget.Cast(rootWidget.FindAnyWidget("lastactive"));
+ 		playercount = TextWidget.Cast(rootWidget.FindAnyWidget("playercount"));
+@@ -57,8 +56,8 @@
+ 		btnJoin = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnJoin"));
+ 		btnDelete = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnDelete"));
  		btnChangeGroupNames = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnChangeGroupNames"));
- 		btnLevelUp = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelUp"));
- 		btnLevelDown = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelDown"));
+-		btnLevelUp = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelUp"));
+-		btnLevelDown = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelDown"));
 +		btnSetMaxPlayers = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnSetMaxPlayers"));
 +		maxPlayersInput = EditBoxWidget.Cast(rootWidget.FindAnyWidget("maxPlayersInput"));
  		
  		groupsList = TextListboxWidget.Cast(rootWidget.FindAnyWidget("groupsList"));
  		memberList = TextListboxWidget.Cast(rootWidget.FindAnyWidget("memberList"));
-@@ -120,6 +122,8 @@
+@@ -120,6 +119,8 @@
  			return;
  		if (!grp.ReadFromCtx(ctx))
  			return;
@@ -1617,7 +1750,11 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c cl
  		bool found = false;
  		for (int i = 0; i < groups.Count(); i++) {
  			if (groups.Get(i).shortname == oldShortname) {
-@@ -248,6 +252,8 @@
+@@ -244,10 +245,11 @@
+ 	void OnGroupSelected(OBLParty grp) {
+ 		shortname.SetText(grp.shortname);
+ 		name.SetText(grp.name);
+-		level.SetText("" + grp.level);
  		created.SetText(JMDate.Epoch(grp.creationDate).ToString("DD.MM.YYYY hh:mm:ss"));
  		lastactive.SetText(JMDate.Epoch(grp.lastActivity).ToString("DD.MM.YYYY hh:mm:ss"));
  		playercount.SetText("" + grp.members.Count() + "/" + grp.maxPlayers);
@@ -1626,7 +1763,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c cl
  		markercount.SetText("" + grp.markers.Count() + "/" + grp.markerLimit);
  		
  		FillMemberList(grp);
-@@ -300,7 +306,29 @@
+@@ -300,18 +302,32 @@
  	void OnMemberSelected(OBLPartyMember member) {
  		steamid.SetText(member.steamid);
  		OBLPartyPermission perm = OBLPartyPermissions.Get().FindPermissionGroupByUID(member.permissionGroup);
@@ -1635,12 +1772,14 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c cl
 +			rank.SetText(perm.permName);
 +		else
 +			rank.SetText("?");
-+	}
-+	
+ 	}
+ 	
+-	void SetGroupLevel(OBLParty grp, int level_) {
+-		if (level_ < 0)
 +	// 0 = стандартний ліміт (6), 1..15 — свій ліміт для групи
 +	void SetGroupMaxPlayers(OBLParty grp) {
 +		if (!maxPlayersInput)
-+			return;
+ 			return;
 +		string txt = maxPlayersInput.GetText();
 +		txt.Replace(" ", "");
 +		if (txt.Length() == 0)
@@ -1650,24 +1789,34 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAdminPage.c cl
 +			NotificationSystem.AddNotificationExtended(4, "Система груп", "Вкажіть число від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний ліміт " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")", "set:ccgui_enforce image:MapDestroyed");
 +			return;
 +		}
-+		ScriptRPC rpc = new ScriptRPC();
-+		rpc.Write(grp.shortname);
+ 		ScriptRPC rpc = new ScriptRPC();
+ 		rpc.Write(grp.shortname);
+-		rpc.Write(level_);
+-		rpc.Send(null, OBLPartyRPCs.GROUP_ADMIN_LEVEL, true);
 +		rpc.Write(newMax);
 +		rpc.Send(null, OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS, true);
  	}
  	
- 	void SetGroupLevel(OBLParty grp, int level_) {
-@@ -364,6 +392,10 @@
- 			if (GetSelectedGroup(grp))
- 				SetGroupLevel(grp, grp.level + 1);
++	
+ 	override bool OnItemSelected(Widget w, int row, int column) {
+ 		if (super.OnItemSelected(w, row, column))
  			return true;
+@@ -356,13 +372,9 @@
+ 			if (GetSelectedGroup(grp))
+ 				ChangeGroupName(grp);
+ 			return true;
+-		} else if (w == btnLevelDown) {
+-			if (GetSelectedGroup(grp))
+-				SetGroupLevel(grp, grp.level - 1);
+-			return true;
+-		} else if (w == btnLevelUp) {
 +		} else if (w == btnSetMaxPlayers) {
-+			if (GetSelectedGroup(grp))
+ 			if (GetSelectedGroup(grp))
+-				SetGroupLevel(grp, grp.level + 1);
 +				SetGroupMaxPlayers(grp);
-+			return true;
+ 			return true;
  		} else if (w == btnRefresh) {
  			RequestGroups();
- 			return true;
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAlliancePage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAlliancePage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAlliancePage.c	2026-10-06 22:08:50.541457291 +0000
 +++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLAlliancePage.c	1970-01-01 00:00:00.000000000 +0000
@@ -2020,7 +2169,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLMarkerListPage
 +}
 diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c
 --- client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:08:50.542370557 +0000
-+++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:28:18.981990078 +0000
++++ client/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePage.c	2026-10-06 22:31:35.234411235 +0000
 @@ -15,21 +15,23 @@
  	}
  	
@@ -2159,7 +2308,19 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  			return true;
  		} else if (w == btn_leave) {
  			pb = PlayerBase.Cast(GetGame().GetPlayer());
-@@ -116,13 +118,13 @@
+@@ -105,24 +107,17 @@
+ 		} else if (w == btn_kick) {
+ 			KickSelectedPlayer();
+ 			return true;
+-		} 
+-		// else if (w == btn_upgrade) {
+-		// 	pb = PlayerBase.Cast(GetGame().GetPlayer());
+-		// 	if (!pb || !pb.GetOBLParty())
+-		// 		return true;
+-		// 	pb.GetOBLParty().UpgradeGroupClient();
+-		// 	return true;
+-		// }
++		}
  		return false;
  	}
  	
@@ -2180,7 +2341,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  	}
  	override bool OnItemSelected(Widget w, int row, int column) {
  		if (w == playerlist_online) {
-@@ -134,98 +136,91 @@
+@@ -134,98 +129,90 @@
  		}
  		return false;
  	}
@@ -2316,7 +2477,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		OBLPartyPermission myPerms = pb.GetPermission();
  		if (!myPerms)
  			return;
- 		// btn_upgrade.Enable(myPerms.canUpgrade);
+-		// btn_upgrade.Enable(myPerms.canUpgrade);
  		int selected = playerlist_members.GetSelectedRow();
 -		btn_joinSubgroup.Enable(false);
  		if (selected < 0 || selected >= playerlist_members.GetNumItems()) {
@@ -2354,7 +2515,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  				btn_kick.Enable(false);
  				btn_promote.Enable(false);
  				btn_demote.Enable(false);
-@@ -242,10 +237,6 @@
+@@ -242,10 +229,6 @@
  	}
  	
  	override bool OnDoubleClick(Widget w) {
@@ -2365,7 +2526,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		return false;
  	}
  	
-@@ -261,12 +252,12 @@
+@@ -261,12 +244,12 @@
  		int items = playerlist_online.GetNumItems();
  		int added = 0;
  		for (int i = 0; i < list.Count(); i++) {
@@ -2384,7 +2545,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  			if (IsSearched(name)) {
  				if (items <= added) {
  					playerlist_online.AddItem(" " + name, param, 0);
-@@ -294,28 +285,30 @@
+@@ -294,28 +277,30 @@
  	void FillMembersList() {
  		OBLLogger.Debug("FillMembersList");
  		
@@ -2425,7 +2586,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  					}
  					playerlist_members.SetItemColor(added, 0, ARGB(255,255,255,255));
  					added++;
-@@ -323,11 +316,11 @@
+@@ -323,11 +308,11 @@
  				}
  				addName = "  ";
  			}
@@ -2442,7 +2603,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  			string displayname = addName + member.name + " (" + groupname + ")";
  			param = new Param3<string, ref OBLPartyPermission, int>(steamid, perm, -1);
  			if (items <= added) {
-@@ -342,40 +335,41 @@
+@@ -342,40 +327,41 @@
  			while (grp.subGroupCount > lastSubgroup) {
  				param = new Param3<string, ref OBLPartyPermission, int>("", null, lastSubgroup);
  				if (items <= added) {
@@ -2504,7 +2665,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		}
  		return mem;
  	}
-@@ -410,16 +404,6 @@
+@@ -410,16 +396,6 @@
  		pb.GetOBLParty().KickPlayerClient(steamid);
  	}
  	
@@ -2521,8 +2682,11 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  	string GetSelectedPlayerSteamid() {
  		int row = playerlist_members.GetSelectedRow();
  		if (row < 0 || row >= playerlist_members.GetNumItems())
-@@ -449,7 +433,10 @@
- 		// btn_upgrade = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_upgrade"));
+@@ -446,10 +422,12 @@
+ 		OBLLogger.Debug("InitMainWidget GrupManage Page");
+ 		btn_kick = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_kick"));
+ 		btn_leave = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_leave"));
+-		// btn_upgrade = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_upgrade"));
  		btn_promote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_promote"));
  		btn_demote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_demote"));
 +		// гравці більше не обирають підгрупу вручну — кнопку ховаємо
@@ -2532,7 +2696,7 @@ diff -ruN client_orig/scripts/5_Mission/Groups/GUI/MapUI/Pages/OBLPartyManagePag
  		
  		searchbox = EditBoxWidget.Cast(rootWidget.FindAnyWidget("searchbox"));
  		buttonInvite = ButtonWidget.Cast(rootWidget.FindAnyWidget("buttonInvite"));
-@@ -459,4 +446,4 @@
+@@ -459,4 +437,4 @@
  		playerlist_online = TextListboxWidget.Cast(rootWidget.FindAnyWidget("playerlist_online"));
  		playerlist_members = TextListboxWidget.Cast(rootWidget.FindAnyWidget("playerlist_members"));
  	}
@@ -3220,7 +3384,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/carePackageMarker.c server/s
  }
 diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scripts/4_world/groups-server/config/oblparty.c
 --- server_orig/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 21:35:53.803294029 +0000
-+++ server/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 22:27:09.727460006 +0000
++++ server/scripts/4_world/groups-server/config/oblparty.c	2026-10-06 22:31:11.266789695 +0000
 @@ -24,6 +24,8 @@
  	// OBL FIX: how long the invite banner is shown on screen (seconds).
  	[NonSerialized()]
@@ -3346,7 +3510,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  			int permGroup = memMarker.permissionGroup;
  			bool wasLastMember = members.Count() <= 1;
  			string leftGroupName = name;
-@@ -413,9 +383,13 @@
+@@ -413,42 +383,34 @@
  						SendInfoNotification(targetPB.GetIdentity(), OBLNotifyTexts.KickedTarget(name));
  					}
  					bool kickDeletedGroup = members.Count() <= 1;
@@ -3360,19 +3524,35 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  				}
  			}
  		} else if (type == OBLPartyRPCs.UPGRADE) {
-@@ -438,6 +412,11 @@
- 				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
- 				return;
- 			}
-+			// OBL FIX: level used to grow forever (no next-level check)
-+			if (!OBLPartyLevels.Get().FindLevelByUID(level + 1)) {
-+				SendErrorNotification(sender, "Досягнуто максимального рівня");
-+				return;
-+			}
- 			GetGame().AdminLog("Player " + sender.GetPlainId() + " (" + sender.GetName() + ") upgraded Group. Name: " + name + " Tag: " + shortname );
- 			level++;
- 			OnLevelChanged();
-@@ -449,6 +428,16 @@
+-			senderPB = PlayerBase.GetPlayerByIdentity(sender);
+-			if (!senderPB) {
+-				OBLLogger.Debug("Failed to get Sender's Player Object !");
+-				return;
+-			}
+-			perms = senderPB.GetPermission();
+-			if (!perms) {
+-				OBLLogger.Debug("Failed to get Sender's Permissions !");
+-				return;
+-			}
+-			if (!perms.canUpgrade) {
+-				SendErrorNotification(sender, "У вас немає прав для покращення!");
+-				return;
+-			}
+-			pb = PlayerBase.GetPlayerByIdentity(sender);
+-			if (!pb) {
+-				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
+-				return;
+-			}
+-			GetGame().AdminLog("Player " + sender.GetPlainId() + " (" + sender.GetName() + ") upgraded Group. Name: " + name + " Tag: " + shortname );
+-			level++;
+-			OnLevelChanged();
+-			OBLPartyManager.Get().SaveGroup(this);
+-			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(level));
++			// рівнів груп більше немає
++			return;
+ 		} else if (type == OBLPartyRPCs.CHANGE_TAG_VISIBILITY) {
+ 			bool enabled;
+ 			if (!ctx.Read(enabled)) {
  				OBLLogger.Debug("Unable to read enabled From Client !");
  				return;
  			}
@@ -3389,7 +3569,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  			showTagInChat = enabled;
  			SyncGroupTagVisiblity();
  			OBLPartyManager.Get().SaveGroup(this);
-@@ -457,11 +446,66 @@
+@@ -457,12 +419,68 @@
  			if (!ctx.Read(uid2))
  				return;
  			OBLMarker marker2 = FindAnyMarkerByUID(uid2);
@@ -3410,6 +3590,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  		}
  	}
  	
+-	void OnLevelChanged() {
 +	int GenerateFreeMarkerUID() {
 +		int newUid = Math.RandomInt(200, int.MAX - 1);
 +		for (int attempt = 0; attempt < 50 && FindAnyMarkerByUID(newUid) != null; attempt++)
@@ -3455,10 +3636,12 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
 +		SendInfoNotification(sender, "Запрошення надіслано гравцю " + targetPB.GetIdentity().GetName() + ".");
 +	}
 +	
- 	void OnLevelChanged() {
++	// перераховує ліміти групи й розсилає їх учасникам
++	void SyncGroupNumbers() {
  		InitNumbers();
  		ScriptRPC upgradeRPC = CreateRPCCall(OBLPartyRPCs.UPGRADE);
-@@ -692,20 +736,15 @@
+ 		upgradeRPC.Write(level);
+@@ -692,32 +710,26 @@
  	}
  	
  	int GetNextFreeSubgroup() {
@@ -3488,43 +3671,128 @@ diff -ruN server_orig/scripts/4_world/groups-server/config/oblparty.c server/scr
  	}
  	
  	override void InitNumbers() {
-@@ -713,11 +752,15 @@
- 		OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(level);
- 		if (!lvl)
- 			lvl = OBLPartyLevels.Get().GetHighestLevel();
+ 		super.InitNumbers();
+-		OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(level);
+-		if (!lvl)
+-			lvl = OBLPartyLevels.Get().GetHighestLevel();
 -		maxPlayers = lvl.maxPlayerCount;
 -		subGroupSize = lvl.subgroupSize;
 -		subGroupCount = lvl.subgroupCount;
 -		markerLimit = OBLPartyMainConfig.Get().groupMarkerLimit + lvl.groupMarkerLimitAdded;
 -		plotpoleLimit = lvl.groupPlotpolesLimitAdded;
++		// рівнів немає: фіксовані ліміти
++		level = 0;
 +		maxPlayers = GetMaxPlayersLimit();
 +		subGroupCount = OBLPartyConstants.SUBGROUP_COUNT;
 +		subGroupSize = maxPlayers;
-+		markerLimit = OBLPartyMainConfig.Get().groupMarkerLimit;
-+		plotpoleLimit = 0;
-+		if (lvl) {
-+			markerLimit += lvl.groupMarkerLimitAdded;
-+			plotpoleLimit = lvl.groupPlotpolesLimitAdded;
-+		}
++		markerLimit = OBLPartyConstants.GROUP_MARKER_LIMIT;
++		plotpoleLimit = OBLPartyConstants.GROUP_PLOTPOLE_LIMIT;
  	}
  	
  	int GetFreeMemberSlots() {
 diff -ruN server_orig/scripts/4_world/groups-server/config/oblpartylevel.c server/scripts/4_world/groups-server/config/oblpartylevel.c
 --- server_orig/scripts/4_world/groups-server/config/oblpartylevel.c	2026-10-06 21:35:53.803370969 +0000
-+++ server/scripts/4_world/groups-server/config/oblpartylevel.c	2026-10-06 22:28:18.990166610 +0000
-@@ -59,7 +59,8 @@
- 	
- 	static OBLPartyLevels LoadDefault() {
- 		OBLPartyLevels def = new OBLPartyLevels;
++++ server/scripts/4_world/groups-server/config/oblpartylevel.c	1970-01-01 00:00:00.000000000 +0000
+@@ -1,95 +0,0 @@
+-class OBLPartyLevel {
+-
+-	int level;
+-	int maxPlayerCount;
+-	int subgroupCount;
+-	int subgroupSize;
+-	int groupMarkerLimitAdded;
+-	int groupPlotpolesLimitAdded = 0;
+-	
+-	static OBLPartyLevel InitLevel(int lvl, int maxPlayers, int subCount, int subSize, int markerAdded, int plotpoleAdded) {
+-		OBLPartyLevel lev = new OBLPartyLevel();
+-		lev.level = lvl;
+-		lev.maxPlayerCount = maxPlayers;
+-		lev.subgroupCount = subCount;
+-		lev.subgroupSize = subSize;
+-		lev.groupMarkerLimitAdded = markerAdded;
+-		lev.groupPlotpolesLimitAdded = plotpoleAdded;
+-		return lev;
+-	}
+-	
+-	bool HasNextLevel() {
+-		return GetNextLevel() != null;
+-	}
+-	
+-	OBLPartyLevel GetNextLevel() {
+-		return OBLPartyLevels.Get().GetNextLevel(this);
+-	}
+-	
+-}
+-class OBLPartyLevels {
+-
+-	ref array<ref OBLPartyLevel> allLevels = new array<ref OBLPartyLevel>();
+-	
+-	static ref OBLPartyLevels g_OBLPartyGroups;
+-	
+-	static OBLPartyLevels Get() {
+-		if (!g_OBLPartyGroups) {
+-			g_OBLPartyGroups = Load();
+-		}
+-		return g_OBLPartyGroups;
+-	}
+-
+-	static void Delete() {
+-		if (g_OBLPartyGroups)
+-			delete g_OBLPartyGroups;
+-	}
+-	
+-	static OBLPartyLevels Load() {
+-		OBLPartyLevels levels;
+-		if (!FileExist(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUP_LEVELS)) {
+-			levels = LoadDefault();
+-			JsonFileLoader<array<ref OBLPartyLevel>>.JsonSaveFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUP_LEVELS, levels.allLevels);
+-			return levels;
+-		}
+-		levels = new OBLPartyLevels();
+-		JsonFileLoader<array<ref OBLPartyLevel>>.JsonLoadFile(OBLPartyConstants.SAVE_PREFIX + OBLPartyConstants.SAVE_SUFFIX_GROUP_LEVELS, levels.allLevels);
+-		return levels;
+-	}
+-	
+-	static OBLPartyLevels LoadDefault() {
+-		OBLPartyLevels def = new OBLPartyLevels;
 -		def.allLevels.Insert(OBLPartyLevel.InitLevel(0, 20, 6, 5, 30, 2)); // +4
-+		// кількість гравців і підгрупи більше не беруться з рівня (6 / до 15 від адміна; «Онлайн» і «Офлайн»)
-+		def.allLevels.Insert(OBLPartyLevel.InitLevel(0, 6, 2, 6, 30, 2));
- 		return def;
- 	}
- 	
+-		return def;
+-	}
+-	
+-	OBLPartyLevel FindLevelByUID(int level) {
+-		if (level == -1)
+-			return null;
+-		foreach (OBLPartyLevel level2 : allLevels) {
+-			if (level2.level == level)
+-				return level2;
+-		}
+-		return null;
+-	}
+-
+-	OBLPartyLevel GetHighestLevel() {
+-		OBLPartyLevel highest = null;
+-		foreach (OBLPartyLevel level2 : allLevels) {
+-			if (!highest || level2.level > highest.level)
+-				highest = level2;
+-		}
+-		return highest;
+-	}
+-	
+-	OBLPartyLevel GetNextLevel(OBLPartyLevel level) {
+-		if (!level)
+-			return null;
+-		return FindLevelByUID(level.level + 1);
+-	}
+-		
+-	OBLPartyLevel GetNextLevel(int level) {
+-		return GetNextLevel(FindLevelByUID(level));
+-	}
+-	
+-}
+\ No newline at end of file
 diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/scripts/4_world/groups-server/groupmanager.c
 --- server_orig/scripts/4_world/groups-server/groupmanager.c	2026-10-06 21:35:53.803422382 +0000
-+++ server/scripts/4_world/groups-server/groupmanager.c	2026-10-06 22:26:55.969393180 +0000
++++ server/scripts/4_world/groups-server/groupmanager.c	2026-10-06 22:31:11.267227101 +0000
 @@ -1,7 +1,5 @@
  modded class OBLPartyManager {
  
@@ -3533,43 +3801,44 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  	const int SAVE_ITERATION_COUNT = 10;
  	const int SAVE_GROUP_INTERVAL = 30 * 1000;
  	const int MIN_LENGTH_NAME = 5;
-@@ -236,7 +234,7 @@
- 			if (!ctx.Read(targetLevel))
- 				return;
- 			OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(targetLevel);
--			if (!lvl && targetLevel > 0) {
-+			if (targetLevel < 0 || (!lvl && targetLevel > 0)) {
- 				SendErrorNotification(sender, "Досягнуто максимального рівня");
- 				return;
- 			}
-@@ -245,6 +243,26 @@
- 			SaveGroup(grp);
- 			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(targetLevel));
- 			RefreshGroupAdmin(sender, grp);
+@@ -228,22 +226,25 @@
+ 			GetGame().AdminLog("Admin Group Name Change Request ! " + sender.GetPlainId() + " for " + grpShortname2 + " Newshortname: " + newshortname + " NewDisplayname: " + newdisplayname);
+ 			SendInfoNotification(sender, "Назву групи змінено");
+ 			RefreshGroupAdmin(sender, grp, oldshortname);
+-		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_LEVEL) {
+-			string grpShortname3 = "";
+-			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortname3))
 +		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS) {
 +			string grpShortnameMax = "";
 +			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortnameMax))
-+				return;
+ 				return;
+-			int targetLevel = 0;
+-			if (!ctx.Read(targetLevel))
 +			int newMax = 0;
 +			if (!ctx.Read(newMax))
-+				return;
+ 				return;
+-			OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(targetLevel);
+-			if (!lvl && targetLevel > 0) {
+-				SendErrorNotification(sender, "Досягнуто максимального рівня");
 +			// 0 = повернути стандартний ліміт
 +			if (newMax < 0 || newMax > OBLPartyConstants.MAX_PLAYERS_LIMIT) {
 +				SendErrorNotification(sender, "Ліміт гравців має бути від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")");
-+				return;
-+			}
+ 				return;
+ 			}
+-			grp.level = targetLevel;
+-			grp.OnLevelChanged();
 +			grp.maxPlayersOverride = newMax;
-+			grp.OnLevelChanged();
-+			SaveGroup(grp);
++			grp.SyncGroupNumbers();
+ 			SaveGroup(grp);
+-			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(targetLevel));
 +			GetGame().AdminLog("Admin " + sender.GetPlainId() + " set max players of " + grp.shortname + " to " + grp.maxPlayers);
 +			SendInfoNotification(sender, "Ліміт гравців групи " + grp.shortname + ": " + grp.maxPlayers);
 +			if (grp.members.Count() > grp.maxPlayers)
 +				SendInfoNotification(sender, "У групі зараз " + grp.members.Count() + " гравців — нових не прийматиме, доки їх більше за ліміт.");
-+			RefreshGroupAdmin(sender, grp);
+ 			RefreshGroupAdmin(sender, grp);
  		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_JOIN) {
  			string grpShortname4 = "";
- 			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortname4))
-@@ -284,11 +302,14 @@
+@@ -284,11 +285,14 @@
  				}
  				oldshortname = grp.shortname;
  				bool deletedByKick = grp.members.Count() <= 1;
@@ -3584,7 +3853,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  			} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_DEMOTE) {
  				OBLPartyPermission newPerms = targetPerms.GetPreviousGroup();
  				if (!newPerms) {
-@@ -328,54 +349,6 @@
+@@ -328,54 +332,6 @@
  			}
  			SaveGroup(grp);
  			RefreshGroupAdmin(sender, grp);
@@ -3639,7 +3908,7 @@ diff -ruN server_orig/scripts/4_world/groups-server/groupmanager.c server/script
  		}
  	}
  	
-@@ -606,7 +579,6 @@
+@@ -606,7 +562,6 @@
  		super.DeleteGroup(group);
  		if (!group)
  			return;
@@ -3735,6 +4004,20 @@ diff -ruN server_orig/scripts/4_world/groups-server/markers/oblpartymember.c ser
 -
  }
 \ No newline at end of file
+diff -ruN server_orig/scripts/4_world/groups-server/oblnotifytexts.c server/scripts/4_world/groups-server/oblnotifytexts.c
+--- server_orig/scripts/4_world/groups-server/oblnotifytexts.c	2026-10-06 21:35:53.803537906 +0000
++++ server/scripts/4_world/groups-server/oblnotifytexts.c	2026-10-06 22:31:11.267477611 +0000
+@@ -30,10 +30,6 @@
+ 		return "Ранг лідера не знайдено!";
+ 	}
+ 
+-	static string GroupUpgraded(int level) {
+-		return "Групу покращено до рівня " + level;
+-	}
+-
+ 	// ---- kick ----
+ 	static string KickedSender(string memberName) {
+ 		return "Гравця " + memberName + " вигнано з групи!";
 diff -ruN server_orig/scripts/4_world/groups-server/planeMarker.c server/scripts/4_world/groups-server/planeMarker.c
 --- server_orig/scripts/4_world/groups-server/planeMarker.c	2026-10-06 21:35:53.803554427 +0000
 +++ server/scripts/4_world/groups-server/planeMarker.c	2026-10-06 21:38:25.928941080 +0000
@@ -3762,8 +4045,24 @@ diff -ruN server_orig/scripts/4_world/groups-server/staticmarkermanager.c server
  			if (!marker3)
 diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c server/scripts/5_mission/groups-server/mission/missionserver.c
 --- server_orig/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 21:35:53.803765573 +0000
-+++ server/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 22:11:33.792421577 +0000
-@@ -143,6 +143,7 @@
++++ server/scripts/5_mission/groups-server/mission/missionserver.c	2026-10-06 22:31:11.266154059 +0000
+@@ -8,7 +8,6 @@
+ 		OBLLogger.Init();
+ 		OBLPartyMainConfig.Get();
+ 		OBLPartyPermissions.Get();
+-		OBLPartyLevels.Get();
+ 		OBLStaticMarkerManager.Get();
+ 		OBLPartyManager.Get();
+ 		OBLShopManager.Get();
+@@ -23,7 +22,6 @@
+ 	void ~MissionServer() {
+ 		OBLPartyMainConfig.Delete();
+ 		OBLPartyPermissions.Delete();
+-		OBLPartyLevels.Delete();
+ 		OBLStaticMarkerManager.Delete();
+ 		OBLPartyManager.Delete();
+ 		GetDayZGame().Event_OnRPC.Remove(RPC_OBL);
+@@ -143,6 +141,7 @@
  	#ifndef OBL_DISABLE_CHAT
  	
  	ref map<string, ref TStringSet> muteVotes = new map<string, ref TStringSet>();
@@ -3771,7 +4070,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  	
  	void UpdateMuteList() {
  		GetMuteConfig().SendMuteList();
-@@ -156,6 +157,12 @@
+@@ -156,6 +155,12 @@
  		if (!ctx.Read(channel) || !ctx.Read(message))
  			return;
  		string name = sender.GetName();
@@ -3784,7 +4083,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		int length = message.Length();
  		if (message.Length() >= 2 && message[0] == "+" && message[1] == "!") {
  			OBLLogger.Debug("trying to read Chat command");
-@@ -169,6 +176,13 @@
+@@ -169,6 +174,13 @@
  			}
  			return;
  		}
@@ -3798,7 +4097,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		//OBLLogger.Debug("Chat Message. Channel: " + channel + " Player: " + sender.GetPlainId() + " (" + sender.GetName() + "): " + message);
  		GetGame().AdminLog("Chat Message. Channel: " + channel + " Player: " + sender.GetPlainId() + " (" + sender.GetName() + "): " + message);
  		if (GetMuteConfig().enabledBadWordsCensor) {
-@@ -202,7 +216,10 @@
+@@ -202,7 +214,10 @@
  		}
  		
  		ScriptRPC rpc = new ScriptRPC();
@@ -3810,7 +4109,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  		int channelColor = 0;
  		bool globalC = false;
  		bool groupC = false;
-@@ -402,6 +419,11 @@
+@@ -402,6 +417,11 @@
  			SendSimpleChatMessage(null, "Канал \"" + chatName + "\" увімкнув " + sender.GetName() + "!", true);
  			return;
  		} else if (cmd == "votemute" || cmd == "mutevote") {
@@ -3822,7 +4121,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  			int onlinePlayers = GetOnlinePlayerCount();
  			if (onlinePlayers < GetMuteConfig().muteVoteMinPlayers) {
  				SendSimpleChatMessage(sender, "Для голосування за мут потрібно щонайменше " + GetMuteConfig().muteVoteMinPlayers + " гравців онлайн");
-@@ -420,6 +442,14 @@
+@@ -420,6 +440,14 @@
  				SendSimpleChatMessage(sender, "Не вдалося знайти гравця " + printname);
  				return;
  			}
@@ -3837,7 +4136,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  			if (GetMuteConfig().IsMuted(target.GetPlainId())) {
  				SendSimpleChatMessage(sender, "Цей гравець уже вимкнений у чаті!");
  				return;
-@@ -437,7 +467,10 @@
+@@ -437,7 +465,10 @@
  				return;
  			}
  			count = muteVoter.Count();

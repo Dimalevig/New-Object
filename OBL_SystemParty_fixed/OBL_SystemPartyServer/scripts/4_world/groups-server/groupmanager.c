@@ -226,23 +226,6 @@ modded class OBLPartyManager {
 			GetGame().AdminLog("Admin Group Name Change Request ! " + sender.GetPlainId() + " for " + grpShortname2 + " Newshortname: " + newshortname + " NewDisplayname: " + newdisplayname);
 			SendInfoNotification(sender, "Назву групи змінено");
 			RefreshGroupAdmin(sender, grp, oldshortname);
-		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_LEVEL) {
-			string grpShortname3 = "";
-			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortname3))
-				return;
-			int targetLevel = 0;
-			if (!ctx.Read(targetLevel))
-				return;
-			OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(targetLevel);
-			if (targetLevel < 0 || (!lvl && targetLevel > 0)) {
-				SendErrorNotification(sender, "Досягнуто максимального рівня");
-				return;
-			}
-			grp.level = targetLevel;
-			grp.OnLevelChanged();
-			SaveGroup(grp);
-			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(targetLevel));
-			RefreshGroupAdmin(sender, grp);
 		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS) {
 			string grpShortnameMax = "";
 			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortnameMax))
@@ -256,7 +239,7 @@ modded class OBLPartyManager {
 				return;
 			}
 			grp.maxPlayersOverride = newMax;
-			grp.OnLevelChanged();
+			grp.SyncGroupNumbers();
 			SaveGroup(grp);
 			GetGame().AdminLog("Admin " + sender.GetPlainId() + " set max players of " + grp.shortname + " to " + grp.maxPlayers);
 			SendInfoNotification(sender, "Ліміт гравців групи " + grp.shortname + ": " + grp.maxPlayers);

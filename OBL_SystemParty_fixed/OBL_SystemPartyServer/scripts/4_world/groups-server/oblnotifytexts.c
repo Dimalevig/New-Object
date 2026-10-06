@@ -30,10 +30,6 @@ class OBLNotifyTexts {
 		return "Ранг лідера не знайдено!";
 	}
 
-	static string GroupUpgraded(int level) {
-		return "Групу покращено до рівня " + level;
-	}
-
 	// ---- kick ----
 	static string KickedSender(string memberName) {
 		return "Гравця " + memberName + " вигнано з групи!";

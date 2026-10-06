@@ -3,8 +3,8 @@ class OBLAdminPage : OBLPartyPage {
 	private ref array<ref OBLParty> groups = new array<ref OBLParty>();
 	
 	EditBoxWidget shortname, name, searchInput, maxPlayersInput;
-	TextWidget level, created, lastactive, playercount, markercount, steamid, rank;
-	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnLevelUp, btnLevelDown, btnSetMaxPlayers;
+	TextWidget created, lastactive, playercount, markercount, steamid, rank;
+	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnSetMaxPlayers;
 	TextListboxWidget groupsList, memberList;
 	CheckBoxWidget chckbxShortnames, chckbxNames, chckbxMemberNames, chckbxSteamids, chckbx_show_territorry_flags;
 	MapWidget mapWidget;
@@ -40,7 +40,6 @@ class OBLAdminPage : OBLPartyPage {
 		shortname = EditBoxWidget.Cast(rootWidget.FindAnyWidget("shortname"));
 		name = EditBoxWidget.Cast(rootWidget.FindAnyWidget("name"));
 		
-		level = TextWidget.Cast(rootWidget.FindAnyWidget("level"));
 		created = TextWidget.Cast(rootWidget.FindAnyWidget("created"));
 		lastactive = TextWidget.Cast(rootWidget.FindAnyWidget("lastactive"));
 		playercount = TextWidget.Cast(rootWidget.FindAnyWidget("playercount"));
@@ -57,8 +56,6 @@ class OBLAdminPage : OBLPartyPage {
 		btnJoin = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnJoin"));
 		btnDelete = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnDelete"));
 		btnChangeGroupNames = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnChangeGroupNames"));
-		btnLevelUp = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelUp"));
-		btnLevelDown = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelDown"));
 		btnSetMaxPlayers = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnSetMaxPlayers"));
 		maxPlayersInput = EditBoxWidget.Cast(rootWidget.FindAnyWidget("maxPlayersInput"));
 		
@@ -248,7 +245,6 @@ class OBLAdminPage : OBLPartyPage {
 	void OnGroupSelected(OBLParty grp) {
 		shortname.SetText(grp.shortname);
 		name.SetText(grp.name);
-		level.SetText("" + grp.level);
 		created.SetText(JMDate.Epoch(grp.creationDate).ToString("DD.MM.YYYY hh:mm:ss"));
 		lastactive.SetText(JMDate.Epoch(grp.lastActivity).ToString("DD.MM.YYYY hh:mm:ss"));
 		playercount.SetText("" + grp.members.Count() + "/" + grp.maxPlayers);
@@ -331,14 +327,6 @@ class OBLAdminPage : OBLPartyPage {
 		rpc.Send(null, OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS, true);
 	}
 	
-	void SetGroupLevel(OBLParty grp, int level_) {
-		if (level_ < 0)
-			return;
-		ScriptRPC rpc = new ScriptRPC();
-		rpc.Write(grp.shortname);
-		rpc.Write(level_);
-		rpc.Send(null, OBLPartyRPCs.GROUP_ADMIN_LEVEL, true);
-	}
 	
 	override bool OnItemSelected(Widget w, int row, int column) {
 		if (super.OnItemSelected(w, row, column))
@@ -383,14 +371,6 @@ class OBLAdminPage : OBLPartyPage {
 		} else if (w == btnChangeGroupNames) {
 			if (GetSelectedGroup(grp))
 				ChangeGroupName(grp);
-			return true;
-		} else if (w == btnLevelDown) {
-			if (GetSelectedGroup(grp))
-				SetGroupLevel(grp, grp.level - 1);
-			return true;
-		} else if (w == btnLevelUp) {
-			if (GetSelectedGroup(grp))
-				SetGroupLevel(grp, grp.level + 1);
 			return true;
 		} else if (w == btnSetMaxPlayers) {
 			if (GetSelectedGroup(grp))

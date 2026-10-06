@@ -34,7 +34,6 @@ class OBLPartyMainConfig {
 	bool enableInfoPanelRealTime = true;
 	bool disableInfoPanelModCreatorMention = false;
 	bool disableLoggerDebug = false;
-	int groupMarkerLimit = 20;
 	ref TStringArray adminSteamids = new TStringArray();
 	float offlinePlayer3dMarkerDistance = 20.0;
 	ref TStringArray subGroupNames = new TStringArray();
