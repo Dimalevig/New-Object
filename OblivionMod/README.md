@@ -20,7 +20,7 @@ OblivionMod/
 1. Скопіюйте папку `Oblivion` на диск `P:\` (DayZ Tools → Workdrive).
 2. Запакуйте через **Addon Builder** (DayZ Tools) з префіксом `Oblivion`.
 3. Покладіть результат у `@Oblivion/Addons/Oblivion.pbo` (+ підпишіть ключем, `.bikey` → `keys/` сервера).
-4. Запускайте сервер з `-mod=@Oblivion` (або `-serverMod=@Oblivion`, якщо мод суто серверний).
+4. Запускайте сервер з `-mod=@Oblivion`. Мод **клієнт-серверний** (нові дії в грі), тому гравці теж мають його завантажити.
 
 ## Налаштування
 
