@@ -243,6 +243,26 @@ modded class OBLPartyManager {
 			SaveGroup(grp);
 			SendInfoNotification(sender, OBLNotifyTexts.GroupUpgraded(targetLevel));
 			RefreshGroupAdmin(sender, grp);
+		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS) {
+			string grpShortnameMax = "";
+			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortnameMax))
+				return;
+			int newMax = 0;
+			if (!ctx.Read(newMax))
+				return;
+			// 0 = повернути стандартний ліміт
+			if (newMax < 0 || newMax > OBLPartyConstants.MAX_PLAYERS_LIMIT) {
+				SendErrorNotification(sender, "Ліміт гравців має бути від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")");
+				return;
+			}
+			grp.maxPlayersOverride = newMax;
+			grp.OnLevelChanged();
+			SaveGroup(grp);
+			GetGame().AdminLog("Admin " + sender.GetPlainId() + " set max players of " + grp.shortname + " to " + grp.maxPlayers);
+			SendInfoNotification(sender, "Ліміт гравців групи " + grp.shortname + ": " + grp.maxPlayers);
+			if (grp.members.Count() > grp.maxPlayers)
+				SendInfoNotification(sender, "У групі зараз " + grp.members.Count() + " гравців — нових не прийматиме, доки їх більше за ліміт.");
+			RefreshGroupAdmin(sender, grp);
 		} else if (rpc_type == OBLPartyRPCs.GROUP_ADMIN_JOIN) {
 			string grpShortname4 = "";
 			if (!ReadGroupFromCtxAdminCheck(sender, ctx, grp, grpShortname4))

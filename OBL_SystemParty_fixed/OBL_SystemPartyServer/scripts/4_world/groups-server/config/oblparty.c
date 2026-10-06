@@ -33,6 +33,7 @@ modded class OBLParty {
 			if (!member)
 				continue;
 			member.online = false;
+			member.currentSubgroup = OBLPartyConstants.SUBGROUP_OFFLINE;
 			member.parentGroup = this;
 		}
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(StartUpdateDelayed, (((currentGroup++) * 733) % GROUP_UPDATE_TIMER), false);
@@ -286,42 +287,15 @@ modded class OBLParty {
 			PlayerBase targetPB = GetPlayerBySteamid(invtedSteamid);
 			TryInvite(senderPB, targetPB);
 		} else if (type == OBLPartyRPCs.JOIN_SUBGROUP) {
-			if (!OBLPartyMainConfig.Get().enableSubGroups)
-				return;
-			int groupId = 0;
-			if (!ctx.Read(groupId)) {
-				OBLLogger.Debug("Failed to read requested Subgroup ID !");
-				return;
-			}
-			if (groupId < 0 || groupId >= subGroupCount) {
-				OBLLogger.Debug("Invalid Group ID: " + groupId + " GroupCount: " + subGroupCount);
-				SendErrorNotification(sender, "Внутрішня помилка 003");
-				return;
-			}
-			int current = GetSubgroupMemberCount(groupId);
-			if (current >= subGroupSize) {
-				SendErrorNotification(sender, OBLNotifyTexts.GroupFull());
-				return;
-			}
+			// підгрупа тепер визначається автоматично (онлайн/офлайн), вручну її не змінити
+			return;
+		} else if (type == OBLPartyRPCs.LEAVE) {
 			PlayerBase pb = PlayerBase.GetPlayerByIdentity(sender);
 			if (!pb) {
 				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
 				return;
 			}
 			OBLPartyMember memMarker = pb.GetMyGroupMarker();
-			if (!memMarker) {
-				OBLLogger.Debug("Unable to find Marker of " + sender.GetPlainId());
-				return;
-			}
-			memMarker.SetSubGroup(groupId);
-			SendInfoNotification(sender, "Ви приєдналися до підгрупи: " + OBLPartyMainConfig.Get().GetSubGroupName(groupId), 1.0);
-		} else if (type == OBLPartyRPCs.LEAVE) {
-			pb = PlayerBase.GetPlayerByIdentity(sender);
-			if (!pb) {
-				OBLLogger.Debug("Unable to find Player Object of " + sender.GetPlainId());
-				return;
-			}
-			memMarker = pb.GetMyGroupMarker();
 			if (!memMarker) {
 				OBLLogger.Debug("Unable to find Marker of " + sender.GetPlainId());
 				return;
@@ -762,20 +736,15 @@ modded class OBLParty {
 	}
 	
 	int GetNextFreeSubgroup() {
-		if (!OBLPartyMainConfig.Get().enableSubGroups)
-			return 0;
-		OBLPartyLevel lev = OBLPartyLevels.Get().FindLevelByUID(level);
-		if (!lev)
-			return 0;
-		int max = lev.subgroupSize;
-		if (max <= 0)
-			return 0;
-		int i = 0;
-		while (i < lev.subgroupCount && GetSubgroupMemberCount(i) >= max)
-			i++;
-		if (i >= lev.subgroupCount)
-			return 0;
-		return i;
+		// новий учасник щойно в грі — він онлайн
+		return OBLPartyConstants.SUBGROUP_ONLINE;
+	}
+	
+	// ліміт гравців: 6 за замовчуванням або значення адміна (до 15)
+	int GetMaxPlayersLimit() {
+		if (maxPlayersOverride > 0)
+			return Math.Min(maxPlayersOverride, OBLPartyConstants.MAX_PLAYERS_LIMIT);
+		return OBLPartyConstants.DEFAULT_MAX_PLAYERS;
 	}
 	
 	override void InitNumbers() {
@@ -783,11 +752,15 @@ modded class OBLParty {
 		OBLPartyLevel lvl = OBLPartyLevels.Get().FindLevelByUID(level);
 		if (!lvl)
 			lvl = OBLPartyLevels.Get().GetHighestLevel();
-		maxPlayers = lvl.maxPlayerCount;
-		subGroupSize = lvl.subgroupSize;
-		subGroupCount = lvl.subgroupCount;
-		markerLimit = OBLPartyMainConfig.Get().groupMarkerLimit + lvl.groupMarkerLimitAdded;
-		plotpoleLimit = lvl.groupPlotpolesLimitAdded;
+		maxPlayers = GetMaxPlayersLimit();
+		subGroupCount = OBLPartyConstants.SUBGROUP_COUNT;
+		subGroupSize = maxPlayers;
+		markerLimit = OBLPartyMainConfig.Get().groupMarkerLimit;
+		plotpoleLimit = 0;
+		if (lvl) {
+			markerLimit += lvl.groupMarkerLimitAdded;
+			plotpoleLimit = lvl.groupPlotpolesLimitAdded;
+		}
 	}
 	
 	int GetFreeMemberSlots() {

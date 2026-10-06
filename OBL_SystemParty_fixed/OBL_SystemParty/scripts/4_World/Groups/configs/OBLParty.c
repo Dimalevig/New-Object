@@ -12,6 +12,8 @@ class OBLParty {
 	int markerLimit = 0;
 	int plotpoleLimit = 0;
 	bool showTagInChat = true;
+	// 0 = стандартний ліміт (6); 1..15 — ліміт, заданий адміном (можна вписати і в JSON групи)
+	int maxPlayersOverride = 0;
 	ref array<ref OBLPartyMember> members = new array<ref OBLPartyMember>();
 	ref array<ref OBLMarker> markers = new array<ref OBLMarker>();
 	[NonSerialized()]
@@ -193,12 +195,6 @@ class OBLParty {
 	
 	int GetSubgroupMemberCount(int subGroup) {
 		return GetSubgroupMembers(subGroup).Count();
-	}
-	
-	void JoinSubgroupRequest(int grp) {
-		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.JOIN_SUBGROUP);
-		rpc.Write(grp);
-		SendRPCToServer(rpc);
 	}
 	
 	array<ref OBLPartyMember> GetSubgroupMembers(int subGroup) {

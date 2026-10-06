@@ -34,6 +34,11 @@ modded class OBLPartyMember {
 				rpc.Write(hashedId_);
 				SendMarkerRPC(rpc);
 			}
+			// гравець автоматично переходить у підгрупу «Онлайн» або «Офлайн»
+			if (on)
+				SetSubGroup(OBLPartyConstants.SUBGROUP_ONLINE);
+			else
+				SetSubGroup(OBLPartyConstants.SUBGROUP_OFFLINE);
 		}
 		super.SetOnline(on, hashedId_);
 	}

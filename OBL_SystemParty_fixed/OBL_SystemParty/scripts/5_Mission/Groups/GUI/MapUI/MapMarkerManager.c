@@ -652,19 +652,11 @@ class MapMarkerWrapperOBLMarker : MapMarkerWrapper {
 			OBLPartyMember myMarker = pb.GetMyGroupMarker();
 			if (!myMarker)
 				return false;
-			int mySubgroup = myMarker.currentSubgroup;
-			
-			OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
 			OBLPartyMember memberMarker;
 			if (Class.CastTo(memberMarker, marker)) {
 				string mysteamid = MissionGameplay.Cast(GetGame().GetMission()).mySteamid;
-				if (memberMarker.steamid == mysteamid)
-					return false;
-				bool checkSubgroupsPlayer = !cfg.enableSubGroupSharedPlayerMapMarker && cfg.enableSubGroups;
-				return (!checkSubgroupsPlayer || mySubgroup == memberMarker.currentSubgroup);
-			} else if (marker.type == OBLMarkerType.GROUP_PING) {
-				bool checkSubgroupsPing = !cfg.enableSubGroupSharedPingMapMarker && cfg.enableSubGroups;
-				return (!checkSubgroupsPing || mySubgroup == marker.currentSubgroup);
+				// підгрупи = статус онлайн/офлайн: тіммейтів показуємо всіх, незалежно від підгрупи
+				return memberMarker.steamid != mysteamid;
 			}
 		}
 		return true;

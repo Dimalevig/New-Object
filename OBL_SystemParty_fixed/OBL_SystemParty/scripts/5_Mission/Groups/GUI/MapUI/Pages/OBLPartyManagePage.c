@@ -92,9 +92,6 @@ class OBLPartyManagePage : OBLPartyPage {
 				return true;
 			pb.GetOBLParty().SendPlayerInviteClient(inviteTarget);
 			return true;
-		} else if (w == btn_joinSubgroup) {
-			JoinSelectedSubGroup();
-			return true;
 		} else if (w == btn_leave) {
 			pb = PlayerBase.Cast(GetGame().GetPlayer());
 			if (!pb || !pb.GetOBLParty())
@@ -209,7 +206,6 @@ class OBLPartyManagePage : OBLPartyPage {
 			return;
 		// btn_upgrade.Enable(myPerms.canUpgrade);
 		int selected = playerlist_members.GetSelectedRow();
-		btn_joinSubgroup.Enable(false);
 		if (selected < 0 || selected >= playerlist_members.GetNumItems()) {
 			btn_kick.Enable(false);
 			btn_promote.Enable(false);
@@ -224,13 +220,7 @@ class OBLPartyManagePage : OBLPartyPage {
 				return;
 			}
 			if (selectedPerm.param1.Length() != 17) {
-				OBLPartyMember myMarker = pb.GetMyGroupMarker();
-				if (!myMarker)
-					return;
-				int mySubgroup = myMarker.currentSubgroup;
-				int groupId = selectedPerm.param3;
-				int count = pb.GetOBLParty().GetSubgroupMemberCount(groupId);
-				btn_joinSubgroup.Enable(count < pb.GetOBLParty().subGroupSize && groupId != mySubgroup);
+				// рядок-заголовок підгрупи «Онлайн»/«Офлайн»
 				btn_kick.Enable(false);
 				btn_promote.Enable(false);
 				btn_demote.Enable(false);
@@ -247,10 +237,6 @@ class OBLPartyManagePage : OBLPartyPage {
 	}
 	
 	override bool OnDoubleClick(Widget w) {
-		if (w == playerlist_members) {
-			JoinSelectedSubGroup();
-			return true;
-		}
 		return false;
 	}
 	
@@ -418,16 +404,6 @@ class OBLPartyManagePage : OBLPartyPage {
 		pb.GetOBLParty().KickPlayerClient(steamid);
 	}
 	
-	void JoinSelectedSubGroup() {
-		int group = GetSelectedSubGroup();
-		if (group < 0)
-			return;
-		PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
-		if (!pb || !pb.GetOBLParty() || pb.GetMySubGroup() == group)
-			return;
-		pb.GetOBLParty().JoinSubgroupRequest(group);
-	}
-	
 	string GetSelectedPlayerSteamid() {
 		int row = playerlist_members.GetSelectedRow();
 		if (row < 0 || row >= playerlist_members.GetNumItems())
@@ -457,7 +433,10 @@ class OBLPartyManagePage : OBLPartyPage {
 		// btn_upgrade = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_upgrade"));
 		btn_promote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_promote"));
 		btn_demote = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_demote"));
+		// гравці більше не обирають підгрупу вручну — кнопку ховаємо
 		btn_joinSubgroup = ButtonWidget.Cast(rootWidget.FindAnyWidget("btn_joinSubgroup"));
+		if (btn_joinSubgroup)
+			btn_joinSubgroup.Show(false);
 		
 		searchbox = EditBoxWidget.Cast(rootWidget.FindAnyWidget("searchbox"));
 		buttonInvite = ButtonWidget.Cast(rootWidget.FindAnyWidget("buttonInvite"));

@@ -59,7 +59,8 @@ class OBLPartyLevels {
 	
 	static OBLPartyLevels LoadDefault() {
 		OBLPartyLevels def = new OBLPartyLevels;
-		def.allLevels.Insert(OBLPartyLevel.InitLevel(0, 20, 6, 5, 30, 2)); // +4
+		// кількість гравців і підгрупи більше не беруться з рівня (6 / до 15 від адміна; «Онлайн» і «Офлайн»)
+		def.allLevels.Insert(OBLPartyLevel.InitLevel(0, 6, 2, 6, 30, 2));
 		return def;
 	}
 	

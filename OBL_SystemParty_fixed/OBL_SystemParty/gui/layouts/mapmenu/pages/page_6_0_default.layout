@@ -288,12 +288,12 @@ FrameWidgetClass rootFrame {
         TextWidgetClass TextWidget8 {
          ignorepointer 1
          position 5 175
-         size 0.45 20
+         size 0.2 20
          hexactpos 1
          vexactpos 1
          hexactsize 0
          vexactsize 1
-         text "Кількість гравців:"
+         text "Гравців:"
         }
         TextWidgetClass TextWidget9 {
          ignorepointer 1
@@ -357,13 +357,45 @@ FrameWidgetClass rootFrame {
         }
         TextWidgetClass playercount {
          ignorepointer 1
+         position 0.22 175
+         size 0.15 20
+         hexactpos 0
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+        }
+        EditBoxWidgetClass maxPlayersInput {
+         ignorepointer 0
+         position 0.38 175
+         size 0.12 20
+         hexactpos 0
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+        }
+        ButtonWidgetClass btnSetMaxPlayers {
          position 5 175
-         size 0.5 20
+         size 0.47 20
          halign right_ref
          hexactpos 1
          vexactpos 1
          hexactsize 0
          vexactsize 1
+         text "Встановити ліміт (0 = 6)"
+         {
+          PanelWidgetClass uaPrimaryMaxPlayers {
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           style Outline
+          }
+         }
         }
         TextWidgetClass markercount {
          ignorepointer 1

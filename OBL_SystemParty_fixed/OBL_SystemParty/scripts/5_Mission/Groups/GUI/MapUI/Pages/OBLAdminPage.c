@@ -2,9 +2,9 @@ class OBLAdminPage : OBLPartyPage {
 	
 	private ref array<ref OBLParty> groups = new array<ref OBLParty>();
 	
-	EditBoxWidget shortname, name, searchInput;
+	EditBoxWidget shortname, name, searchInput, maxPlayersInput;
 	TextWidget level, created, lastactive, playercount, markercount, steamid, rank;
-	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnLevelUp, btnLevelDown;
+	ButtonWidget btnRefresh, btnDemote, btnPromote, btnKick, btnToLeader, btnCopy, btnJoin, btnDelete, btnChangeGroupNames, btnLevelUp, btnLevelDown, btnSetMaxPlayers;
 	TextListboxWidget groupsList, memberList;
 	CheckBoxWidget chckbxShortnames, chckbxNames, chckbxMemberNames, chckbxSteamids, chckbx_show_territorry_flags;
 	MapWidget mapWidget;
@@ -59,6 +59,8 @@ class OBLAdminPage : OBLPartyPage {
 		btnChangeGroupNames = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnChangeGroupNames"));
 		btnLevelUp = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelUp"));
 		btnLevelDown = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnLevelDown"));
+		btnSetMaxPlayers = ButtonWidget.Cast(rootWidget.FindAnyWidget("btnSetMaxPlayers"));
+		maxPlayersInput = EditBoxWidget.Cast(rootWidget.FindAnyWidget("maxPlayersInput"));
 		
 		groupsList = TextListboxWidget.Cast(rootWidget.FindAnyWidget("groupsList"));
 		memberList = TextListboxWidget.Cast(rootWidget.FindAnyWidget("memberList"));
@@ -250,6 +252,8 @@ class OBLAdminPage : OBLPartyPage {
 		created.SetText(JMDate.Epoch(grp.creationDate).ToString("DD.MM.YYYY hh:mm:ss"));
 		lastactive.SetText(JMDate.Epoch(grp.lastActivity).ToString("DD.MM.YYYY hh:mm:ss"));
 		playercount.SetText("" + grp.members.Count() + "/" + grp.maxPlayers);
+		if (maxPlayersInput)
+			maxPlayersInput.SetText("" + grp.maxPlayers);
 		markercount.SetText("" + grp.markers.Count() + "/" + grp.markerLimit);
 		
 		FillMemberList(grp);
@@ -306,6 +310,25 @@ class OBLAdminPage : OBLPartyPage {
 			rank.SetText(perm.permName);
 		else
 			rank.SetText("?");
+	}
+	
+	// 0 = стандартний ліміт (6), 1..15 — свій ліміт для групи
+	void SetGroupMaxPlayers(OBLParty grp) {
+		if (!maxPlayersInput)
+			return;
+		string txt = maxPlayersInput.GetText();
+		txt.Replace(" ", "");
+		if (txt.Length() == 0)
+			return;
+		int newMax = txt.ToInt();
+		if (newMax < 0 || newMax > OBLPartyConstants.MAX_PLAYERS_LIMIT || (newMax == 0 && txt != "0")) {
+			NotificationSystem.AddNotificationExtended(4, "Система груп", "Вкажіть число від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний ліміт " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")", "set:ccgui_enforce image:MapDestroyed");
+			return;
+		}
+		ScriptRPC rpc = new ScriptRPC();
+		rpc.Write(grp.shortname);
+		rpc.Write(newMax);
+		rpc.Send(null, OBLPartyRPCs.GROUP_ADMIN_MAX_PLAYERS, true);
 	}
 	
 	void SetGroupLevel(OBLParty grp, int level_) {
@@ -368,6 +391,10 @@ class OBLAdminPage : OBLPartyPage {
 		} else if (w == btnLevelUp) {
 			if (GetSelectedGroup(grp))
 				SetGroupLevel(grp, grp.level + 1);
+			return true;
+		} else if (w == btnSetMaxPlayers) {
+			if (GetSelectedGroup(grp))
+				SetGroupMaxPlayers(grp);
 			return true;
 		} else if (w == btnRefresh) {
 			RequestGroups();

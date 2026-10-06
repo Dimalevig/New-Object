@@ -14,4 +14,11 @@ class OBLPartyConstants {
 	const string SAVE_SUFFIX_CLANCLOTHING_CONFIG = "ClanClothing.json";
 	const string SAVE_SUFFIX_GROUPS_FOLDER = "Partys/";
 	const string SAVE_SUFFIX_GROUPSDELETED_FOLDER = "Partys_Deleted/";
+	// підгрупи: лише «Онлайн» та «Офлайн», гравець потрапляє туди автоматично
+	const int SUBGROUP_ONLINE = 0;
+	const int SUBGROUP_OFFLINE = 1;
+	const int SUBGROUP_COUNT = 2;
+	// розмір групи: 6 за замовчуванням, адмін може задати до 15
+	const int DEFAULT_MAX_PLAYERS = 6;
+	const int MAX_PLAYERS_LIMIT = 15;
 }

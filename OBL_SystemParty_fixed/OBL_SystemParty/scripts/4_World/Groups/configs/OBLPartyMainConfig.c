@@ -77,6 +77,8 @@ class OBLPartyMainConfig {
 			OBLFile<OBLPartyMainConfig>.SaveToJson(OBLPartyConstants.SAVE_SUFFIX_MAIN_CONFIG, cfg);
 		}
 		EnsureButtonConfig(cfg);
+		// підгрупи «Онлайн»/«Офлайн» — обов'язкова частина системи груп
+		cfg.enableSubGroups = true;
 		return cfg;
 	}
 	
@@ -208,14 +210,6 @@ class OBLPartyMainConfig {
 		def.adminSteamids.Insert("00000000000000000");
 		def.subGroupNames.Insert("Онлайн");
 		def.subGroupNames.Insert("Офлайн");
-		def.subGroupNames.Insert("Charlie");
-		def.subGroupNames.Insert("Delta");
-		def.subGroupNames.Insert("Echo");
-		def.subGroupNames.Insert("Foxtrot");
-		def.subGroupNames.Insert("Golf");
-		def.subGroupNames.Insert("Hotel");
-		def.subGroupNames.Insert("India");
-		def.subGroupNames.Insert("Juliett");
 		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.SERVER_STATIC, -1, true, true, true, false));
 		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.SERVER_DYNAMIC, -1, true, true, true, false));
 		def.markerConfig.Insert(MarkerConfigEntry.Init(OBLMarkerType.GROUP_PING, -1, true, false, false, true));
@@ -441,11 +435,11 @@ class OBLPartyMainConfig {
 		return null;
 	}
 	
-	// назва підгрупи; якщо в конфігу назв менше, ніж підгруп — номер
+	// підгруп лише дві, назви фіксовані
 	string GetSubGroupName(int index) {
-		if (subGroupNames && index >= 0 && index < subGroupNames.Count())
-			return subGroupNames.Get(index);
-		return "Підгрупа " + (index + 1);
+		if (index == OBLPartyConstants.SUBGROUP_OFFLINE)
+			return "Офлайн";
+		return "Онлайн";
 	}
 	
 	bool IsAdmin(string steamid) {

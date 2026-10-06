@@ -192,15 +192,8 @@ class OBLMarker {
 	
 	void UpdateMarkerSlow() {
 		SetColor();
-		if (OBLPartyMainConfig.Get().enableSubGroups && (type == OBLMarkerType.GROUP_PING || type == OBLMarkerType.GROUP_PLAYER_MARKER)) {
-			PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
-			if (!pb)
-				return;
-			int mySubgroup = pb.GetMySubGroup();
-			disable3dDifferentSubgroup = mySubgroup != currentSubgroup;
-			if (disable3dDifferentSubgroup)
-				return;
-		}
+		// підгрупи тепер лише статус «онлайн/офлайн», тож маркери за ними не ховаємо
+		// (офлайн-гравці й так не мають 3D-маркера — це перевіряє ShowMarker)
 		disable3dDifferentSubgroup = false;
 		show = ShowMarker();
 		//OBLLogger.Debug("Show Marker: " + name + ": " + show);
