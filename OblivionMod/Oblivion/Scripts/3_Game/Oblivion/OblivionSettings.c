@@ -1,11 +1,11 @@
 class OblivionRadiatorRepairSettings
 {
 	bool  Enabled               = true;
-	float DurationSeconds       = 15;    // repair time
-	float RepairToHealthPercent = 70;    // radiator health after repair, % of max (70 = Worn)
-	bool  AllowRuined           = false; // can a ruined radiator be repaired
-	bool  RequireAccessible     = true;  // installed radiator: hood must allow access (same rule as detaching it)
-	int   RepairsPerEpoxy       = 2;     // how many repairs one full Epoxy Putty gives
+	float DurationSeconds       = 15;    // тривалість ремонту, с
+	float RepairToHealthPercent = 70;    // стан радіатора після ремонту, % від максимуму (70 = Worn)
+	bool  AllowRuined           = false; // чи можна ремонтувати зіпсований (ruined) радіатор
+	bool  RequireAccessible     = true;  // радіатор у машині: потрібен доступ (те саме правило, що й для зняття)
+	int   RepairsPerEpoxy       = 2;     // скільки ремонтів дає одна повна епоксидна смола
 
 	void Write(ParamsWriteContext ctx)
 	{
@@ -28,9 +28,9 @@ class OblivionRadiatorRepairSettings
 	}
 }
 
-// Server-side settings, stored in <server profile>/Oblivion/settings.json.
-// Clients receive a copy on connect (OBLIVION_RPC_SETTINGS) so action conditions match the server.
-// Each new mechanic adds its own block here.
+// Серверні налаштування, файл <профіль сервера>/Oblivion/settings.json.
+// Клієнт отримує копію при підключенні (OBLIVION_RPC_SETTINGS), щоб умови дій збігались із сервером.
+// Кожна нова механіка додає сюди свій блок.
 class OblivionSettings
 {
 	int ConfigVersion = 1;
@@ -45,7 +45,7 @@ class OblivionSettings
 			if (GetGame().IsServer())
 				s_Instance = Load();
 			else
-				s_Instance = new OblivionSettings(); // defaults until the server sends its copy
+				s_Instance = new OblivionSettings(); // дефолти, поки сервер не надішле свої
 		}
 		return s_Instance;
 	}
@@ -60,17 +60,17 @@ class OblivionSettings
 		if (FileExist(OBLIVION_SETTINGS_FILE))
 		{
 			JsonFileLoader<OblivionSettings>.JsonLoadFile(OBLIVION_SETTINGS_FILE, settings);
-			OblivionLog("settings loaded from " + OBLIVION_SETTINGS_FILE);
+			OblivionLog("налаштування завантажено з " + OBLIVION_SETTINGS_FILE);
 		}
 		else
 		{
-			OblivionLog("settings file not found, writing defaults");
+			OblivionLog("файл налаштувань не знайдено, записую дефолтні");
 		}
 
 		if (!settings.RadiatorRepair)
 			settings.RadiatorRepair = new OblivionRadiatorRepairSettings();
 
-		// Re-save so newly added fields appear in the file with default values.
+		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);
 		return settings;
 	}
@@ -85,10 +85,10 @@ class OblivionSettings
 		OblivionSettings settings = new OblivionSettings();
 		if (!settings.RadiatorRepair.Read(ctx))
 		{
-			OblivionLog("failed to read settings from server");
+			OblivionLog("не вдалося прочитати налаштування від сервера");
 			return;
 		}
 		s_Instance = settings;
-		OblivionLog("settings received from server");
+		OblivionLog("налаштування отримано від сервера");
 	}
 }

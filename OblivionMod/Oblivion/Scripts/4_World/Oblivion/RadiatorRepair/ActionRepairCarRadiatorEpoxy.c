@@ -6,7 +6,7 @@ class ActionRepairCarRadiatorEpoxyCB : ActionContinuousBaseCB
 	}
 }
 
-// Epoxy Putty in hands -> look at a car (radiator installed) or at a radiator lying on the ground.
+// Епоксидка в руках -> дивимось на машину (радіатор встановлений) або на радіатор на землі.
 class ActionRepairCarRadiatorEpoxy : ActionContinuousBase
 {
 	void ActionRepairCarRadiatorEpoxy()
@@ -16,7 +16,7 @@ class ActionRepairCarRadiatorEpoxy : ActionContinuousBase
 		m_FullBody         = true;
 		m_StanceMask       = DayZPlayerConstants.STANCEMASK_ERECT | DayZPlayerConstants.STANCEMASK_CROUCH;
 		m_SpecialtyWeight  = UASoftSkillsWeight.PRECISE_LOW;
-		m_Text             = "Repair radiator";
+		m_Text             = "#STR_OBLIVION_REPAIR_RADIATOR";
 	}
 
 	override void CreateConditionComponents()
@@ -62,7 +62,7 @@ class ActionRepairCarRadiatorEpoxy : ActionContinuousBase
 		if (radiator.GetHealth01("", "") >= s.RepairToHealthPercent / 100)
 			return false;
 
-		// Installed radiator: same access rule as detaching it (hood open etc.).
+		// Радіатор у машині: те саме правило доступу, що й для зняття (відкритий капот тощо).
 		if (car && s.RequireAccessible && !car.CanReleaseAttachment(radiator))
 			return false;
 
@@ -91,7 +91,7 @@ class ActionRepairCarRadiatorEpoxy : ActionContinuousBase
 		string who = "?";
 		if (action_data.m_Player.GetIdentity())
 			who = action_data.m_Player.GetIdentity().GetName() + " (" + action_data.m_Player.GetIdentity().GetPlainId() + ")";
-		OblivionLog("radiator repaired with epoxy by " + who + " at " + radiator.GetPosition().ToString());
+		OblivionLog("радіатор відремонтовано епоксидкою, гравець " + who + ", позиція " + radiator.GetPosition().ToString());
 	}
 
 	protected void ConsumeEpoxy(ItemBase epoxy, int repairsPerItem)

@@ -4,7 +4,7 @@ modded class ItemBase
 	{
 		super.SetActions();
 
-		// Checked by config class so it works whether or not vanilla has a script class for EpoxyPutty.
+		// Перевірка за конфіг-класом, щоб працювало незалежно від того, чи є у ванілі скрипт-клас EpoxyPutty.
 		if (IsKindOf("EpoxyPutty"))
 			AddAction(ActionRepairCarRadiatorEpoxy);
 	}

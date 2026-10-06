@@ -9,6 +9,7 @@ OblivionMod/
 ├── MECHANICS.md                 # опис усіх механік
 └── Oblivion/                    # пакується в Oblivion.pbo
     ├── config.cpp               # CfgPatches / CfgMods
+    ├── stringtable.csv          # тексти в грі (українською в усіх колонках)
     └── Scripts/
         ├── 3_Game/Oblivion/     # константи, налаштування
         ├── 4_World/Oblivion/    # гравці, предмети, дії
