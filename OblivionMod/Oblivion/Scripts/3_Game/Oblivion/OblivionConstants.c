@@ -4,8 +4,3 @@ const string OBLIVION_SETTINGS_FILE = "$profile:Oblivion/settings.json";
 
 // Сервер -> клієнт: синхронізація налаштувань при підключенні.
 const int OBLIVION_RPC_SETTINGS = 0x0B1100;
-
-static void OblivionLog(string msg)
-{
-	Print("[Oblivion] " + msg);
-}

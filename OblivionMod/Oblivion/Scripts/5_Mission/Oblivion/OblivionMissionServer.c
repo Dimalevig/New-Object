@@ -3,7 +3,6 @@ modded class MissionServer
 	override void OnInit()
 	{
 		super.OnInit();
-		OblivionLog("мод v" + OBLIVION_MOD_VERSION + " ініціалізовано");
 		OblivionSettings.Get();
 	}
 

@@ -58,14 +58,7 @@ class OblivionSettings
 			MakeDirectory(OBLIVION_PROFILE_DIR);
 
 		if (FileExist(OBLIVION_SETTINGS_FILE))
-		{
 			JsonFileLoader<OblivionSettings>.JsonLoadFile(OBLIVION_SETTINGS_FILE, settings);
-			OblivionLog("налаштування завантажено з " + OBLIVION_SETTINGS_FILE);
-		}
-		else
-		{
-			OblivionLog("файл налаштувань не знайдено, записую дефолтні");
-		}
 
 		if (!settings.RadiatorRepair)
 			settings.RadiatorRepair = new OblivionRadiatorRepairSettings();
@@ -83,12 +76,7 @@ class OblivionSettings
 	static void ReadSync(ParamsReadContext ctx)
 	{
 		OblivionSettings settings = new OblivionSettings();
-		if (!settings.RadiatorRepair.Read(ctx))
-		{
-			OblivionLog("не вдалося прочитати налаштування від сервера");
-			return;
-		}
-		s_Instance = settings;
-		OblivionLog("налаштування отримано від сервера");
+		if (settings.RadiatorRepair.Read(ctx))
+			s_Instance = settings;
 	}
 }

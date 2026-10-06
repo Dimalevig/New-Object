@@ -87,11 +87,6 @@ class ActionRepairCarRadiatorEpoxy : ActionContinuousBase
 
 		radiator.SetHealth("", "", radiator.GetMaxHealth("", "") * s.RepairToHealthPercent / 100);
 		ConsumeEpoxy(action_data.m_MainItem, s.RepairsPerEpoxy);
-
-		string who = "?";
-		if (action_data.m_Player.GetIdentity())
-			who = action_data.m_Player.GetIdentity().GetName() + " (" + action_data.m_Player.GetIdentity().GetPlainId() + ")";
-		OblivionLog("радіатор відремонтовано епоксидкою, гравець " + who + ", позиція " + radiator.GetPosition().ToString());
 	}
 
 	protected void ConsumeEpoxy(ItemBase epoxy, int repairsPerItem)
