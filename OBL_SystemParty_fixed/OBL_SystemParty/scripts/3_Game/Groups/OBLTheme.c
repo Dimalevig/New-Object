@@ -12,4 +12,11 @@ class OBLTheme {
 	static int Muted()       { return ARGB(255, 142, 136, 172); } // #8E88AC
 	static int Success()     { return ARGB(255, 91, 227, 166); }  // #5BE3A6
 	static int Danger()      { return ARGB(255, 224, 70, 90); }   // #E0465A
+
+	// сповіщення у стилі сервера
+	static const string NOTIFY_TITLE = "OBLIVION — Група";
+	static const string NOTIFY_TITLE_CHAT = "OBLIVION — Чат";
+	static const string ICON_ERROR = OBLTheme.ICON_ERROR;
+	static const string ICON_INFO = OBLTheme.ICON_INFO;
+	static const string ICON_SUCCESS = OBLTheme.ICON_SUCCESS;
 }

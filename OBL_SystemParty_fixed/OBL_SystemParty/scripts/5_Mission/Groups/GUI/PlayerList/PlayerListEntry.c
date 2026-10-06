@@ -10,6 +10,7 @@ class OBLPlayerListEntry {
 	Widget borderWidget;
 	
 	float lastHealth;
+	bool lastDowned;
 	
 	void ~OBLPlayerListEntry(){
 		if (mainWidget)
@@ -50,9 +51,15 @@ class OBLPlayerListEntry {
 			healthbar.SetCurrent(member.health);
 			healthbar.SetColor(GetColor(member.health));
 		}
-		if (playername)
-			playername.SetText(member.name);
+		if (playername) {
+			string danger = member.GetDangerText();
+			if (danger != "")
+				playername.SetText(member.name + "  —  " + danger);
+			else
+				playername.SetText(member.name);
+		}
 		lastHealth = member.health;
+		lastDowned = member.downed;
 		if (borderWidget) {
 			int borderColor = OBLColorManager.Get().GetColor("Playerlist entry border");
 			borderWidget.SetColor(borderColor);

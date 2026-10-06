@@ -318,7 +318,7 @@ class OBLAdminPage : OBLPartyPage {
 			return;
 		int newMax = txt.ToInt();
 		if (newMax < 0 || newMax > OBLPartyConstants.MAX_PLAYERS_LIMIT || (newMax == 0 && txt != "0")) {
-			NotificationSystem.AddNotificationExtended(4, "Система груп", "Вкажіть число від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний ліміт " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")", "set:ccgui_enforce image:MapDestroyed");
+			NotificationSystem.AddNotificationExtended(4, OBLTheme.NOTIFY_TITLE, "Вкажіть число від 1 до " + OBLPartyConstants.MAX_PLAYERS_LIMIT + " (0 — стандартний ліміт " + OBLPartyConstants.DEFAULT_MAX_PLAYERS + ")", OBLTheme.ICON_ERROR);
 			return;
 		}
 		ScriptRPC rpc = new ScriptRPC();
@@ -427,7 +427,7 @@ class OBLAdminPage : OBLPartyPage {
 			return;
 		string cop = member.steamid + " " + member.name;
 		GetGame().CopyToClipboard(cop);
-		NotificationSystem.AddNotificationExtended(4, "Система груп", "Дані користувача скопійовано", "set:ccgui_enforce image:HudUserMarker");
+		NotificationSystem.AddNotificationExtended(4, OBLTheme.NOTIFY_TITLE, "Дані користувача скопійовано", OBLTheme.ICON_SUCCESS);
 	}
 	
 	void SendSelectedGroupMemberRPC(int rpc_type) {

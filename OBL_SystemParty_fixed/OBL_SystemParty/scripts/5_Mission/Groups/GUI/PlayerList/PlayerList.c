@@ -142,7 +142,7 @@ class OBLPlayerList {
 		foreach (OBLPlayerListEntry entry : entries) {
 			if (!entry || !entry.member || members.Find(entry.member) == -1)
 				return 1;
-			if (entry.lastHealth != entry.member.health)
+			if (entry.lastHealth != entry.member.health || entry.lastDowned != entry.member.downed)
 				changedHealth = true;
 		}
 		if (changedHealth)

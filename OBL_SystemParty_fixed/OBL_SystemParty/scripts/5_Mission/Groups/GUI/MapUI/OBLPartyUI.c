@@ -113,6 +113,7 @@ class OBLPartyUI : UIScriptedMenu {
 		
 		mapWidget = MapWidget.Cast(layoutRoot.FindAnyWidget("Map"));
 		chckbx_dragMarkers = CheckBoxWidget.Cast(layoutRoot.FindAnyWidget("chckbx_dragMarkers"));
+		SetKeyHints();
 		initialized = true;
 		return layoutRoot;
 	}
@@ -127,6 +128,14 @@ class OBLPartyUI : UIScriptedMenu {
 		ChangePageTo(pages.Get(0));
 		OBLLogger.Debug("Init Page Rest");
 		initializedRest = true;
+	}
+	
+	// підказка з клавішами над картою (стандартні прив'язки моду)
+	void SetKeyHints() {
+		TextWidget hints = TextWidget.Cast(layoutRoot.FindAnyWidget("hintsText"));
+		if (!hints)
+			return;
+		hints.SetText("M — карта    P — група    T — пінг    C — прибрати пінг    Ctrl+J — прийняти запрошення    ПКМ×2 — редагувати маркер    ЛКМ×2 — новий маркер    Del — видалити маркер");
 	}
 	
 	void SetServerLogo() {
@@ -263,7 +272,7 @@ class OBLPartyUI : UIScriptedMenu {
 			if (w == p.buttonWidget && !p.IsAvailable()) {
 				string reason = p.GetUnavailableReason();
 				if (reason != "")
-					NotificationSystem.AddNotificationExtended(4, "Система груп", reason, "set:ccgui_enforce image:MapDestroyed");
+					NotificationSystem.AddNotificationExtended(4, OBLTheme.NOTIFY_TITLE, reason, OBLTheme.ICON_ERROR);
 				return true;
 			}
 		}

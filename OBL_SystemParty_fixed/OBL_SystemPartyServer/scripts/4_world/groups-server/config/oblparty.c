@@ -192,7 +192,17 @@ modded class OBLParty {
 		if (!inv)
 			return;
 		lastInvites.RemoveItem(inv);
+		// повідомляємо групу до додавання, щоб новачок не отримав це сповіщення
+		string joinedName = steamid;
+		if (pb && pb.GetIdentity())
+			joinedName = pb.GetIdentity().GetName();
+		foreach (PlayerBase memberPB : playerChars) {
+			if (memberPB && memberPB.GetIdentity())
+				SendInfoNotification(memberPB.GetIdentity(), joinedName + " приєднався до групи.");
+		}
 		AddMember(pb);
+		if (pb && pb.GetIdentity())
+			SendSuccessNotification(pb.GetIdentity(), "Ви приєдналися до групи " + name + " [" + shortname + "].");
 	}
 	
 	void OnRPCServer(PlayerIdentity sender, int type, ParamsReadContext ctx) {
@@ -476,7 +486,7 @@ modded class OBLParty {
 			return;
 		}
 		InvitePlayer(targetPB, sender.GetName());
-		SendInfoNotification(sender, "Запрошення надіслано гравцю " + targetPB.GetIdentity().GetName() + ".");
+		SendSuccessNotification(sender, "Запрошення надіслано гравцю " + targetPB.GetIdentity().GetName() + ".");
 	}
 	
 	// перераховує ліміти групи й розсилає їх учасникам
@@ -777,7 +787,17 @@ modded class OBLParty {
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
 		OBLLogger.Debug("Sending Error Notification to " + player.GetPlainId() + ": " + printmessage);
-		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, "Система груп", printmessage, "set:ccgui_enforce image:MapDestroyed");
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, printmessage, OBLTheme.ICON_ERROR);
+	}
+	
+	void SendSuccessNotification(PlayerIdentity player, string message, float show_time = 4) {
+		if (!player)
+			return;
+		string printmessage = message + "";
+		printmessage.Replace("%", "");
+		if (show_time <= 0 || show_time > 15)
+			show_time = 4;
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, printmessage, OBLTheme.ICON_SUCCESS);
 	}
 	
 	void SendInfoNotification(PlayerIdentity player, string message, float show_time = 4) {
@@ -789,7 +809,7 @@ modded class OBLParty {
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
 		OBLLogger.Debug("Sending Info Notification to " + player.GetPlainId() + ": " + printmessage);
-		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, "Система груп", printmessage, "set:ccgui_enforce image:HudUserMarker");
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, printmessage, OBLTheme.ICON_INFO);
 	}
 	
 	void SyncGroupTagVisiblity() {

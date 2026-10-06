@@ -20,6 +20,7 @@ modded class PlayerBase {
 		OBLPartyMember member = GetMyGroupMarker();
 		if (member) {
 			member.SetHealth(GetHealth());
+			member.SetDowned(IsUnconscious());
 			if (GetIdentity()) {
 				member.SetName(GetIdentity().GetName());
 				member.SetOnline(true, GetIdentity().GetId());
@@ -116,8 +117,29 @@ modded class PlayerBase {
 	override void EEKilled(Object killer) {
 		super.EEKilled(killer);
 		OBLPartyMember member = GetMyGroupMarker();
-		if (member)
+		if (member) {
+			member.SetDowned(false);
 			member.SetHealth(0.0);
+		}
+	}
+	
+	// тіммейти бачать, що гравець у нокауті
+	override void OnUnconsciousStart() {
+		super.OnUnconsciousStart();
+		if (!GetGame() || !GetGame().IsServer())
+			return;
+		OBLPartyMember member = GetMyGroupMarker();
+		if (member)
+			member.SetDowned(true);
+	}
+	
+	override void OnUnconsciousStop(int pCurrentCommandID) {
+		super.OnUnconsciousStop(pCurrentCommandID);
+		if (!GetGame() || !GetGame().IsServer())
+			return;
+		OBLPartyMember member = GetMyGroupMarker();
+		if (member && IsAlive())
+			member.SetDowned(false);
 	}
 	
 	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef) {

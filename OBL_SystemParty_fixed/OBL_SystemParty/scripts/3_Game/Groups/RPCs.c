@@ -60,7 +60,7 @@ enum OBLPartyRPCs {
 	CONFIG_SYNC_ONLINE_PRIVACY_LIST,
 	// колишні RPC альянсів (видалені); слоти лишаються, щоб номери RPC магазину не змінились
 	GROUP_ADMIN_MAX_PLAYERS,  // client → server: адмін задає ліміт гравців групи (0 = за замовчуванням)
-	RESERVED_2,
+	MEMBER_DOWNED,            // server → client: тіммейт у нокауті (true/false)
 	RESERVED_3,
 	RESERVED_4,
 	RESERVED_5,

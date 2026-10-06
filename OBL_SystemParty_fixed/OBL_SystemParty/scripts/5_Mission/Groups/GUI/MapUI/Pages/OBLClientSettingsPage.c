@@ -468,13 +468,13 @@ class OBLClientSettingsPage : OBLPartyPage {
 				mission.SendOnlinePrivacyRPC();
 			ReloadAll(true);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(OBLLayoutConfig.InvokeOnLayoutChanged);
-			NotificationSystem.AddNotificationExtended(4.0, "Система груп", "Усі налаштування скинуто до значень за замовчуванням!", "set:ccgui_enforce image:MapUserMarker");
+			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Усі налаштування скинуто до значень за замовчуванням!", OBLTheme.ICON_SUCCESS);
 		} else if (w == btn_Save_Config) {
 			OBLColorManager.Get().Save();
 			OBLPositionManager.Get().Save();
 			OBLLayoutConfig.Get().Save();
 			OBLMarkerVisibilityManager.Get().Save();
-			NotificationSystem.AddNotificationExtended(4.0, "Система груп", "Налаштування збережено!", "set:ccgui_enforce image:MapUserMarker");
+			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Налаштування збережено!", OBLTheme.ICON_SUCCESS);
 		} else if (w == btn_Reload_From_Config) {
 			OBLColorManager.Reload();
 			OBLPositionManager.Reload();
@@ -485,7 +485,7 @@ class OBLClientSettingsPage : OBLPartyPage {
 				missionReload.SendOnlinePrivacyRPC();
 			ReloadAll(true);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(OBLLayoutConfig.InvokeOnLayoutChanged);
-			NotificationSystem.AddNotificationExtended(4.0, "Система груп", "Налаштування перезавантажено!", "set:ccgui_enforce image:MapUserMarker");
+			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Налаштування перезавантажено!", OBLTheme.ICON_SUCCESS);
 		} else if (w == invertX || w == invertY) {
 			if (w == invertX) {
 				sliderX.SetCurrent(1.0 - sliderX.GetCurrent());

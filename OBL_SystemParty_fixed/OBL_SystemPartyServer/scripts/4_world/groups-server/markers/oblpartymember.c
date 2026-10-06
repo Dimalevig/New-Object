@@ -13,6 +13,17 @@ modded class OBLPartyMember {
 		}
 	}
 	
+	override void SetDowned(bool downed_) {
+		if (GetGame().IsServer()) {
+			if (downed_ != downed) {
+				ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.MEMBER_DOWNED);
+				rpc.Write(downed_);
+				SendMarkerRPC(rpc);
+			}
+		}
+		super.SetDowned(downed_);
+	}
+	
 	override void SetPermission(int perm) {
 		if (GetGame().IsServer()) {
 			if (perm != permissionGroup) {

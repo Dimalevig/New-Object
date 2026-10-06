@@ -10,6 +10,42 @@ class OBLPartyMember : OBLMarker {
 	PlayerBase clientPBFound;
 	[NonSerialized()]
 	string hashedId = "";
+	// у нокауті (без свідомості); не зберігається у файл групи
+	[NonSerialized()]
+	bool downed = false;
+	
+	// онлайн, але без свідомості або мертвий
+	bool IsInDanger() {
+		return online && (downed || health <= 0);
+	}
+	
+	string GetDangerText() {
+		if (!online)
+			return "";
+		if (health <= 0)
+			return "ЗАГИНУВ";
+		if (downed)
+			return "НОКАУТ";
+		return "";
+	}
+	
+	// червоне блимання для тіммейта в біді
+	static bool BlinkOn() {
+		return (GetGame().GetTime() / 400) % 2 == 0;
+	}
+	
+	override string GetDistancePrefix() {
+		string txt = GetDangerText();
+		if (txt == "")
+			return "";
+		return txt + " · ";
+	}
+	
+	void SetDowned(bool downed_) {
+		downed = downed_;
+		if (GetGame().IsClient())
+			SetColor(true);
+	}
 	
 	void FindPlayerBase() {
 		//ref array<Man> players = ClientData.m_PlayerBaseList;
@@ -79,6 +115,9 @@ class OBLPartyMember : OBLMarker {
 		if (IsValidPlayerBase()) {
 			position = GetHeadPos();
 		}
+		// блимання: SetColor сам пропускає, якщо колір не змінився
+		if (IsInDanger())
+			SetColor();
 		return true;
 	}
 	
@@ -94,6 +133,11 @@ class OBLPartyMember : OBLMarker {
 			if (!ctx.Read(perm))
 				return;
 			SetPermission(perm);
+		} else if (type_ == OBLPartyRPCs.MEMBER_DOWNED) {
+			bool downedState = false;
+			if (!ctx.Read(downedState))
+				return;
+			SetDowned(downedState);
 		} else if (type_ == OBLPartyRPCs.ONLINE) {
 			bool online_ = 0;
 			string hashedId_;
@@ -140,6 +184,8 @@ class OBLPartyMember : OBLMarker {
 	}
 	
 	override int GetColorARGB() {
+		if (IsInDanger())
+			return OBLTheme.Danger();
 		if (online) {
 			return OBLColorManager.Get().GetColor("Player Online");
 		} else {
@@ -148,6 +194,11 @@ class OBLPartyMember : OBLMarker {
 	}
 	
 	override int Get3DColorARGB() {
+		if (IsInDanger()) {
+			if (BlinkOn())
+				return OBLTheme.Danger();
+			return OBLTheme.Text();
+		}
 		if (online) {
 			return OBLColorManager.Get().GetColor("Player 3D Marker");
 		} else {
@@ -170,6 +221,8 @@ class OBLPartyMember : OBLMarker {
 			return false;
 		if (!ctx.Read(health))
 			return false;
+		if (!ctx.Read(downed))
+			return false;
 		icon = OBLPartyMainConfig.Get().otherPlayerIconsPath;
 		return true;
 	}
@@ -182,6 +235,7 @@ class OBLPartyMember : OBLMarker {
 		ctx.Write(currentSubgroup);
 		ctx.Write(online);
 		ctx.Write(health);
+		ctx.Write(downed);
 	}
 
 }

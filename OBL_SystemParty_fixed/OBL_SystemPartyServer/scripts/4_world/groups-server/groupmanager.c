@@ -431,7 +431,7 @@ modded class OBLPartyManager {
 		safeError.Replace("%", "");
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
-		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, "Система груп", safeError, "set:ccgui_enforce image:MapDestroyed");
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, safeError, OBLTheme.ICON_ERROR);
 	}
 	void SendInfoNotification(PlayerIdentity player, string message, int show_time = 4) {
 		if (!player)
@@ -441,7 +441,7 @@ modded class OBLPartyManager {
 		safeInfo.Replace("%", "");
 		if (show_time <= 0 || show_time > 15)
 			show_time = 4;
-		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, "Система груп", safeInfo, "set:ccgui_enforce image:HudUserMarker");
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player, show_time, OBLTheme.NOTIFY_TITLE, safeInfo, OBLTheme.ICON_INFO);
 	}
 	
 	override void SaveGroup(OBLParty grp) {

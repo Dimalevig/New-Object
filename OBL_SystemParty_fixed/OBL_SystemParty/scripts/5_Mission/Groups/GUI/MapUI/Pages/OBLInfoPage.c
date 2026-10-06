@@ -70,7 +70,7 @@ class OBLInfoPage : OBLPartyPage {
 			vector pos = GetGame().GetPlayer().GetPosition();
 			string posStr = "" + pos[0] + " " + pos[1] + " " + pos[2];
 			GetGame().CopyToClipboard(posStr);
-			NotificationSystem.AddNotificationExtended(4.0, "Система груп", "Координати гравця скопійовано", "set:ccgui_enforce image:MapUserMarker"); 
+			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "Координати гравця скопійовано", OBLTheme.ICON_SUCCESS); 
 		}
 		return false;
 	}

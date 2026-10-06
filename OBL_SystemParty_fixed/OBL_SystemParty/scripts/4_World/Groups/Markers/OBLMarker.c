@@ -41,6 +41,16 @@ class OBLMarker {
 	int lastcolor = 0;
 	[NonSerialized()]
 	bool showBottom = true;
+	[NonSerialized()]
+	float lastFade = -1;
+	[NonSerialized()]
+	float iconBaseW = -1, iconBaseH = -1;
+	
+	// плавне згасання й зменшення далеких 3D-маркерів
+	static const float FADE_NEAR = 150;
+	static const float FADE_FAR = 1500;
+	static const float FADE_MIN_ALPHA = 0.45;
+	static const float FADE_MIN_SCALE = 0.7;
 	
 	[NonSerialized()]
 	Widget compassWidget;
@@ -400,10 +410,37 @@ class OBLMarker {
 		vector pos = GetGame().GetCurrentCameraPosition();
 		dist = vector.Distance(position, pos);
 		if (dist < 1000) {
-			distanceWidget.SetText("" + ((int) dist) + "m");
+			distanceWidget.SetText(GetDistancePrefix() + ((int) dist) + "m");
 		} else {
 			float km = ((float) ((int) (dist / 100))) / 10;
-			distanceWidget.SetText("" + km + "km");
+			distanceWidget.SetText(GetDistancePrefix() + km + "km");
+		}
+	}
+	
+	// текст перед відстанню (напр. «НОКАУТ · »)
+	string GetDistancePrefix() {
+		return "";
+	}
+	
+	bool UsesDistanceFade() {
+		return type != OBLMarkerType.GROUP_PING;
+	}
+	
+	void UpdateDistanceFade() {
+		if (!mainWidget || !UsesDistanceFade())
+			return;
+		float t = (dist - FADE_NEAR) / (FADE_FAR - FADE_NEAR);
+		t = Math.Clamp(t, 0, 1);
+		// оновлюємо лише при помітній зміні, щоб не смикати віджети щокадру
+		if (lastFade >= 0 && Math.AbsFloat(t - lastFade) < 0.02)
+			return;
+		lastFade = t;
+		mainWidget.SetAlpha(1.0 - t * (1.0 - FADE_MIN_ALPHA));
+		if (iconWidget) {
+			if (iconBaseW < 0)
+				iconWidget.GetSize(iconBaseW, iconBaseH);
+			float scale = 1.0 - t * (1.0 - FADE_MIN_SCALE);
+			iconWidget.SetSize(iconBaseW * scale, iconBaseH * scale);
 		}
 	}
 	
@@ -448,6 +485,7 @@ class OBLMarker {
 		if (!mainWidget || !show || !GetGame() || !GetGame().GetPlayer() || !GetGame().GetPlayer().IsAlive() || GetGame().GetPlayer().IsUnconscious())
 			return false;
 		UpdateDistance();
+		UpdateDistanceFade();
 		return true;
 	}
 	

@@ -281,11 +281,11 @@ class OBLParty {
 	}
 	
 	void SendErrorNotificationLOCAL(string message, float show_time = 4) {
-		NotificationSystem.AddNotificationExtended(show_time, "Система груп", message, "set:ccgui_enforce image:MapDestroyed");
+		NotificationSystem.AddNotificationExtended(show_time, OBLTheme.NOTIFY_TITLE, message, OBLTheme.ICON_ERROR);
 	}
 	
 	void SendInfoNotificationLOCAL(string message, float show_time = 4) {
-		NotificationSystem.AddNotificationExtended(show_time, "Система груп", message, "set:ccgui_enforce image:HudUserMarker");
+		NotificationSystem.AddNotificationExtended(show_time, OBLTheme.NOTIFY_TITLE, message, OBLTheme.ICON_INFO);
 	}
 	
 	void RemoveMarker(OBLMarker marker) {

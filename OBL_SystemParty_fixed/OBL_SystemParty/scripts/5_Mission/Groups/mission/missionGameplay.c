@@ -462,7 +462,7 @@ modded class MissionGameplay {
 			if (switchChatChannel && switchChatChannel.LocalPress()) {
 				if (channels.Count() > 1) {
 					SwitchNextChannel();
-					NotificationSystem.AddNotificationExtended(1.0, "Глобальний чат", "Канал: " + GetCurrentChannel(), "set:ccgui_enforce image:MapUserMarker");
+					NotificationSystem.AddNotificationExtended(1.0, OBLTheme.NOTIFY_TITLE_CHAT, "Канал: " + GetCurrentChannel(), OBLTheme.ICON_SUCCESS);
 					//GetGame().Chat("Channel: " + GetCurrentChannel(), "colorAction");
 				}
 			}
@@ -515,7 +515,7 @@ modded class MissionGameplay {
 			return;
 		// OBL FIX: pressing the key with no pending invite gave no feedback at all
 		if (lastInvite == "") {
-			NotificationSystem.AddNotificationExtended(4.0, "Система груп", "У вас немає активного запрошення до групи.", "set:ccgui_enforce image:MapDestroyed");
+			NotificationSystem.AddNotificationExtended(4.0, OBLTheme.NOTIFY_TITLE, "У вас немає активного запрошення до групи.", OBLTheme.ICON_ERROR);
 			return;
 		}
 		Param1<string> lastInviteParam = new Param1<string>(lastInvite);
