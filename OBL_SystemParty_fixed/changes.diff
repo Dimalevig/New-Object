@@ -7316,8 +7316,8 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  	}
 diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scripts/5_mission/groups-server/shopmanager.c
 --- server_orig/scripts/5_mission/groups-server/shopmanager.c	2026-10-06 21:35:53.803862783 +0000
-+++ server/scripts/5_mission/groups-server/shopmanager.c	2026-10-06 22:56:47.645731417 +0000
-@@ -84,10 +84,18 @@
++++ server/scripts/5_mission/groups-server/shopmanager.c	2026-10-07 21:49:09.352540651 +0000
+@@ -84,10 +84,19 @@
  	// keep callbacks alive while the HTTP request is in flight
  	ref array<ref RestCallback> pendingCallbacks = new array<ref RestCallback>();
  
@@ -7334,13 +7334,14 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
 +	// антиспам: час останнього запиту гравця (мс), окремо для списку і видачі
 +	ref map<string, int> m_lastRequestTime = new map<string, int>();
 +	// гравці, яким уже заплановано відкладений запит списку
-+	ref TStringSet m_deferredList = new TStringSet();
++	// (мапа, а не set: у set Remove() приймає індекс, а не значення)
++	ref map<string, bool> m_deferredList = new map<string, bool>();
 +	const int REQUEST_COOLDOWN_MS = 1500;
 +	const int MAX_KEPT_CALLBACKS  = 256;
  
  	void OBLShopManager() {
  		GetDayZGame().Event_OnRPC.Insert(OnRPC_Shop);
-@@ -116,17 +124,62 @@
+@@ -116,17 +125,62 @@
  		return u;
  	}
  
@@ -7385,7 +7386,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
 +			if (listWait > 0) {
 +				// OBL FIX: замість відмови — виконуємо один відкладений запит
 +				if (!m_deferredList.Contains(steamId)) {
-+					m_deferredList.Insert(steamId);
++					m_deferredList.Insert(steamId, true);
 +					GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(DeferredListRequest, listWait, false, steamId);
 +				}
 +				return;
@@ -7403,7 +7404,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			HandleClaimRequest(sender, purchaseId);
  		}
  	}
-@@ -149,9 +202,11 @@
+@@ -149,9 +203,11 @@
  			return;
  		}
  		OBLShopListCallback cb = new OBLShopListCallback(steamId);
@@ -7417,7 +7418,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  	}
  
  	void OnListResponse(string steamId, string data) {
-@@ -161,7 +216,7 @@
+@@ -161,7 +217,7 @@
  		bool ok = js.ReadFromString(resp, data, err);
  
  		if (!ok) {
@@ -7426,7 +7427,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			// показуємо сире повідомлення з сайту, якщо є коротке
  			string shortRaw = data;
  			if (shortRaw.Length() > 80)
-@@ -172,7 +227,7 @@
+@@ -172,7 +228,7 @@
  		}
  
  		if (resp.status != "success") {
@@ -7435,7 +7436,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			string sr = data;
  			if (sr.Length() > 90)
  				sr = sr.Substring(0, 90);
-@@ -188,7 +243,7 @@
+@@ -188,7 +244,7 @@
  	}
  
  	void OnListError(string steamId, int errorCode) {
@@ -7444,7 +7445,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
  		SendListSync(steamId, null);
  	}
-@@ -199,17 +254,18 @@
+@@ -199,17 +255,18 @@
  			SendClaimResult(sender.GetPlainId(), false, "Магазин вимкнено на цьому сервері.");
  			return;
  		}
@@ -7470,7 +7471,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  		string serverIp = GetServerIp();
  
  		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
-@@ -217,13 +273,15 @@
+@@ -217,13 +274,15 @@
  
  		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
  		if (!ctx) {
@@ -7488,7 +7489,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  	}
  
  	void OnClaimResponse(string steamId, string data) {
-@@ -231,11 +289,14 @@
+@@ -231,11 +290,14 @@
  		JsonSerializer js = new JsonSerializer();
  		string err;
  		if (!js.ReadFromString(resp, data, err)) {
@@ -7505,7 +7506,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  		if (resp.status == "success") {
  			SendClaimResult(steamId, true, "Предмет [" + resp.item_name + "] видається у гру. Зачекайте кілька секунд.");
  		} else {
-@@ -247,15 +308,19 @@
+@@ -247,15 +309,19 @@
  	}
  
  	void OnClaimError(string steamId, int errorCode) {

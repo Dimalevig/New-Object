@@ -93,7 +93,8 @@ class OBLShopManager {
 	// антиспам: час останнього запиту гравця (мс), окремо для списку і видачі
 	ref map<string, int> m_lastRequestTime = new map<string, int>();
 	// гравці, яким уже заплановано відкладений запит списку
-	ref TStringSet m_deferredList = new TStringSet();
+	// (мапа, а не set: у set Remove() приймає індекс, а не значення)
+	ref map<string, bool> m_deferredList = new map<string, bool>();
 	const int REQUEST_COOLDOWN_MS = 1500;
 	const int MAX_KEPT_CALLBACKS  = 256;
 
@@ -165,7 +166,7 @@ class OBLShopManager {
 			if (listWait > 0) {
 				// OBL FIX: замість відмови — виконуємо один відкладений запит
 				if (!m_deferredList.Contains(steamId)) {
-					m_deferredList.Insert(steamId);
+					m_deferredList.Insert(steamId, true);
 					GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(DeferredListRequest, listWait, false, steamId);
 				}
 				return;
