@@ -54,6 +54,13 @@ class OBLShopListCallback : RestCallback {
 		if (mgr)
 			mgr.OnListError(ownerSteamId, errorCode);
 	}
+
+	// OBL FIX: без цього при тайм-ауті гравець не отримував жодної відповіді
+	override void OnTimeout() {
+		OBLShopManager mgr = OBLShopManager.Get();
+		if (mgr)
+			mgr.OnListError(ownerSteamId, -1);
+	}
 }
 
 class OBLShopClaimCallback : RestCallback {
@@ -73,6 +80,12 @@ class OBLShopClaimCallback : RestCallback {
 		OBLShopManager mgr = OBLShopManager.Get();
 		if (mgr)
 			mgr.OnClaimError(ownerSteamId, errorCode);
+	}
+
+	override void OnTimeout() {
+		OBLShopManager mgr = OBLShopManager.Get();
+		if (mgr)
+			mgr.OnClaimError(ownerSteamId, -1);
 	}
 }
 
@@ -119,10 +132,38 @@ class OBLShopManager {
 	string ApiUrl() {
 		string u = OBLPartyMainConfig.Get().shopApiUrl;
 		u.Replace("\\", "/");
-		// strip trailing slash
-		while (u.Length() > 0 && u.IndexOf("/") == u.Length() - 1)
+		// OBL FIX: прибираємо слеш у кінці (стара перевірка шукала ПЕРШИЙ «/» — з «https://» і не спрацьовувала)
+		while (u.Length() > 0 && u.Substring(u.Length() - 1, 1) == "/")
 			u = u.Substring(0, u.Length() - 1);
 		return u;
+	}
+
+	// OBL FIX: REST API на сервері може бути ще не створений — тоді GetRestApi() повертає null
+	// і магазин падав з помилкою. Створюємо, якщо його немає.
+	RestContext GetShopContext() {
+		RestApi api = GetRestApi();
+		if (!api)
+			api = CreateRestApi();
+		if (!api)
+			return null;
+		return api.GetRestContext(ApiUrl());
+	}
+
+	string ShopErrorText(int errorCode) {
+		if (errorCode == -1)
+			return "Магазин не відповідає. Спробуйте пізніше.";
+		return "Магазин недоступний (код " + errorCode + ").";
+	}
+
+	// чи заповнені налаштування магазину в MainConfig.json
+	bool ShopConfigured(string steamId) {
+		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
+		if (cfg.shopApiUrl != "" && cfg.shopSecretKey != "")
+			return true;
+		OBLLogger.Warn("[Shop] не налаштовано: заповніть shopApiUrl і shopSecretKey у MainConfig.json");
+		SendClaimResult(steamId, false, "Магазин ще не налаштовано на сервері.");
+		SendListSync(steamId, null);
+		return false;
 	}
 
 	// повертає 0, якщо запит можна виконати зараз, інакше — скільки мс ще чекати
@@ -187,19 +228,23 @@ class OBLShopManager {
 
 	// ---- LIST ----
 	void HandleListRequest(PlayerIdentity sender) {
+		string steamId  = sender.GetPlainId();
 		if (!ShopEnabled()) {
-			SendClaimResult(sender.GetPlainId(), false, "Магазин вимкнено на цьому сервері.");
+			SendClaimResult(steamId, false, "Магазин вимкнено на цьому сервері.");
+			SendListSync(steamId, null);
 			return;
 		}
-		string steamId  = sender.GetPlainId();
+		if (!ShopConfigured(steamId))
+			return;
 		string serverIp = GetServerIp();
 
 		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
 		string path = "/api_warehouse.php?action=list&key=" + cfg.shopSecretKey + "&server_id=" + cfg.shopServerId.ToString() + "&sid=" + steamId + "&server_ip=" + serverIp;
 
-		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
+		RestContext ctx = GetShopContext();
 		if (!ctx) {
 			SendClaimResult(steamId, false, "Не вдалося звʼязатися з магазином.");
+			SendListSync(steamId, null);
 			return;
 		}
 		OBLShopListCallback cb = new OBLShopListCallback(steamId);
@@ -245,7 +290,7 @@ class OBLShopManager {
 
 	void OnListError(string steamId, int errorCode) {
 		OBLLogger.Warn("[Shop] LIST http error " + errorCode + " for " + steamId);
-		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
+		SendClaimResult(steamId, false, ShopErrorText(errorCode));
 		SendListSync(steamId, null);
 	}
 
@@ -256,6 +301,12 @@ class OBLShopManager {
 			return;
 		}
 		string claimSteam = sender.GetPlainId();
+		OBLPartyMainConfig shopCfg = OBLPartyMainConfig.Get();
+		if (shopCfg.shopApiUrl == "" || shopCfg.shopSecretKey == "") {
+			OBLLogger.Warn("[Shop] не налаштовано: заповніть shopApiUrl і shopSecretKey у MainConfig.json");
+			SendClaimResult(claimSteam, false, "Магазин ще не налаштовано на сервері.");
+			return;
+		}
 		m_pendingClaims.Set(claimSteam, purchaseId);
 		m_claimRetries.Set(claimSteam, 0);
 		m_claimStarted.Set(claimSteam, GetGame().GetTime());
@@ -272,7 +323,7 @@ class OBLShopManager {
 		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
 		string path = "/api_warehouse.php?action=claim&key=" + cfg.shopSecretKey + "&server_id=" + cfg.shopServerId.ToString() + "&sid=" + steamId + "&server_ip=" + serverIp + "&purchase_id=" + purchaseId.ToString();
 
-		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
+		RestContext ctx = GetShopContext();
 		if (!ctx) {
 			m_pendingClaims.Remove(steamId);
 			SendClaimResult(steamId, false, "Не вдалося звʼязатися з магазином.");
@@ -322,7 +373,7 @@ class OBLShopManager {
 		}
 		m_pendingClaims.Remove(steamId);
 		m_claimRetries.Remove(steamId);
-		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
+		SendClaimResult(steamId, false, ShopErrorText(errorCode));
 	}
 
 	// ---- Replies to client ----

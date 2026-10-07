@@ -7316,8 +7316,35 @@ diff -ruN server_orig/scripts/5_mission/groups-server/mission/missionserver.c se
  	}
 diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scripts/5_mission/groups-server/shopmanager.c
 --- server_orig/scripts/5_mission/groups-server/shopmanager.c	2026-10-06 21:35:53.803862783 +0000
-+++ server/scripts/5_mission/groups-server/shopmanager.c	2026-10-07 21:49:09.352540651 +0000
-@@ -84,10 +84,19 @@
++++ server/scripts/5_mission/groups-server/shopmanager.c	2026-10-07 21:51:39.613467055 +0000
+@@ -54,6 +54,13 @@
+ 		if (mgr)
+ 			mgr.OnListError(ownerSteamId, errorCode);
+ 	}
++
++	// OBL FIX: без цього при тайм-ауті гравець не отримував жодної відповіді
++	override void OnTimeout() {
++		OBLShopManager mgr = OBLShopManager.Get();
++		if (mgr)
++			mgr.OnListError(ownerSteamId, -1);
++	}
+ }
+ 
+ class OBLShopClaimCallback : RestCallback {
+@@ -74,6 +81,12 @@
+ 		if (mgr)
+ 			mgr.OnClaimError(ownerSteamId, errorCode);
+ 	}
++
++	override void OnTimeout() {
++		OBLShopManager mgr = OBLShopManager.Get();
++		if (mgr)
++			mgr.OnClaimError(ownerSteamId, -1);
++	}
+ }
+ 
+ // ---- Manager ----
+@@ -84,10 +97,19 @@
  	// keep callbacks alive while the HTTP request is in flight
  	ref array<ref RestCallback> pendingCallbacks = new array<ref RestCallback>();
  
@@ -7341,10 +7368,46 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  
  	void OBLShopManager() {
  		GetDayZGame().Event_OnRPC.Insert(OnRPC_Shop);
-@@ -116,17 +125,62 @@
+@@ -110,48 +132,127 @@
+ 	string ApiUrl() {
+ 		string u = OBLPartyMainConfig.Get().shopApiUrl;
+ 		u.Replace("\\", "/");
+-		// strip trailing slash
+-		while (u.Length() > 0 && u.IndexOf("/") == u.Length() - 1)
++		// OBL FIX: прибираємо слеш у кінці (стара перевірка шукала ПЕРШИЙ «/» — з «https://» і не спрацьовувала)
++		while (u.Length() > 0 && u.Substring(u.Length() - 1, 1) == "/")
+ 			u = u.Substring(0, u.Length() - 1);
  		return u;
  	}
  
++	// OBL FIX: REST API на сервері може бути ще не створений — тоді GetRestApi() повертає null
++	// і магазин падав з помилкою. Створюємо, якщо його немає.
++	RestContext GetShopContext() {
++		RestApi api = GetRestApi();
++		if (!api)
++			api = CreateRestApi();
++		if (!api)
++			return null;
++		return api.GetRestContext(ApiUrl());
++	}
++
++	string ShopErrorText(int errorCode) {
++		if (errorCode == -1)
++			return "Магазин не відповідає. Спробуйте пізніше.";
++		return "Магазин недоступний (код " + errorCode + ").";
++	}
++
++	// чи заповнені налаштування магазину в MainConfig.json
++	bool ShopConfigured(string steamId) {
++		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
++		if (cfg.shopApiUrl != "" && cfg.shopSecretKey != "")
++			return true;
++		OBLLogger.Warn("[Shop] не налаштовано: заповніть shopApiUrl і shopSecretKey у MainConfig.json");
++		SendClaimResult(steamId, false, "Магазин ще не налаштовано на сервері.");
++		SendListSync(steamId, null);
++		return false;
++	}
++
 +	// повертає 0, якщо запит можна виконати зараз, інакше — скільки мс ще чекати
 +	int CooldownLeft(string key) {
 +		int now = GetGame().GetTime();
@@ -7404,7 +7467,29 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			HandleClaimRequest(sender, purchaseId);
  		}
  	}
-@@ -149,9 +203,11 @@
+ 
+ 	// ---- LIST ----
+ 	void HandleListRequest(PlayerIdentity sender) {
++		string steamId  = sender.GetPlainId();
+ 		if (!ShopEnabled()) {
+-			SendClaimResult(sender.GetPlainId(), false, "Магазин вимкнено на цьому сервері.");
++			SendClaimResult(steamId, false, "Магазин вимкнено на цьому сервері.");
++			SendListSync(steamId, null);
+ 			return;
+ 		}
+-		string steamId  = sender.GetPlainId();
++		if (!ShopConfigured(steamId))
++			return;
+ 		string serverIp = GetServerIp();
+ 
+ 		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
+ 		string path = "/api_warehouse.php?action=list&key=" + cfg.shopSecretKey + "&server_id=" + cfg.shopServerId.ToString() + "&sid=" + steamId + "&server_ip=" + serverIp;
+ 
+-		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
++		RestContext ctx = GetShopContext();
+ 		if (!ctx) {
+ 			SendClaimResult(steamId, false, "Не вдалося звʼязатися з магазином.");
++			SendListSync(steamId, null);
  			return;
  		}
  		OBLShopListCallback cb = new OBLShopListCallback(steamId);
@@ -7418,7 +7503,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  	}
  
  	void OnListResponse(string steamId, string data) {
-@@ -161,7 +217,7 @@
+@@ -161,7 +262,7 @@
  		bool ok = js.ReadFromString(resp, data, err);
  
  		if (!ok) {
@@ -7427,7 +7512,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			// показуємо сире повідомлення з сайту, якщо є коротке
  			string shortRaw = data;
  			if (shortRaw.Length() > 80)
-@@ -172,7 +228,7 @@
+@@ -172,7 +273,7 @@
  		}
  
  		if (resp.status != "success") {
@@ -7436,22 +7521,30 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			string sr = data;
  			if (sr.Length() > 90)
  				sr = sr.Substring(0, 90);
-@@ -188,7 +244,7 @@
+@@ -188,8 +289,8 @@
  	}
  
  	void OnListError(string steamId, int errorCode) {
 -		OBLLogger.Debug("[Shop] LIST http error " + errorCode + " for " + steamId);
+-		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
 +		OBLLogger.Warn("[Shop] LIST http error " + errorCode + " for " + steamId);
- 		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
++		SendClaimResult(steamId, false, ShopErrorText(errorCode));
  		SendListSync(steamId, null);
  	}
-@@ -199,17 +255,18 @@
+ 
+@@ -199,31 +300,40 @@
  			SendClaimResult(sender.GetPlainId(), false, "Магазин вимкнено на цьому сервері.");
  			return;
  		}
 -		m_pendingClaimSteam = sender.GetPlainId();
 -		m_pendingClaimId    = purchaseId;
 +		string claimSteam = sender.GetPlainId();
++		OBLPartyMainConfig shopCfg = OBLPartyMainConfig.Get();
++		if (shopCfg.shopApiUrl == "" || shopCfg.shopSecretKey == "") {
++			OBLLogger.Warn("[Shop] не налаштовано: заповніть shopApiUrl і shopSecretKey у MainConfig.json");
++			SendClaimResult(claimSteam, false, "Магазин ще не налаштовано на сервері.");
++			return;
++		}
 +		m_pendingClaims.Set(claimSteam, purchaseId);
 +		m_claimRetries.Set(claimSteam, 0);
 +		m_claimStarted.Set(claimSteam, GetGame().GetTime());
@@ -7471,9 +7564,10 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  		string serverIp = GetServerIp();
  
  		OBLPartyMainConfig cfg = OBLPartyMainConfig.Get();
-@@ -217,13 +274,15 @@
+ 		string path = "/api_warehouse.php?action=claim&key=" + cfg.shopSecretKey + "&server_id=" + cfg.shopServerId.ToString() + "&sid=" + steamId + "&server_ip=" + serverIp + "&purchase_id=" + purchaseId.ToString();
  
- 		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
+-		RestContext ctx = GetRestApi().GetRestContext(ApiUrl());
++		RestContext ctx = GetShopContext();
  		if (!ctx) {
 +			m_pendingClaims.Remove(steamId);
  			SendClaimResult(steamId, false, "Не вдалося звʼязатися з магазином.");
@@ -7489,7 +7583,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  	}
  
  	void OnClaimResponse(string steamId, string data) {
-@@ -231,11 +290,14 @@
+@@ -231,11 +341,14 @@
  		JsonSerializer js = new JsonSerializer();
  		string err;
  		if (!js.ReadFromString(resp, data, err)) {
@@ -7506,7 +7600,7 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  		if (resp.status == "success") {
  			SendClaimResult(steamId, true, "Предмет [" + resp.item_name + "] видається у гру. Зачекайте кілька секунд.");
  		} else {
-@@ -247,15 +309,19 @@
+@@ -247,16 +360,20 @@
  	}
  
  	void OnClaimError(string steamId, int errorCode) {
@@ -7526,8 +7620,10 @@ diff -ruN server_orig/scripts/5_mission/groups-server/shopmanager.c server/scrip
  			return;
  		}
 -		m_claimRetries = 0;
+-		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
 +		m_pendingClaims.Remove(steamId);
 +		m_claimRetries.Remove(steamId);
- 		SendClaimResult(steamId, false, "Магазин недоступний (код " + errorCode + ").");
++		SendClaimResult(steamId, false, ShopErrorText(errorCode));
  	}
  
+ 	// ---- Replies to client ----
