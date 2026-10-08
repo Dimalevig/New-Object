@@ -55,6 +55,39 @@ class OblivionMetalPlatesSettings
 	}
 }
 
+class OblivionVehicleActionsSettings
+{
+	bool Enabled = true;
+
+	// Дії, дозволені в машині. Назва класу дії — підходять і всі її нащадки
+	// (ActionConsume = вся їжа й пиття).
+	ref array<string> AllowedActions = {
+		"ActionConsume",              // їсти, пити
+		"ActionConsumeSingle",        // таблетки, вітаміни
+		"ActionBandageSelf",          // бинтуватися
+		"ActionSplintSelf",           // шина
+		"ActionInjectSelf",           // уколи собі (адреналін, морфін)
+		"ActionDisinfectSelf",        // дезінфекція
+		"ActionMeasureTemperatureSelf", // градусник
+		"ActionLoadMagazine",         // заряджати магазин
+		"ActionLoadMagazineQuick",
+		"ActionEmptyMagazine",        // розряджати магазин
+		"ActionToggleNVG"             // ПНВ
+	};
+
+	void Write(ParamsWriteContext ctx)
+	{
+		ctx.Write(Enabled);
+		ctx.Write(AllowedActions);
+	}
+
+	bool Read(ParamsReadContext ctx)
+	{
+		return ctx.Read(Enabled)
+			&& ctx.Read(AllowedActions);
+	}
+}
+
 // Серверні налаштування, файл <профіль сервера>/Oblivion/settings.json.
 // Клієнт отримує копію при підключенні (OBLIVION_RPC_SETTINGS), щоб умови дій збігались із сервером.
 // Кожна нова механіка додає сюди свій блок.
@@ -63,8 +96,10 @@ class OblivionSettings
 	int ConfigVersion = 1;
 	ref OblivionRadiatorRepairSettings RadiatorRepair = new OblivionRadiatorRepairSettings();
 	ref OblivionMetalPlatesSettings    MetalPlates    = new OblivionMetalPlatesSettings();
+	ref OblivionVehicleActionsSettings VehicleActions = new OblivionVehicleActionsSettings();
 
 	private static ref OblivionSettings s_Instance;
+	static int s_Revision; // росте при кожній заміні налаштувань — для кешів
 
 	static OblivionSettings Get()
 	{
@@ -92,6 +127,10 @@ class OblivionSettings
 			settings.RadiatorRepair = new OblivionRadiatorRepairSettings();
 		if (!settings.MetalPlates)
 			settings.MetalPlates = new OblivionMetalPlatesSettings();
+		if (!settings.VehicleActions)
+			settings.VehicleActions = new OblivionVehicleActionsSettings();
+		if (!settings.VehicleActions.AllowedActions)
+			settings.VehicleActions.AllowedActions = new array<string>();
 
 		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);
@@ -102,12 +141,16 @@ class OblivionSettings
 	{
 		RadiatorRepair.Write(ctx);
 		MetalPlates.Write(ctx);
+		VehicleActions.Write(ctx);
 	}
 
 	static void ReadSync(ParamsReadContext ctx)
 	{
 		OblivionSettings settings = new OblivionSettings();
-		if (settings.RadiatorRepair.Read(ctx) && settings.MetalPlates.Read(ctx))
+		if (settings.RadiatorRepair.Read(ctx) && settings.MetalPlates.Read(ctx) && settings.VehicleActions.Read(ctx))
+		{
 			s_Instance = settings;
+			s_Revision++;
+		}
 	}
 }
