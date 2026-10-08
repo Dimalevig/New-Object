@@ -58,6 +58,7 @@ class OblivionMetalPlatesSettings
 class OblivionVehicleActionsSettings
 {
 	bool Enabled = true;
+	bool CargoFromInside = true; // інвентар машини зсередини, у русі й при закритому багажнику
 
 	// Дії, дозволені в машині. Назва класу дії — підходять і всі її нащадки
 	// (ActionConsume = вся їжа й пиття).
@@ -78,12 +79,14 @@ class OblivionVehicleActionsSettings
 	void Write(ParamsWriteContext ctx)
 	{
 		ctx.Write(Enabled);
+		ctx.Write(CargoFromInside);
 		ctx.Write(AllowedActions);
 	}
 
 	bool Read(ParamsReadContext ctx)
 	{
 		return ctx.Read(Enabled)
+			&& ctx.Read(CargoFromInside)
 			&& ctx.Read(AllowedActions);
 	}
 }
