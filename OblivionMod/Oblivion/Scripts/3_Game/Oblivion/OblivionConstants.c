@@ -33,5 +33,6 @@ static bool OblivionIsChatCommand(string text)
 	string cmd = words[0];
 	cmd.ToLower();
 	return cmd == "/contract" || cmd == "/contracts" || cmd == "/контракт" || cmd == "/контракти"
-		|| cmd == "/bounty" || cmd == "/баунті";
+		|| cmd == "/bounty" || cmd == "/баунті"
+		|| cmd == "/reward" || cmd == "/нагорода";
 }

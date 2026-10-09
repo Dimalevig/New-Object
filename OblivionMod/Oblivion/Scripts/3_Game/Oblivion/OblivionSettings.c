@@ -205,8 +205,9 @@ class OblivionRevengeSettings
 class OblivionPlaytimeRewardsSettings
 {
 	bool  Enabled        = true;
-	float RewardMinutes  = 60; // кожні N хв живої гри — нагорода
+	float RewardMinutes  = 60; // кожні N хв живої гри — нагорода (забирається командою /reward)
 	int   ItemsPerReward = 1;  // скільки випадкових предметів за раз
+	// Без зброї (зброя з цього списку відкидається автоматично); набої й магазини — можна.
 	ref array<string> LootPool = {
 		"BandageDressing", "Morphine", "Epinephrine", "SewingKit", "EpoxyPutty",
 		"BakedBeansCan", "TacticalBaconCan", "WaterBottle",

@@ -1,10 +1,12 @@
-// Нагорода за час у грі: кожні RewardMinutes живої гри — випадковий предмет із LootPool.
+// Нагорода за час у грі: кожні RewardMinutes живої гри — нагорода «чекає», гравцю приходить сповіщення,
+// і він забирає її командою /reward. Предмети випадкові з LootPool, зброя відкидається.
 // Один таймер на сервер раз на хвилину. Накопичений час зберігається в playtime.json
 // раз на SAVE_EVERY_TICKS хвилин і при вимкненні сервера — рестарт його не скидає.
 class OblivionPlaytimeEntry
 {
 	string Uid;
 	int    Seconds;
+	int    Pending; // нагород, які ще не забрали
 }
 
 class OblivionPlaytimeData
@@ -17,7 +19,10 @@ class OblivionPlaytimeRewards
 	protected const int TICK_SECONDS     = 60;
 	protected const int SAVE_EVERY_TICKS = 5;
 
+	protected static OblivionPlaytimeRewards s_Instance;
+
 	protected ref map<string, int> m_Seconds = new map<string, int>(); // Steam ID -> накопичені секунди
+	protected ref map<string, int> m_Pending = new map<string, int>(); // Steam ID -> незабрані нагороди
 	protected int  m_TicksSinceSave;
 	protected bool m_Dirty;
 	protected bool m_Started;
@@ -29,7 +34,8 @@ class OblivionPlaytimeRewards
 			return;
 
 		Load();
-		m_Started = true;
+		m_Started  = true;
+		s_Instance = this;
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(Tick, TICK_SECONDS * 1000, true);
 	}
 
@@ -44,7 +50,11 @@ class OblivionPlaytimeRewards
 			return;
 
 		foreach (OblivionPlaytimeEntry entry : data.Players)
+		{
 			m_Seconds.Set(entry.Uid, entry.Seconds);
+			if (entry.Pending > 0)
+				m_Pending.Set(entry.Uid, entry.Pending);
+		}
 	}
 
 	void Save()
@@ -58,6 +68,7 @@ class OblivionPlaytimeRewards
 			OblivionPlaytimeEntry entry = new OblivionPlaytimeEntry();
 			entry.Uid     = uid;
 			entry.Seconds = seconds;
+			entry.Pending = m_Pending.Get(uid);
 			data.Players.Insert(entry);
 		}
 
@@ -100,13 +111,66 @@ class OblivionPlaytimeRewards
 
 	protected void Reward(PlayerBase player, OblivionPlaytimeRewardsSettings s)
 	{
-		array<string> items = new array<string>();
-		for (int i = 0; i < Math.Max(1, s.ItemsPerReward); i++)
-			items.Insert(s.LootPool.GetRandomElement());
+		string uid = player.OblivionGetUid();
+		int pending = m_Pending.Get(uid) + 1;
+		m_Pending.Set(uid, pending);
 
-		OblivionNotify.GiveItems(player, items);
+		OblivionNotify.Player(player, "Нагорода готова", "Введи в чат /reward, щоб забрати. Нагород чекає: " + pending + ".", s.NotifySeconds);
+	}
 
-		int minutes = s.RewardMinutes;
-		OblivionNotify.Player(player, "Нагорода за час у грі", minutes + " хв у грі — у тебе в інвентарі (або під ногами) подарунок.", s.NotifySeconds);
+	// Нагадування при вході на сервер.
+	static void OnConnect(PlayerBase player)
+	{
+		if (!s_Instance || !player)
+			return;
+
+		int pending = s_Instance.m_Pending.Get(player.OblivionGetUid());
+		if (pending > 0)
+			OblivionNotify.Player(player, "Нагорода чекає", "Нагород за час у грі: " + pending + ". Введи в чат /reward.", OblivionSettings.Get().PlaytimeRewards.NotifySeconds);
+	}
+
+	// /reward — видати всі незабрані нагороди.
+	static void HandleCommand(PlayerBase player)
+	{
+		OblivionPlaytimeRewardsSettings s = OblivionSettings.Get().PlaytimeRewards;
+		if (!s_Instance)
+		{
+			OblivionNotify.Player(player, "Нагорода", "Нагороди за час у грі вимкнені.", s.NotifySeconds);
+			return;
+		}
+		s_Instance.Claim(player, s);
+	}
+
+	protected void Claim(PlayerBase player, OblivionPlaytimeRewardsSettings s)
+	{
+		string uid = player.OblivionGetUid();
+		int pending = m_Pending.Get(uid);
+		if (pending <= 0)
+		{
+			int left = Math.Ceil((s.RewardMinutes * 60 - m_Seconds.Get(uid)) / 60.0);
+			OblivionNotify.Player(player, "Нагорода", "Поки нічого немає. Наступна — через " + left + " хв гри.", s.NotifySeconds);
+			return;
+		}
+		if (!player.IsAlive())
+			return;
+
+		array<string> pool = new array<string>();
+		foreach (string type : s.LootPool)
+		{
+			if (!GetGame().IsKindOf(type, "Weapon_Base"))
+				pool.Insert(type);
+		}
+		if (pool.Count() == 0)
+			return;
+
+		int count = pending * Math.Max(1, s.ItemsPerReward);
+		for (int i = 0; i < count; i++)
+			OblivionNotify.SpawnItem(player, pool.GetRandomElement(), player.GetPosition());
+
+		m_Pending.Remove(uid);
+		m_Dirty = true;
+		Save();
+
+		OblivionNotify.Player(player, "Нагороду отримано", "Предметів: " + count + ". Що не влізло в інвентар — під ногами.", s.NotifySeconds);
 	}
 }

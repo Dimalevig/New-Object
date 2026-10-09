@@ -52,6 +52,8 @@ modded class PlayerBase
 		cmd.ToLower();
 		if (cmd == "/bounty" || cmd == "/баунті")
 			OblivionBounty.HandleCommand(this);
+		else if (cmd == "/reward" || cmd == "/нагорода")
+			OblivionPlaytimeRewards.HandleCommand(this);
 		else
 			OblivionContracts.HandleCommand(this, words);
 	}

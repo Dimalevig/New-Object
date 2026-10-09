@@ -33,6 +33,8 @@ modded class MissionServer
 		ScriptRPC rpc = new ScriptRPC();
 		OblivionSettings.Get().WriteSync(rpc);
 		rpc.Send(player, OBLIVION_RPC_SETTINGS, true, identity);
+
+		OblivionPlaytimeRewards.OnConnect(player);
 	}
 
 	// Combat log: вихід у бою — персонаж стоїть у світі довше.
