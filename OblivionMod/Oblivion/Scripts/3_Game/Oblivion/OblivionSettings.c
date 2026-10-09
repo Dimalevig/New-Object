@@ -92,6 +92,34 @@ class OblivionVehicleActionsSettings
 }
 
 // Тільки серверні, клієнту не передаються.
+class OblivionContractsSettings
+{
+	bool  Enabled            = true;
+	int   MaxActivePerPlayer = 3;  // скільки активних контрактів може замовити один гравець
+	float NotifySeconds      = 10;
+}
+
+class OblivionCapturePoint
+{
+	string Name            = "Точка";
+	vector Position        = "0 0 0"; // центр (X висота Z), висота не важлива
+	float  Radius          = 50;      // м
+	float  CaptureSeconds  = 300;     // скільки треба простояти в зоні
+	float  CooldownSeconds = 3600;    // пауза після захоплення
+	string RewardContainer = "WoodenCrate";
+	ref array<string> RewardItems = new array<string>();
+}
+
+// Тільки серверні, клієнту не передаються.
+class OblivionCapturePointsSettings
+{
+	bool  Enabled       = true;
+	float CheckSeconds  = 5;  // як часто сервер перевіряє зони (один таймер на всі точки)
+	float NotifySeconds = 10;
+	ref array<ref OblivionCapturePoint> Points = new array<ref OblivionCapturePoint>();
+}
+
+// Тільки серверні, клієнту не передаються.
 class OblivionBountySettings
 {
 	bool  Enabled           = true;
@@ -124,6 +152,8 @@ class OblivionSettings
 	ref OblivionVehicleActionsSettings VehicleActions = new OblivionVehicleActionsSettings();
 	ref OblivionCombatLogSettings      CombatLog      = new OblivionCombatLogSettings();
 	ref OblivionBountySettings         Bounty         = new OblivionBountySettings();
+	ref OblivionContractsSettings      Contracts      = new OblivionContractsSettings();
+	ref OblivionCapturePointsSettings  CapturePoints  = new OblivionCapturePointsSettings();
 
 	private static ref OblivionSettings s_Instance;
 	static int s_Revision; // росте при кожній заміні налаштувань — для кешів
@@ -164,6 +194,17 @@ class OblivionSettings
 			settings.Bounty = new OblivionBountySettings();
 		if (!settings.Bounty.RewardItems)
 			settings.Bounty.RewardItems = new array<string>();
+		if (!settings.Contracts)
+			settings.Contracts = new OblivionContractsSettings();
+		if (!settings.CapturePoints)
+			settings.CapturePoints = new OblivionCapturePointsSettings();
+		if (!settings.CapturePoints.Points)
+			settings.CapturePoints.Points = new array<ref OblivionCapturePoint>();
+		foreach (OblivionCapturePoint point : settings.CapturePoints.Points)
+		{
+			if (!point.RewardItems)
+				point.RewardItems = new array<string>();
+		}
 
 		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);

@@ -1,9 +1,14 @@
 modded class MissionServer
 {
+	protected ref OblivionCapturePoints m_OblivionCapturePoints;
+
 	override void OnInit()
 	{
 		super.OnInit();
 		OblivionSettings.Get();
+
+		m_OblivionCapturePoints = new OblivionCapturePoints();
+		m_OblivionCapturePoints.Start();
 	}
 
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)

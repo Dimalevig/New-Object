@@ -10,6 +10,24 @@ modded class PlayerBase
 
 		if (rpc_type == OBLIVION_RPC_SETTINGS && GetGame().IsClient())
 			OblivionSettings.ReadSync(ctx);
+
+		if (rpc_type == OBLIVION_RPC_COMMAND && GetGame().IsServer())
+			OblivionOnChatCommand(sender, ctx);
+	}
+
+	// Команда з чату; приймаємо лише від самого гравця.
+	protected void OblivionOnChatCommand(PlayerIdentity sender, ParamsReadContext ctx)
+	{
+		if (!sender || !GetIdentity() || sender.GetId() != GetIdentity().GetId())
+			return;
+
+		Param1<string> data = new Param1<string>("");
+		if (!ctx.Read(data) || !OblivionIsChatCommand(data.param1))
+			return;
+
+		array<string> words;
+		OblivionSplitCommand(data.param1, words);
+		OblivionContracts.HandleCommand(this, words);
 	}
 
 	string OblivionGetUid()
@@ -55,8 +73,12 @@ modded class PlayerBase
 	{
 		super.EEKilled(killer);
 
-		if (GetGame().IsServer())
-			OblivionBounty.OnPlayerKilled(this, OblivionFindKiller(killer));
+		if (!GetGame().IsServer())
+			return;
+
+		PlayerBase killerPlayer = OblivionFindKiller(killer);
+		OblivionBounty.OnPlayerKilled(this, killerPlayer);
+		OblivionContracts.OnPlayerKilled(this, killerPlayer);
 	}
 
 	protected PlayerBase OblivionFindKiller(Object killer)
