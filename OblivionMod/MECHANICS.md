@@ -110,7 +110,7 @@
 **Технічна реалізація:**
 - `4_World/Oblivion/VehicleActions/OblivionActionBase.c` — перевизначає `ActionBase.CanBeUsedInVehicle()`.
 - `4_World/Oblivion/VehicleActions/OblivionCarScript.c` — доступ до вантажу машини зсередини;
-- `4_World/Oblivion/VehicleActions/OblivionVicinityItemManager.c` — показує машину в інвентарі «поруч».
+- `5_Mission/Oblivion/OblivionVicinityItemManager.c` — показує машину в інвентарі «поруч».
 
 ## 4. Мисливський приціл на Мосіна
 
