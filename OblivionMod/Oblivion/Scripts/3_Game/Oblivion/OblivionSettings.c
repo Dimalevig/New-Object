@@ -185,6 +185,8 @@ class OblivionCarTrapsSettings
 	float InspectSeconds  = 8;  // оглянути двигун (порожні руки, капот відкритий)
 	float DefuseSeconds   = 15; // розмінувати (інструмент у руках, капот відкритий)
 	string DefuseTool     = "Pliers";
+	string ExplosionAmmo  = "";   // тип вибуху (CfgAmmo); "" = брати з конфігу гранати
+	bool   DestroyEngine  = true; // вибух гарантовано вбиває двигун
 	ref array<string> Grenades = {"RGD5", "M67Grenade"};
 
 	void Write(ParamsWriteContext ctx)

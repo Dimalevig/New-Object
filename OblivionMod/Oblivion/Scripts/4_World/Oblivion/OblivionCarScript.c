@@ -108,7 +108,27 @@ modded class CarScript
 		if (!grenade)
 			return;
 
-		grenade.Explode(DamageType.EXPLOSION);
+		// Тип вибуху: з налаштувань, інакше з конфігу гранати (там він заданий списком, тому читаємо масив).
+		OblivionCarTrapsSettings s = OblivionSettings.Get().CarTraps;
+		array<string> ammoTypes = new array<string>();
+		if (s.ExplosionAmmo != "")
+			ammoTypes.Insert(s.ExplosionAmmo);
+		else
+			GetGame().ConfigGetTextArray("CfgVehicles " + type + " ammoType", ammoTypes);
+
+		if (ammoTypes.Count() == 0)
+		{
+			string single = GetGame().ConfigGetTextOut("CfgVehicles " + type + " ammoType");
+			if (single != "")
+				ammoTypes.Insert(single);
+		}
+
+		foreach (string ammo : ammoTypes)
+			grenade.Explode(DamageType.EXPLOSION, ammo);
+
+		if (s.DestroyEngine)
+			SetHealth("Engine", "", 0);
+
 		// Видаляємо трохи пізніше, щоб клієнти встигли отримати ефект вибуху.
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(GetGame().ObjectDelete, 1000, false, grenade);
 	}
