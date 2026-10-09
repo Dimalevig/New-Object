@@ -26,3 +26,24 @@ OblivionMod/
 ## Налаштування
 
 При першому запуску сервер створює `<profiles>/Oblivion/settings.json` з дефолтними значеннями.
+
+## Інтеграція з модом пати (OBL_SystemPartyServer)
+
+Мод пати замінює ванільний чат, тому команди Oblivion (`!reward`, `!bounty`, `!contract`, `!contracts`) треба передати з нього. У `OBL_SystemPartyServer/scripts/5_mission/groups-server/mission/missionserver.c` у `OnChatCommand` невідомі команди передаються в Oblivion **викликом за назвою функції** (`CallFunctionParams(..., "OblivionRunChatCommand", ...)`):
+
+```c
+	void OnChatCommand(PlayerIdentity sender, string cmd, TStringArray args) {
+		if (!ChatCommandExists(cmd)) {
+			PlayerBase oblPlayer = PlayerBase.GetPlayerByIdentity(sender);
+			if (oblPlayer) {
+				string oblText = "/" + cmd;
+				foreach (string oblArg : args)
+					oblText += " " + oblArg;
+				GetGame().GameScript.CallFunctionParams(oblPlayer, "OblivionRunChatCommand", null, new Param1<string>(oblText));
+			}
+			return;
+		}
+		...
+```
+
+Відповідь Oblivion так само викликає `SendSimpleChatMessage` мода пати за назвою. Жорсткої залежності немає: кожен мод працює і без іншого.

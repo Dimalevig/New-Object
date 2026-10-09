@@ -63,8 +63,7 @@ modded class PlayerBase
 		array<string> words;
 		OblivionSplitCommand(text, words);
 
-		string cmd = words[0];
-		cmd.ToLower();
+		string cmd = OblivionNormalizeCommand(words[0]);
 		if (cmd == "/bounty" || cmd == "/баунті")
 			OblivionBounty.HandleCommand(this);
 		else if (cmd == "/reward" || cmd == "/нагорода")

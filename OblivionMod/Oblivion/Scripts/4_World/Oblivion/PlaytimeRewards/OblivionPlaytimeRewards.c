@@ -115,7 +115,7 @@ class OblivionPlaytimeRewards
 		int pending = m_Pending.Get(uid) + 1;
 		m_Pending.Set(uid, pending);
 
-		OblivionNotify.ToPlayer(player, "Нагорода готова", "Введи в чат /reward, щоб забрати. Нагород чекає: " + pending + ".", s.NotifySeconds);
+		OblivionNotify.ToPlayer(player, "Нагорода готова", "Введи в чат !reward, щоб забрати. Нагород чекає: " + pending + ".", s.NotifySeconds);
 	}
 
 	// Нагадування при вході на сервер.
@@ -126,7 +126,7 @@ class OblivionPlaytimeRewards
 
 		int pending = s_Instance.m_Pending.Get(player.OblivionGetUid());
 		if (pending > 0)
-			OblivionNotify.ToPlayer(player, "Нагорода чекає", "Нагород за час у грі: " + pending + ". Введи в чат /reward.", OblivionSettings.Get().PlaytimeRewards.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Нагорода чекає", "Нагород за час у грі: " + pending + ". Введи в чат !reward.", OblivionSettings.Get().PlaytimeRewards.NotifySeconds);
 	}
 
 	// /reward — видати всі незабрані нагороди.

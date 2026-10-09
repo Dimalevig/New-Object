@@ -48,8 +48,7 @@ class OblivionContracts
 			return;
 		}
 
-		string cmd = words[0];
-		cmd.ToLower();
+		string cmd = OblivionNormalizeCommand(words[0]);
 		if (cmd == "/contracts" || cmd == "/контракти" || words.Count() < 2)
 		{
 			List(player, s);
@@ -130,7 +129,7 @@ class OblivionContracts
 
 		if (perTarget.Count() == 0)
 		{
-			OblivionNotify.ToPlayer(player, "Контракти", "Активних контрактів немає. Замовити: /contract <нік> з нагородою в руках.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Контракти", "Активних контрактів немає. Замовити: !contract <нік> з нагородою в руках.", s.NotifySeconds);
 			return;
 		}
 

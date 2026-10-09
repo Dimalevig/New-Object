@@ -14,6 +14,23 @@ class OblivionNotify
 
 		NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), seconds, title, text);
 		GetGame().RPCSingleParam(player, ERPCs.RPC_USER_ACTION_MESSAGE, new Param1<string>(title + ": " + text), true, player.GetIdentity());
+
+		// Чат мода пати (OBL_SystemPartyServer) замінює ванільний — відповідаємо і туди, викликом за назвою.
+		if (HasPartyChat())
+			GetGame().GameScript.CallFunctionParams(GetGame().GetMission(), "SendSimpleChatMessage", null, new Param3<PlayerIdentity, string, bool>(player.GetIdentity(), title + ": " + text, false));
+	}
+
+	protected static int s_PartyChat = -1;
+
+	static bool HasPartyChat()
+	{
+		if (s_PartyChat == -1)
+		{
+			s_PartyChat = 0;
+			if (GetGame().ConfigIsExisting("CfgPatches OBL_SystemPartyServer"))
+				s_PartyChat = 1;
+		}
+		return s_PartyChat == 1;
 	}
 
 	static PlayerBase FindPlayerByName(string name)

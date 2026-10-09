@@ -7,7 +7,7 @@ const string OBLIVION_PLAYTIME_FILE  = "$profile:Oblivion/playtime.json";
 // Сервер -> клієнт: синхронізація налаштувань при підключенні.
 const int OBLIVION_RPC_SETTINGS = 0x0B1100;
 
-// Клієнт -> сервер: команда з чату (/contract ...).
+// Клієнт -> сервер: команда з чату (!contract ... або /contract ...).
 const int OBLIVION_RPC_COMMAND = 0x0B1101;
 
 // Розбиває рядок чату на слова; перше слово — команда.
@@ -23,6 +23,16 @@ void OblivionSplitCommand(string text, out array<string> words)
 	}
 }
 
+// "!reward" і "/reward" — одне й те саме; повертає "/reward" у нижньому регістрі.
+string OblivionNormalizeCommand(string word)
+{
+	string cmd = word;
+	cmd.ToLower();
+	if (cmd.Length() > 1 && cmd.Substring(0, 1) == "!")
+		cmd = "/" + cmd.Substring(1, cmd.Length() - 1);
+	return cmd;
+}
+
 bool OblivionIsChatCommand(string text)
 {
 	array<string> words;
@@ -30,8 +40,7 @@ bool OblivionIsChatCommand(string text)
 	if (words.Count() == 0)
 		return false;
 
-	string cmd = words[0];
-	cmd.ToLower();
+	string cmd = OblivionNormalizeCommand(words[0]);
 	array<string> commands = {"/contract", "/contracts", "/контракт", "/контракти", "/bounty", "/баунті", "/reward", "/нагорода"};
 	return commands.Find(cmd) != -1;
 }
