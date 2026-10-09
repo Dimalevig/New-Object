@@ -71,7 +71,7 @@ class OblivionMetalPlatesSettings
 class OblivionVehicleActionsSettings
 {
 	bool Enabled = true;
-	bool QuickbarInVehicle = true; // клавіші 1-9 у машині: річ у руки кладе сервер (рушій сам не дає)
+	bool InventoryInVehicle = true; // інвентар (Tab), руки й швидкі слоти в машині — ваніль їх замикає
 
 	// Дії, дозволені в машині. Назва класу дії — підходять і всі її нащадки
 	// (ActionConsume = вся їжа й пиття).
@@ -92,7 +92,7 @@ class OblivionVehicleActionsSettings
 	void Write(ParamsWriteContext ctx)
 	{
 		ctx.Write(Enabled);
-		ctx.Write(QuickbarInVehicle);
+		ctx.Write(InventoryInVehicle);
 		ctx.Write(AllowedActions);
 	}
 
@@ -100,7 +100,7 @@ class OblivionVehicleActionsSettings
 	{
 		if (!ctx.Read(Enabled))
 			return false;
-		if (!ctx.Read(QuickbarInVehicle))
+		if (!ctx.Read(InventoryInVehicle))
 			return false;
 		if (!ctx.Read(AllowedActions))
 			return false;

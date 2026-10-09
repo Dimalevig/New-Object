@@ -41,42 +41,40 @@ modded class PlayerBase
 
 		if (rpc_type == OBLIVION_RPC_COMMAND && GetGame().IsServer())
 			OblivionOnChatCommand(sender, ctx);
-
-		if (rpc_type == OBLIVION_RPC_QUICKBAR && GetGame().IsServer())
-			OblivionOnQuickbar(sender, ctx);
 	}
 
-	// Швидкий слот у машині: рушій не дає клієнту взяти річ у руки, тому перекладає сервер.
-	// Логіка як у ванільного швидкого слота: та сама річ у руках — сховати, інша — поміняти.
-	protected void OblivionOnQuickbar(PlayerIdentity sender, ParamsReadContext ctx)
+	// --- Інвентар у машині. Ваніль при посадці замикає інвентар скриптовим замком
+	// і забороняє брати речі в руки; знімаємо обидва обмеження (якщо ввімкнено).
+
+	protected bool OblivionInventoryInVehicle()
 	{
-		if (!sender || !GetIdentity() || sender.GetId() != GetIdentity().GetId())
-			return;
-
-		Param2<int, int> netId = new Param2<int, int>(0, 0);
-		if (!ctx.Read(netId))
-			return;
-
 		OblivionVehicleActionsSettings s = OblivionSettings.Get().VehicleActions;
-		if (!s.Enabled || !s.QuickbarInVehicle || !IsInVehicle() || !IsAlive() || IsUnconscious())
-			return;
+		return s.Enabled && s.InventoryInVehicle;
+	}
 
-		EntityAI item = EntityAI.Cast(GetGame().GetObjectByNetworkId(netId.param1, netId.param2));
-		if (!item || item.GetHierarchyRootPlayer() != this)
-			return;
+	override void OnCommandVehicleStart()
+	{
+		super.OnCommandVehicleStart();
 
-		int flags = FindInventoryLocationType.ATTACHMENT | FindInventoryLocationType.CARGO;
-		EntityAI inHands = GetEntityInHands();
-		if (inHands == item)
-		{
-			ServerTakeEntityToInventory(flags, item);
-			return;
-		}
+		if (OblivionInventoryInVehicle() && GetInventory())
+			GetInventory().UnlockInventory(LOCK_FROM_SCRIPT);
+	}
 
-		if (inHands && !ServerTakeEntityToInventory(flags, inHands))
-			return;
+	override void OnCommandVehicleFinish()
+	{
+		// Ванільний OnCommandVehicleFinish знімає замок — ставимо його, щоб лічильник зійшовся.
+		if (OblivionInventoryInVehicle() && GetInventory())
+			GetInventory().LockInventory(LOCK_FROM_SCRIPT);
 
-		ServerTakeEntityToHands(item);
+		super.OnCommandVehicleFinish();
+	}
+
+	override bool CanReceiveItemIntoHands(EntityAI item_to_hands)
+	{
+		if (IsInVehicle() && OblivionInventoryInVehicle())
+			return CanPickupHeavyItem(item_to_hands);
+
+		return super.CanReceiveItemIntoHands(item_to_hands);
 	}
 
 	// Команда з чату; приймаємо лише від самого гравця.
