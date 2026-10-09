@@ -1,6 +1,40 @@
 // Усі зміни CarScript — в одному файлі: різні modded-шари не бачать методів один одного.
 modded class CarScript
 {
+	// --- Багажник із салону: на ходу й при закритій кришці (кришку перевіряють CanDisplayCargo окремих машин,
+	// див. OblivionCarCargo.c). Зовні — як у ванілі.
+
+	static CarScript OblivionGetVehicleOf(PlayerBase player)
+	{
+		if (!player)
+			return null;
+
+		HumanCommandVehicle hcv = player.GetCommand_Vehicle();
+		if (!hcv)
+			return null;
+
+		return CarScript.Cast(hcv.GetTransport());
+	}
+
+	bool OblivionCargoFromInside()
+	{
+		OblivionVehicleActionsSettings s = OblivionSettings.Get().VehicleActions;
+		if (!s.Enabled || !s.InventoryInVehicle || !s.CargoFromInside)
+			return false;
+
+		// Клієнт: чи сидить у цій машині сам гравець.
+		if (GetGame().IsClient())
+			return OblivionGetVehicleOf(PlayerBase.Cast(GetGame().GetPlayer())) == this;
+
+		// Сервер: чи є в машині хоч хтось.
+		for (int i = 0; i < CrewSize(); i++)
+		{
+			if (CrewMember(i))
+				return true;
+		}
+		return false;
+	}
+
 	// --- Мінування: граната під капотом вибухає при запуску двигуна. Діє до рестарту (не зберігається в базу).
 
 	protected string m_OblivionMine; // клас гранати, "" = не замінована

@@ -72,6 +72,7 @@ class OblivionVehicleActionsSettings
 {
 	bool Enabled = true;
 	bool InventoryInVehicle = true; // інвентар (Tab), руки й швидкі слоти в машині — ваніль їх замикає
+	bool CargoFromInside    = true; // багажник із салону: на ходу й при закритій кришці
 
 	// Дії, дозволені в машині. Назва класу дії — підходять і всі її нащадки
 	// (ActionConsume = вся їжа й пиття).
@@ -93,6 +94,7 @@ class OblivionVehicleActionsSettings
 	{
 		ctx.Write(Enabled);
 		ctx.Write(InventoryInVehicle);
+		ctx.Write(CargoFromInside);
 		ctx.Write(AllowedActions);
 	}
 
@@ -101,6 +103,8 @@ class OblivionVehicleActionsSettings
 		if (!ctx.Read(Enabled))
 			return false;
 		if (!ctx.Read(InventoryInVehicle))
+			return false;
+		if (!ctx.Read(CargoFromInside))
 			return false;
 		if (!ctx.Read(AllowedActions))
 			return false;

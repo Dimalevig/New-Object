@@ -107,11 +107,15 @@
 
 **Інвентар у машині:** Tab відкриває інвентар, речі можна брати в руки (через інвентар або швидкі слоти 1–9) і, відповідно, їсти/пити/бинтуватися. Ваніль при посадці замикає інвентар скриптовим замком (`LockInventory(LOCK_FROM_SCRIPT)` в `OnCommandVehicleStart`) і забороняє руки (`CanReceiveItemIntoHands`) — мод знімає обидва обмеження. Вимикається `VehicleActions.InventoryInVehicle: false`.
 
+**Багажник із салону:** той, хто сидить у машині, бачить її вантаж у вікні «поруч» і може класти/брати речі — **на ходу й при закритому багажнику**. Зовні — як у ванілі, тільки через відкритий багажник. Закриту кришку ваніль перевіряє в `CanDisplayCargo` п'яти машин (Нива, Седан, Гунтер, Сарка, Ада) — мод перевизначає саме їх. Вимикається `VehicleActions.CargoFromInside: false`.
+
 **Навантаження:** нуль — гра й так перевіряє, чи можна дію в машині; мод лише відповідає на це питання, а відповідь кешується.
 
 **Технічна реалізація:**
 - `4_World/Oblivion/VehicleActions/OblivionActionBase.c` — перевизначає `ActionBase.CanBeUsedInVehicle()`.
 - `4_World/Oblivion/OblivionPlayerBase.c` — `OnCommandVehicleStart/Finish`, `CanReceiveItemIntoHands`: інвентар у машині.
+- `4_World/Oblivion/OblivionCarScript.c` + `VehicleActions/OblivionCarCargo.c` — багажник із салону;
+- `5_Mission/Oblivion/OblivionVicinityItemManager.c` — машина у вікні «поруч».
 
 ## 4. Мисливський приціл на Мосіна
 
