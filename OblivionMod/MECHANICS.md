@@ -111,6 +111,7 @@
 - `4_World/Oblivion/VehicleActions/OblivionActionBase.c` — перевизначає `ActionBase.CanBeUsedInVehicle()`.
 - `4_World/Oblivion/OblivionCarScript.c` — доступ до вантажу машини зсередини;
 - `5_Mission/Oblivion/OblivionVicinityItemManager.c` — показує машину в інвентарі «поруч».
+- `5_Mission/Oblivion/OblivionMissionGameplay.c` — відкриває вікно інвентаря (Tab) у машині: гра там його блокує.
 
 ## 4. Мисливський приціл на Мосіна
 
