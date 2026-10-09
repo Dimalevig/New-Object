@@ -109,7 +109,7 @@
 
 **Технічна реалізація:**
 - `4_World/Oblivion/VehicleActions/OblivionActionBase.c` — перевизначає `ActionBase.CanBeUsedInVehicle()`.
-- `4_World/Oblivion/VehicleActions/OblivionCarScript.c` — доступ до вантажу машини зсередини;
+- `4_World/Oblivion/OblivionCarScript.c` — доступ до вантажу машини зсередини;
 - `5_Mission/Oblivion/OblivionVicinityItemManager.c` — показує машину в інвентарі «поруч».
 
 ## 4. Мисливський приціл на Мосіна
@@ -148,7 +148,7 @@
 
 **Технічна реалізація:**
 - `4_World/Oblivion/OblivionPlayerBase.c` — `EEHitBy`: хто в кого влучив;
-- `4_World/Oblivion/CombatLog/OblivionCombatPlayer.c` — позначка «в бою»;
+- `4_World/Oblivion/OblivionPlayerBase.c` — позначка «в бою»;
 - `5_Mission/Oblivion/OblivionMissionServer.c` — `ShouldPlayerBeKilled` і `OnClientDisconnectedEvent`.
 
 ## 6. Баунті — «голова за голову»
@@ -277,7 +277,7 @@
 
 **Технічна реалізація:**
 - `4_World/Oblivion/CarTraps/ActionMineCar.c` — дія;
-- `4_World/Oblivion/CarTraps/OblivionCarTrap.c` — вибух при `OnEngineStart`.
+- `4_World/Oblivion/OblivionCarScript.c` — вибух при `OnEngineStart`.
 - `4_World/Oblivion/CarTraps/ActionInspectCarEngine.c` — огляд двигуна;
 - `4_World/Oblivion/CarTraps/ActionDefuseCar.c` — розмінування.
 
