@@ -112,32 +112,17 @@ modded class CarScript
 		string type = m_OblivionMine;
 		m_OblivionMine = "";
 
-		EntityAI grenade = EntityAI.Cast(GetGame().CreateObjectEx(type, GetPosition() + "0 0.5 0", ECE_NONE));
-		if (!grenade)
-			return;
-
-		// Тип вибуху: з налаштувань, інакше з конфігу гранати (там він заданий списком, тому читаємо масив).
 		OblivionCarTrapsSettings s = OblivionSettings.Get().CarTraps;
-		array<string> ammoTypes = new array<string>();
-		if (s.ExplosionAmmo != "")
-			ammoTypes.Insert(s.ExplosionAmmo);
-		else
-			GetGame().ConfigGetTextArray("CfgVehicles " + type + " ammoType", ammoTypes);
-
-		if (ammoTypes.Count() == 0)
-		{
-			string single = GetGame().ConfigGetTextOut("CfgVehicles " + type + " ammoType");
-			if (single != "")
-				ammoTypes.Insert(single);
-		}
-
-		foreach (string ammo : ammoTypes)
-			grenade.Explode(DamageType.EXPLOSION, ammo);
-
 		if (s.DestroyEngine)
 			SetHealth("Engine", "", 0);
 
-		// Видаляємо трохи пізніше, щоб клієнти встигли отримати ефект вибуху.
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(GetGame().ObjectDelete, 1000, false, grenade);
+		// Справжня граната біля двигуна і її власне спрацювання, як у ванілі:
+		// вибух з її типом, ефектом і шкодою, потім граната сама себе видаляє.
+		EntityAI grenade = EntityAI.Cast(GetGame().CreateObjectEx(type, GetEnginePointPosWS(), ECE_NONE));
+		Grenade_Base live = Grenade_Base.Cast(grenade);
+		if (live)
+			live.ActivateImmediate();
+		else if (grenade)
+			grenade.SetHealth("", "", 0);
 	}
 }

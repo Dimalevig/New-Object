@@ -274,7 +274,7 @@
 - **«Розмінувати»** — з **пасатижами** в руках (`DefuseTool`), `DefuseSeconds` (15 с). **Без шансу провалу.** Граната повертається гравцю в інвентар (або під ноги). Якщо міни немає — «Міни немає».
 - Міна діє до рестарту сервера (не пишеться в базу, щоб не ламати збереження машин).
 
-**Параметри** (`settings.json` → `CarTraps`): `Enabled` (`true`), `DurationSeconds` (`10`), `InspectSeconds` (`8`), `DefuseSeconds` (`15`), `DefuseTool` (`"Pliers"`), `ExplosionAmmo` (`""` — тип вибуху з CfgAmmo; порожньо = з конфігу гранати), `DestroyEngine` (`true` — вибух гарантовано вбиває двигун), `Grenades` (`["RGD5", "M67Grenade"]`).
+**Параметри** (`settings.json` → `CarTraps`): `Enabled` (`true`), `DurationSeconds` (`10`), `InspectSeconds` (`8`), `DefuseSeconds` (`15`), `DefuseTool` (`"Pliers"`), `DestroyEngine` (`true` — вибух гарантовано вбиває двигун), `Grenades` (`["RGD5Grenade", "M67Grenade"]`).
 
 **Навантаження:** нуль — лише в момент дії та при запуску двигуна.
 
