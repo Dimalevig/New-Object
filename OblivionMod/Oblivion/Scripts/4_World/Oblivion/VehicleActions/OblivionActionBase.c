@@ -24,12 +24,12 @@ modded class ActionBase
 		if (!s.Enabled)
 			return false;
 
-		typename t = Type();
-		while (t)
+		typename own = Type();
+		foreach (string name : s.AllowedActions)
 		{
-			if (s.AllowedActions.Find(t.ToString()) != -1)
+			typename allowed = name.ToType();
+			if (allowed && (own == allowed || own.IsInherited(allowed)))
 				return true;
-			t = t.Parent();
 		}
 		return false;
 	}
