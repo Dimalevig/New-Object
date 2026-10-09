@@ -10,6 +10,9 @@ const int OBLIVION_RPC_SETTINGS = 0x0B1100;
 // Клієнт -> сервер: команда з чату (!contract ... або /contract ...).
 const int OBLIVION_RPC_COMMAND = 0x0B1101;
 
+// Клієнт -> сервер: швидкий слот (1-9) у машині — річ у руки кладе сервер.
+const int OBLIVION_RPC_QUICKBAR = 0x0B1102;
+
 // Розбиває рядок чату на слова; перше слово — команда.
 void OblivionSplitCommand(string text, out array<string> words)
 {

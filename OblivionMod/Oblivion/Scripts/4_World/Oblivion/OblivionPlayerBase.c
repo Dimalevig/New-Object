@@ -41,6 +41,42 @@ modded class PlayerBase
 
 		if (rpc_type == OBLIVION_RPC_COMMAND && GetGame().IsServer())
 			OblivionOnChatCommand(sender, ctx);
+
+		if (rpc_type == OBLIVION_RPC_QUICKBAR && GetGame().IsServer())
+			OblivionOnQuickbar(sender, ctx);
+	}
+
+	// Швидкий слот у машині: рушій не дає клієнту взяти річ у руки, тому перекладає сервер.
+	// Логіка як у ванільного швидкого слота: та сама річ у руках — сховати, інша — поміняти.
+	protected void OblivionOnQuickbar(PlayerIdentity sender, ParamsReadContext ctx)
+	{
+		if (!sender || !GetIdentity() || sender.GetId() != GetIdentity().GetId())
+			return;
+
+		Param2<int, int> netId = new Param2<int, int>(0, 0);
+		if (!ctx.Read(netId))
+			return;
+
+		OblivionVehicleActionsSettings s = OblivionSettings.Get().VehicleActions;
+		if (!s.Enabled || !s.QuickbarInVehicle || !IsInVehicle() || !IsAlive() || IsUnconscious())
+			return;
+
+		EntityAI item = EntityAI.Cast(GetGame().GetObjectByNetworkId(netId.param1, netId.param2));
+		if (!item || item.GetHierarchyRootPlayer() != this)
+			return;
+
+		int flags = FindInventoryLocationType.ATTACHMENT | FindInventoryLocationType.CARGO;
+		EntityAI inHands = GetEntityInHands();
+		if (inHands == item)
+		{
+			ServerTakeEntityToInventory(flags, item);
+			return;
+		}
+
+		if (inHands && !ServerTakeEntityToInventory(flags, inHands))
+			return;
+
+		ServerTakeEntityToHands(item);
 	}
 
 	// Команда з чату; приймаємо лише від самого гравця.
