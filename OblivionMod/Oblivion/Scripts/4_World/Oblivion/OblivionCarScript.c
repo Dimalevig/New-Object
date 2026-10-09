@@ -77,6 +77,14 @@ modded class CarScript
 		return type;
 	}
 
+	// Гравець біля двигуна: як у ванілі для заливки антифризу — відстань до точки радіатора.
+	bool OblivionIsNearEngine(PlayerBase player)
+	{
+		if (!player)
+			return false;
+		return vector.Distance(GetCoolantPtcPosWS(), player.GetPosition()) < GetActionDistanceCoolant();
+	}
+
 	// Капот відкритий або знятий. Слот капота шукаємо за назвою — працює для різних машин.
 	bool OblivionIsHoodOpen()
 	{

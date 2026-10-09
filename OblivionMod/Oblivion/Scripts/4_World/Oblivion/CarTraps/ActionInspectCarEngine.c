@@ -35,7 +35,7 @@ class ActionInspectCarEngine : ActionContinuousBase
 			return false;
 
 		CarScript car = ActionMineCar.GetCar(target);
-		return car && !car.IsRuined() && !car.EngineIsOn() && car.OblivionIsHoodOpen();
+		return car && !car.IsRuined() && !car.EngineIsOn() && car.OblivionIsHoodOpen() && car.OblivionIsNearEngine(player);
 	}
 
 	override void OnFinishProgressServer(ActionData action_data)
