@@ -182,6 +182,9 @@ class OblivionCarTrapsSettings
 	float DefuseSeconds   = 15; // розмінувати (інструмент у руках, капот відкритий)
 	string DefuseTool     = "Pliers";
 	bool   DestroyEngine  = true; // вибух гарантовано вбиває двигун
+	bool   DestroyWheels  = true; // і колеса
+	bool   KnockOutCrew   = true; // усі в машині втрачають свідомість
+	float  CrewHealthDamage = 30; // шкода здоров'ю кожному в машині (зі 100)
 	ref array<string> Grenades = {"RGD5Grenade", "M67Grenade"};
 
 	void Write(ParamsWriteContext ctx)
