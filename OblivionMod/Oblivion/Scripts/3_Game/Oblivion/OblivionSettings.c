@@ -165,12 +165,18 @@ class OblivionCarTrapsSettings
 {
 	bool  Enabled         = true;
 	float DurationSeconds = 10; // скільки часу ставити гранату під капот
+	float InspectSeconds  = 8;  // оглянути двигун (порожні руки, капот відкритий)
+	float DefuseSeconds   = 15; // розмінувати (інструмент у руках, капот відкритий)
+	string DefuseTool     = "Pliers";
 	ref array<string> Grenades = {"RGD5", "M67Grenade"};
 
 	void Write(ParamsWriteContext ctx)
 	{
 		ctx.Write(Enabled);
 		ctx.Write(DurationSeconds);
+		ctx.Write(InspectSeconds);
+		ctx.Write(DefuseSeconds);
+		ctx.Write(DefuseTool);
 		ctx.Write(Grenades);
 	}
 
@@ -178,6 +184,9 @@ class OblivionCarTrapsSettings
 	{
 		return ctx.Read(Enabled)
 			&& ctx.Read(DurationSeconds)
+			&& ctx.Read(InspectSeconds)
+			&& ctx.Read(DefuseSeconds)
+			&& ctx.Read(DefuseTool)
 			&& ctx.Read(Grenades);
 	}
 }

@@ -6,6 +6,13 @@ modded class PlayerBase
 	protected int        m_OblivionSpawnTime;
 	protected bool       m_OblivionLoadedFromDb; // персонаж завантажений з бази = не новий
 
+	// Дії з порожніми руками.
+	override void SetActions(out TInputActionMap InputActionMap)
+	{
+		super.SetActions(InputActionMap);
+		AddAction(ActionInspectCarEngine, InputActionMap);
+	}
+
 	override void EEInit()
 	{
 		super.EEInit();

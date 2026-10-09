@@ -10,5 +10,9 @@ modded class ItemBase
 
 		if (IsKindOf("Grenade_Base"))
 			AddAction(ActionMineCar);
+
+		// Інструмент для розмінування задається в налаштуваннях, тому дія є на всіх предметах,
+		// а ActionCondition перевіряє, чи це саме він.
+		AddAction(ActionDefuseCar);
 	}
 }

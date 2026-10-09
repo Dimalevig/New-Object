@@ -1,4 +1,4 @@
-const string OBLIVION_MOD_VERSION   = "0.10.0";
+const string OBLIVION_MOD_VERSION   = "0.11.0";
 const string OBLIVION_PROFILE_DIR   = "$profile:Oblivion/";
 const string OBLIVION_SETTINGS_FILE  = "$profile:Oblivion/settings.json";
 const string OBLIVION_CONTRACTS_FILE = "$profile:Oblivion/contracts.json";
