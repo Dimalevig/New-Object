@@ -105,7 +105,7 @@ class OblivionCapturePoint
 	vector Position        = "0 0 0"; // центр (X висота Z), висота не важлива
 	float  Radius          = 50;      // м
 	float  CaptureSeconds  = 300;     // скільки треба простояти в зоні
-	float  CooldownSeconds = 7200;    // пауза після захоплення (2 год)
+	float  CooldownSeconds = 10800;   // пауза після захоплення (3 год = раз на рестарт)
 	string RewardContainer = "WoodenCrate";
 	ref array<string> RewardItems = new array<string>();
 }
