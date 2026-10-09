@@ -67,13 +67,13 @@ class OblivionBounty
 		OblivionBountySettings s = OblivionSettings.Get().Bounty;
 		if (!s.Enabled)
 		{
-			OblivionNotify.Player(player, "Баунті", "Баунті вимкнене.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Баунті", "Баунті вимкнене.", s.NotifySeconds);
 			return;
 		}
 
 		if (s_TargetNames.Count() == 0)
 		{
-			OblivionNotify.Player(player, "Баунті", "Цілей зараз немає. Баунті — після " + s.KillsForBounty + " вбивств поспіль.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Баунті", "Цілей зараз немає. Баунті — після " + s.KillsForBounty + " вбивств поспіль.", s.NotifySeconds);
 			return;
 		}
 
@@ -94,7 +94,7 @@ class OblivionBounty
 			text += name + " — " + s_Streaks.Get(uid) + " вбивств, квадрат " + s_TargetGrids.Get(uid) + " (" + minutesAgo + " хв тому)";
 			shown++;
 		}
-		OblivionNotify.Player(player, "Баунті", text, s.NotifySeconds);
+		OblivionNotify.ToPlayer(player, "Баунті", text, s.NotifySeconds);
 	}
 
 	// Координати як в iZurvive: сотні метрів, 3 цифри (напр. "040 110"), округлені до GridMeters.

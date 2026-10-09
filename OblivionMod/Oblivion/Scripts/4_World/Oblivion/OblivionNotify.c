@@ -6,7 +6,7 @@ class OblivionNotify
 		NotificationSystem.SendNotificationToPlayerIdentityExtended(null, seconds, title, text);
 	}
 
-	static void Player(PlayerBase player, string title, string text, float seconds)
+	static void ToPlayer(PlayerBase player, string title, string text, float seconds)
 	{
 		if (player && player.GetIdentity())
 			NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), seconds, title, text);

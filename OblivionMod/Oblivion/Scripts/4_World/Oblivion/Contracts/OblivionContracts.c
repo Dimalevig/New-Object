@@ -44,7 +44,7 @@ class OblivionContracts
 		OblivionContractsSettings s = OblivionSettings.Get().Contracts;
 		if (!s.Enabled)
 		{
-			OblivionNotify.Player(player, "Контракти", "Контракти вимкнені.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Контракти", "Контракти вимкнені.", s.NotifySeconds);
 			return;
 		}
 
@@ -68,12 +68,12 @@ class OblivionContracts
 		PlayerBase target = OblivionNotify.FindPlayerByName(nick);
 		if (!target)
 		{
-			OblivionNotify.Player(orderer, "Контракти", "Гравця «" + nick + "» немає онлайн або збігів кілька.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(orderer, "Контракти", "Гравця «" + nick + "» немає онлайн або збігів кілька.", s.NotifySeconds);
 			return;
 		}
 		if (target == orderer)
 		{
-			OblivionNotify.Player(orderer, "Контракти", "Не можна замовити самого себе.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(orderer, "Контракти", "Не можна замовити самого себе.", s.NotifySeconds);
 			return;
 		}
 
@@ -86,20 +86,20 @@ class OblivionContracts
 		}
 		if (active >= s.MaxActivePerPlayer)
 		{
-			OblivionNotify.Player(orderer, "Контракти", "У тебе вже " + active + " активних контрактів (максимум " + s.MaxActivePerPlayer + ").", s.NotifySeconds);
+			OblivionNotify.ToPlayer(orderer, "Контракти", "У тебе вже " + active + " активних контрактів (максимум " + s.MaxActivePerPlayer + ").", s.NotifySeconds);
 			return;
 		}
 
 		ItemBase item = orderer.GetItemInHands();
 		if (!item || item.IsRuined())
 		{
-			OblivionNotify.Player(orderer, "Контракти", "Візьми в руки предмет-нагороду (не зіпсований).", s.NotifySeconds);
+			OblivionNotify.ToPlayer(orderer, "Контракти", "Візьми в руки предмет-нагороду (не зіпсований).", s.NotifySeconds);
 			return;
 		}
 		CargoBase cargo = item.GetInventory().GetCargo();
 		if (item.GetInventory().AttachmentCount() > 0 || (cargo && cargo.GetItemCount() > 0))
 		{
-			OblivionNotify.Player(orderer, "Контракти", "Зніми з предмета все приладдя і вийми вміст.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(orderer, "Контракти", "Зніми з предмета все приладдя і вийми вміст.", s.NotifySeconds);
 			return;
 		}
 
@@ -130,7 +130,7 @@ class OblivionContracts
 
 		if (perTarget.Count() == 0)
 		{
-			OblivionNotify.Player(player, "Контракти", "Активних контрактів немає. Замовити: /contract <нік> з нагородою в руках.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Контракти", "Активних контрактів немає. Замовити: /contract <нік> з нагородою в руках.", s.NotifySeconds);
 			return;
 		}
 
@@ -148,7 +148,7 @@ class OblivionContracts
 			text += name + " (" + count + ")";
 			shown++;
 		}
-		OblivionNotify.Player(player, "Контракти", text, s.NotifySeconds);
+		OblivionNotify.ToPlayer(player, "Контракти", text, s.NotifySeconds);
 	}
 
 	static void OnPlayerKilled(PlayerBase victim, PlayerBase killer)

@@ -11,7 +11,7 @@ const int OBLIVION_RPC_SETTINGS = 0x0B1100;
 const int OBLIVION_RPC_COMMAND = 0x0B1101;
 
 // Розбиває рядок чату на слова; перше слово — команда.
-static void OblivionSplitCommand(string text, out array<string> words)
+void OblivionSplitCommand(string text, out array<string> words)
 {
 	words = new array<string>();
 	array<string> raw = new array<string>();
@@ -23,7 +23,7 @@ static void OblivionSplitCommand(string text, out array<string> words)
 	}
 }
 
-static bool OblivionIsChatCommand(string text)
+bool OblivionIsChatCommand(string text)
 {
 	array<string> words;
 	OblivionSplitCommand(text, words);

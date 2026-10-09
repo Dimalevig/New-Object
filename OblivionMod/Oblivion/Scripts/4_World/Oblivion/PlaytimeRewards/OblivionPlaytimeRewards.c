@@ -115,7 +115,7 @@ class OblivionPlaytimeRewards
 		int pending = m_Pending.Get(uid) + 1;
 		m_Pending.Set(uid, pending);
 
-		OblivionNotify.Player(player, "Нагорода готова", "Введи в чат /reward, щоб забрати. Нагород чекає: " + pending + ".", s.NotifySeconds);
+		OblivionNotify.ToPlayer(player, "Нагорода готова", "Введи в чат /reward, щоб забрати. Нагород чекає: " + pending + ".", s.NotifySeconds);
 	}
 
 	// Нагадування при вході на сервер.
@@ -126,7 +126,7 @@ class OblivionPlaytimeRewards
 
 		int pending = s_Instance.m_Pending.Get(player.OblivionGetUid());
 		if (pending > 0)
-			OblivionNotify.Player(player, "Нагорода чекає", "Нагород за час у грі: " + pending + ". Введи в чат /reward.", OblivionSettings.Get().PlaytimeRewards.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Нагорода чекає", "Нагород за час у грі: " + pending + ". Введи в чат /reward.", OblivionSettings.Get().PlaytimeRewards.NotifySeconds);
 	}
 
 	// /reward — видати всі незабрані нагороди.
@@ -135,7 +135,7 @@ class OblivionPlaytimeRewards
 		OblivionPlaytimeRewardsSettings s = OblivionSettings.Get().PlaytimeRewards;
 		if (!s_Instance)
 		{
-			OblivionNotify.Player(player, "Нагорода", "Нагороди за час у грі вимкнені.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Нагорода", "Нагороди за час у грі вимкнені.", s.NotifySeconds);
 			return;
 		}
 		s_Instance.Claim(player, s);
@@ -148,7 +148,7 @@ class OblivionPlaytimeRewards
 		if (pending <= 0)
 		{
 			int left = Math.Ceil((s.RewardMinutes * 60 - m_Seconds.Get(uid)) / 60.0);
-			OblivionNotify.Player(player, "Нагорода", "Поки нічого немає. Наступна — через " + left + " хв гри.", s.NotifySeconds);
+			OblivionNotify.ToPlayer(player, "Нагорода", "Поки нічого немає. Наступна — через " + left + " хв гри.", s.NotifySeconds);
 			return;
 		}
 		if (!player.IsAlive())
@@ -171,6 +171,6 @@ class OblivionPlaytimeRewards
 		m_Dirty = true;
 		Save();
 
-		OblivionNotify.Player(player, "Нагороду отримано", "Предметів: " + count + ". Що не влізло в інвентар — під ногами.", s.NotifySeconds);
+		OblivionNotify.ToPlayer(player, "Нагороду отримано", "Предметів: " + count + ". Що не влізло в інвентар — під ногами.", s.NotifySeconds);
 	}
 }
