@@ -1,6 +1,7 @@
 modded class MissionServer
 {
-	protected ref OblivionCapturePoints m_OblivionCapturePoints;
+	protected ref OblivionCapturePoints   m_OblivionCapturePoints;
+	protected ref OblivionPlaytimeRewards m_OblivionPlaytimeRewards;
 
 	override void OnInit()
 	{
@@ -9,6 +10,9 @@ modded class MissionServer
 
 		m_OblivionCapturePoints = new OblivionCapturePoints();
 		m_OblivionCapturePoints.Start();
+
+		m_OblivionPlaytimeRewards = new OblivionPlaytimeRewards();
+		m_OblivionPlaytimeRewards.Start();
 	}
 
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)

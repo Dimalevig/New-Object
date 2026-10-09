@@ -44,6 +44,19 @@ class OblivionNotify
 		return null;
 	}
 
+	// Предмети в інвентар гравця, якщо немає місця — на землю. times — скільки разів видати весь список.
+	static void GiveItems(PlayerBase player, array<string> items, int times = 1)
+	{
+		if (!player || !items)
+			return;
+
+		for (int i = 0; i < times; i++)
+		{
+			foreach (string type : items)
+				SpawnItem(player, type, player.GetPosition());
+		}
+	}
+
 	static void SpawnItem(EntityAI container, string type, vector fallbackPos)
 	{
 		if (container && container.GetInventory().CreateInInventory(type))

@@ -160,6 +160,62 @@ class OblivionCombatLogSettings
 	bool  Notify             = true; // повідомлення гравцю при вході в бій
 }
 
+class OblivionCarTrapsSettings
+{
+	bool  Enabled         = true;
+	float DurationSeconds = 10; // скільки часу ставити гранату під капот
+	ref array<string> Grenades = {"RGD5", "M67Grenade"};
+
+	void Write(ParamsWriteContext ctx)
+	{
+		ctx.Write(Enabled);
+		ctx.Write(DurationSeconds);
+		ctx.Write(Grenades);
+	}
+
+	bool Read(ParamsReadContext ctx)
+	{
+		return ctx.Read(Enabled)
+			&& ctx.Read(DurationSeconds)
+			&& ctx.Read(Grenades);
+	}
+}
+
+// Тільки серверні, клієнту не передаються.
+class OblivionWantedSettings
+{
+	bool  Enabled           = true;
+	float FreshSpawnMinutes = 10; // гравець вважається новачком, якщо персонажу менше N хв
+	float WantedMinutes     = 60; // скільки вбивця новачків у розшуку
+	int   RewardMultiplier  = 2;  // скільки разів видається нагорода за розшукуваного
+	ref array<string> RewardItems = {"Morphine", "Ammo_762x39"};
+	float NotifySeconds     = 10;
+}
+
+// Тільки серверні, клієнту не передаються.
+class OblivionRevengeSettings
+{
+	bool  Enabled       = true;
+	float WindowMinutes = 60; // помста зараховується, якщо минуло не більше N хв від смерті
+	ref array<string> RewardItems = {"Morphine"};
+	float NotifySeconds = 10;
+}
+
+// Тільки серверні, клієнту не передаються.
+class OblivionPlaytimeRewardsSettings
+{
+	bool  Enabled        = true;
+	float RewardMinutes  = 60; // кожні N хв живої гри — нагорода
+	int   ItemsPerReward = 1;  // скільки випадкових предметів за раз
+	ref array<string> LootPool = {
+		"BandageDressing", "Morphine", "Epinephrine", "SewingKit", "EpoxyPutty",
+		"BakedBeansCan", "TacticalBaconCan", "WaterBottle",
+		"Ammo_9x19", "Ammo_762x39", "Ammo_556x45", "Ammo_762x54",
+		"Mag_AKM_30Rnd", "Mag_STANAG_30Rnd", "Battery9V", "Hacksaw", "MetalPlate", "Nail"
+	};
+	float NotifySeconds  = 8;
+}
+
 // Серверні налаштування, файл <профіль сервера>/Oblivion/settings.json.
 // Клієнт отримує копію при підключенні (OBLIVION_RPC_SETTINGS), щоб умови дій збігались із сервером.
 // Кожна нова механіка додає сюди свій блок.
@@ -173,6 +229,10 @@ class OblivionSettings
 	ref OblivionBountySettings         Bounty         = new OblivionBountySettings();
 	ref OblivionContractsSettings      Contracts      = new OblivionContractsSettings();
 	ref OblivionCapturePointsSettings  CapturePoints  = new OblivionCapturePointsSettings();
+	ref OblivionCarTrapsSettings       CarTraps       = new OblivionCarTrapsSettings();
+	ref OblivionWantedSettings         Wanted         = new OblivionWantedSettings();
+	ref OblivionRevengeSettings        Revenge        = new OblivionRevengeSettings();
+	ref OblivionPlaytimeRewardsSettings PlaytimeRewards = new OblivionPlaytimeRewardsSettings();
 
 	private static ref OblivionSettings s_Instance;
 	static int s_Revision; // росте при кожній заміні налаштувань — для кешів
@@ -221,6 +281,22 @@ class OblivionSettings
 			settings.CapturePoints.Points = new array<ref OblivionCapturePoint>();
 		if (settings.CapturePoints.Points.Count() == 0)
 			settings.CapturePoints.FillChernarusDefaults(); // щоб вимкнути точки — Enabled: false
+		if (!settings.CarTraps)
+			settings.CarTraps = new OblivionCarTrapsSettings();
+		if (!settings.CarTraps.Grenades)
+			settings.CarTraps.Grenades = new array<string>();
+		if (!settings.Wanted)
+			settings.Wanted = new OblivionWantedSettings();
+		if (!settings.Wanted.RewardItems)
+			settings.Wanted.RewardItems = new array<string>();
+		if (!settings.Revenge)
+			settings.Revenge = new OblivionRevengeSettings();
+		if (!settings.Revenge.RewardItems)
+			settings.Revenge.RewardItems = new array<string>();
+		if (!settings.PlaytimeRewards)
+			settings.PlaytimeRewards = new OblivionPlaytimeRewardsSettings();
+		if (!settings.PlaytimeRewards.LootPool)
+			settings.PlaytimeRewards.LootPool = new array<string>();
 		foreach (OblivionCapturePoint point : settings.CapturePoints.Points)
 		{
 			if (!point.RewardItems)
@@ -237,12 +313,13 @@ class OblivionSettings
 		RadiatorRepair.Write(ctx);
 		MetalPlates.Write(ctx);
 		VehicleActions.Write(ctx);
+		CarTraps.Write(ctx);
 	}
 
 	static void ReadSync(ParamsReadContext ctx)
 	{
 		OblivionSettings settings = new OblivionSettings();
-		if (settings.RadiatorRepair.Read(ctx) && settings.MetalPlates.Read(ctx) && settings.VehicleActions.Read(ctx))
+		if (settings.RadiatorRepair.Read(ctx) && settings.MetalPlates.Read(ctx) && settings.VehicleActions.Read(ctx) && settings.CarTraps.Read(ctx))
 		{
 			s_Instance = settings;
 			s_Revision++;

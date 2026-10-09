@@ -4,5 +4,6 @@ modded class ActionConstructor
 	{
 		super.RegisterActions(actions);
 		actions.Insert(ActionRepairCarRadiatorEpoxy);
+		actions.Insert(ActionMineCar);
 	}
 }

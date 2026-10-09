@@ -3,6 +3,26 @@ modded class PlayerBase
 	protected string     m_OblivionUid;          // Steam ID, кешується, бо після виходу identity вже немає
 	protected PlayerBase m_OblivionLastAttacker;
 	protected int        m_OblivionLastHitTime;  // GetGame().GetTime(), мс
+	protected int        m_OblivionSpawnTime;
+	protected bool       m_OblivionLoadedFromDb; // персонаж завантажений з бази = не новий
+
+	override void EEInit()
+	{
+		super.EEInit();
+		m_OblivionSpawnTime = GetGame().GetTime();
+	}
+
+	override bool OnStoreLoad(ParamsReadContext ctx, int version)
+	{
+		m_OblivionLoadedFromDb = true;
+		return super.OnStoreLoad(ctx, version);
+	}
+
+	// Новачок: персонаж створений у цій сесії сервера менше N хв тому.
+	bool OblivionIsFreshSpawn(float minutes)
+	{
+		return !m_OblivionLoadedFromDb && GetGame().GetTime() - m_OblivionSpawnTime < minutes * 60000;
+	}
 
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
 	{
@@ -85,6 +105,7 @@ modded class PlayerBase
 		PlayerBase killerPlayer = OblivionFindKiller(killer);
 		OblivionBounty.OnPlayerKilled(this, killerPlayer);
 		OblivionContracts.OnPlayerKilled(this, killerPlayer);
+		OblivionKillEvents.OnPlayerKilled(this, killerPlayer);
 	}
 
 	protected PlayerBase OblivionFindKiller(Object killer)
