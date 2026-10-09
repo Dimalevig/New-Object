@@ -92,6 +92,18 @@ class OblivionVehicleActionsSettings
 }
 
 // Тільки серверні, клієнту не передаються.
+class OblivionBountySettings
+{
+	bool  Enabled           = true;
+	int   KillsForBounty    = 5;     // вбивств поспіль без смерті, щоб отримати баунті
+	bool  AnnounceEveryKill = true;  // після баунті — оголошувати кожне нове вбивство з квадратом
+	int   GridMeters        = 1000;  // точність квадрата в оголошенні, м
+	float LastHitSeconds    = 60;    // смерть від кровотечі / виходу в бою зараховується тому, хто влучив останнім
+	float NotifySeconds     = 10;    // скільки висить повідомлення
+	ref array<string> RewardItems = {}; // що отримує той, хто зняв голову (класи предметів)
+}
+
+// Тільки серверні, клієнту не передаються.
 class OblivionCombatLogSettings
 {
 	bool  Enabled            = true;
@@ -111,6 +123,7 @@ class OblivionSettings
 	ref OblivionMetalPlatesSettings    MetalPlates    = new OblivionMetalPlatesSettings();
 	ref OblivionVehicleActionsSettings VehicleActions = new OblivionVehicleActionsSettings();
 	ref OblivionCombatLogSettings      CombatLog      = new OblivionCombatLogSettings();
+	ref OblivionBountySettings         Bounty         = new OblivionBountySettings();
 
 	private static ref OblivionSettings s_Instance;
 	static int s_Revision; // росте при кожній заміні налаштувань — для кешів
@@ -147,6 +160,10 @@ class OblivionSettings
 			settings.VehicleActions.AllowedActions = new array<string>();
 		if (!settings.CombatLog)
 			settings.CombatLog = new OblivionCombatLogSettings();
+		if (!settings.Bounty)
+			settings.Bounty = new OblivionBountySettings();
+		if (!settings.Bounty.RewardItems)
+			settings.Bounty.RewardItems = new array<string>();
 
 		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);

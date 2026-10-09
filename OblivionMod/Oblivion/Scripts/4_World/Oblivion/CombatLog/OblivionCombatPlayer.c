@@ -1,26 +1,7 @@
-// Позначка «в бою»: ставиться тільки при влученні гравця в гравця, без таймерів.
+// Позначка «в бою»: ставиться при влученні гравця в гравця (див. OblivionPlayerBase.EEHitBy), без таймерів.
 modded class PlayerBase
 {
 	protected int m_OblivionCombatUntil; // час GetGame().GetTime(), мс
-
-	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
-	{
-		super.EEHitBy(damageResult, damageType, source, component, dmgZone, ammo, modelPos, speedCoef);
-
-		if (!GetGame().IsServer() || !source)
-			return;
-
-		OblivionCombatLogSettings s = OblivionSettings.Get().CombatLog;
-		if (!s.Enabled)
-			return;
-
-		PlayerBase attacker = PlayerBase.Cast(source.GetHierarchyRootPlayer());
-		if (!attacker || attacker == this)
-			return;
-
-		OblivionMarkInCombat(s);
-		attacker.OblivionMarkInCombat(s);
-	}
 
 	void OblivionMarkInCombat(OblivionCombatLogSettings s)
 	{
