@@ -91,6 +91,16 @@ class OblivionVehicleActionsSettings
 	}
 }
 
+// Тільки серверні, клієнту не передаються.
+class OblivionCombatLogSettings
+{
+	bool  Enabled            = true;
+	float CombatSeconds      = 60;   // скільки триває «бій» після останнього влучання гравець↔гравець
+	bool  KillOnLeave        = true; // вийшов у бою -> персонаж помирає (тіло з лутом лишається)
+	int   StayInWorldSeconds = 60;   // якщо KillOnLeave = false: скільки персонаж стоїть у світі після виходу
+	bool  Notify             = true; // повідомлення гравцю при вході в бій
+}
+
 // Серверні налаштування, файл <профіль сервера>/Oblivion/settings.json.
 // Клієнт отримує копію при підключенні (OBLIVION_RPC_SETTINGS), щоб умови дій збігались із сервером.
 // Кожна нова механіка додає сюди свій блок.
@@ -100,6 +110,7 @@ class OblivionSettings
 	ref OblivionRadiatorRepairSettings RadiatorRepair = new OblivionRadiatorRepairSettings();
 	ref OblivionMetalPlatesSettings    MetalPlates    = new OblivionMetalPlatesSettings();
 	ref OblivionVehicleActionsSettings VehicleActions = new OblivionVehicleActionsSettings();
+	ref OblivionCombatLogSettings      CombatLog      = new OblivionCombatLogSettings();
 
 	private static ref OblivionSettings s_Instance;
 	static int s_Revision; // росте при кожній заміні налаштувань — для кешів
@@ -134,6 +145,8 @@ class OblivionSettings
 			settings.VehicleActions = new OblivionVehicleActionsSettings();
 		if (!settings.VehicleActions.AllowedActions)
 			settings.VehicleActions.AllowedActions = new array<string>();
+		if (!settings.CombatLog)
+			settings.CombatLog = new OblivionCombatLogSettings();
 
 		// Перезаписуємо, щоб нові поля з'явились у файлі з дефолтними значеннями.
 		JsonFileLoader<OblivionSettings>.JsonSaveFile(OBLIVION_SETTINGS_FILE, settings);

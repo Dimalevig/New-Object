@@ -17,4 +17,24 @@ modded class MissionServer
 		OblivionSettings.Get().WriteSync(rpc);
 		rpc.Send(player, OBLIVION_RPC_SETTINGS, true, identity);
 	}
+
+	// Combat log: вихід у бою — персонаж стоїть у світі довше.
+	override void OnClientDisconnectedEvent(PlayerIdentity identity, PlayerBase player, int logoutTime, bool authFailed)
+	{
+		OblivionCombatLogSettings s = OblivionSettings.Get().CombatLog;
+		if (s.Enabled && !s.KillOnLeave && player && player.OblivionIsInCombat())
+			logoutTime = Math.Max(logoutTime, s.StayInWorldSeconds);
+
+		super.OnClientDisconnectedEvent(identity, player, logoutTime, authFailed);
+	}
+
+	// Combat log: вихід у бою — персонаж помирає, тіло з лутом лишається.
+	override bool ShouldPlayerBeKilled(PlayerBase player)
+	{
+		if (super.ShouldPlayerBeKilled(player))
+			return true;
+
+		OblivionCombatLogSettings s = OblivionSettings.Get().CombatLog;
+		return s.Enabled && s.KillOnLeave && player && player.OblivionIsInCombat();
+	}
 }
