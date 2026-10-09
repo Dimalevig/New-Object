@@ -117,6 +117,25 @@ class OblivionCapturePointsSettings
 	float CheckSeconds  = 5;  // як часто сервер перевіряє зони (один таймер на всі точки)
 	float NotifySeconds = 10;
 	ref array<ref OblivionCapturePoint> Points = new array<ref OblivionCapturePoint>();
+
+	static OblivionCapturePoint MakePoint(string name, vector pos, array<string> loot)
+	{
+		OblivionCapturePoint p = new OblivionCapturePoint();
+		p.Name        = name;
+		p.Position    = pos;
+		p.Radius      = 75;
+		p.RewardItems = loot;
+		return p;
+	}
+
+	// Дефолтні точки для Чорнорусі (координати приблизні, як в iZurvive: X, висота, Z).
+	void FillChernarusDefaults()
+	{
+		Points.Insert(MakePoint("Північно-західний аеродром", "4600 0 10400",  {"M4A1", "Mag_STANAG_30Rnd", "Mag_STANAG_30Rnd", "Ammo_556x45", "PlateCarrierVest", "Mich2001Helmet", "NVGoggles", "Morphine"}));
+		Points.Insert(MakePoint("Військова база Тиса",        "1650 0 14000",  {"SVD", "Mag_SVD_10Rnd", "Mag_SVD_10Rnd", "Ammo_762x54", "PlateCarrierVest", "NVGoggles", "Morphine"}));
+		Points.Insert(MakePoint("Аеродром Балота",            "4900 0 2450",   {"AKM", "Mag_AKM_30Rnd", "Mag_AKM_30Rnd", "Ammo_762x39", "Mich2001Helmet", "BandageDressing"}));
+		Points.Insert(MakePoint("Аеродром Красностав",        "12000 0 12550", {"AKM", "Mag_AKM_30Rnd", "Mag_AKM_30Rnd", "Ammo_762x39", "PlateCarrierVest", "BandageDressing"}));
+	}
 }
 
 // Тільки серверні, клієнту не передаються.
@@ -200,6 +219,8 @@ class OblivionSettings
 			settings.CapturePoints = new OblivionCapturePointsSettings();
 		if (!settings.CapturePoints.Points)
 			settings.CapturePoints.Points = new array<ref OblivionCapturePoint>();
+		if (settings.CapturePoints.Points.Count() == 0)
+			settings.CapturePoints.FillChernarusDefaults(); // щоб вимкнути точки — Enabled: false
 		foreach (OblivionCapturePoint point : settings.CapturePoints.Points)
 		{
 			if (!point.RewardItems)
