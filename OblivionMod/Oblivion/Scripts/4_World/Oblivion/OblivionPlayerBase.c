@@ -27,7 +27,13 @@ modded class PlayerBase
 
 		array<string> words;
 		OblivionSplitCommand(data.param1, words);
-		OblivionContracts.HandleCommand(this, words);
+
+		string cmd = words[0];
+		cmd.ToLower();
+		if (cmd == "/bounty" || cmd == "/баунті")
+			OblivionBounty.HandleCommand(this);
+		else
+			OblivionContracts.HandleCommand(this, words);
 	}
 
 	string OblivionGetUid()

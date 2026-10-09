@@ -1,4 +1,4 @@
-const string OBLIVION_MOD_VERSION   = "0.8.0";
+const string OBLIVION_MOD_VERSION   = "0.9.0";
 const string OBLIVION_PROFILE_DIR   = "$profile:Oblivion/";
 const string OBLIVION_SETTINGS_FILE  = "$profile:Oblivion/settings.json";
 const string OBLIVION_CONTRACTS_FILE = "$profile:Oblivion/contracts.json";
@@ -31,5 +31,6 @@ static bool OblivionIsChatCommand(string text)
 
 	string cmd = words[0];
 	cmd.ToLower();
-	return cmd == "/contract" || cmd == "/contracts" || cmd == "/контракт" || cmd == "/контракти";
+	return cmd == "/contract" || cmd == "/contracts" || cmd == "/контракт" || cmd == "/контракти"
+		|| cmd == "/bounty" || cmd == "/баунті";
 }

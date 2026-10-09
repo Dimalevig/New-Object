@@ -17,7 +17,7 @@ class CfgMods
 		name = "Oblivion";
 		credits = "Oblivion Server";
 		author = "Oblivion";
-		version = "0.8.0";
+		version = "0.9.0";
 		type = "mod";
 		hideName = 1;
 		hidePicture = 1;
