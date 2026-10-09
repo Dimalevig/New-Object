@@ -23,6 +23,23 @@ modded class MissionServer
 		super.OnMissionFinish();
 	}
 
+	// Запасний шлях для команд: якщо клієнт не перехопив команду і вона пішла в чат — ловимо її тут.
+	override void OnEvent(EventType eventTypeId, Param params)
+	{
+		super.OnEvent(eventTypeId, params);
+
+		if (eventTypeId != ChatMessageEventTypeID)
+			return;
+
+		ChatMessageEventParams chat;
+		if (!Class.CastTo(chat, params) || !OblivionIsChatCommand(chat.param3))
+			return;
+
+		PlayerBase player = OblivionNotify.FindPlayerByName(chat.param2);
+		if (player)
+			player.OblivionRunChatCommand(chat.param3);
+	}
+
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
 	{
 		super.InvokeOnConnect(player, identity);

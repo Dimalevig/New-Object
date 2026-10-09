@@ -50,11 +50,18 @@ modded class PlayerBase
 			return;
 
 		Param1<string> data = new Param1<string>("");
-		if (!ctx.Read(data) || !OblivionIsChatCommand(data.param1))
-			return;
+		if (ctx.Read(data))
+			OblivionRunChatCommand(data.param1);
+	}
+
+	// Виконати команду мода від імені цього гравця (сервер).
+	bool OblivionRunChatCommand(string text)
+	{
+		if (!OblivionIsChatCommand(text))
+			return false;
 
 		array<string> words;
-		OblivionSplitCommand(data.param1, words);
+		OblivionSplitCommand(text, words);
 
 		string cmd = words[0];
 		cmd.ToLower();
@@ -64,6 +71,7 @@ modded class PlayerBase
 			OblivionPlaytimeRewards.HandleCommand(this);
 		else
 			OblivionContracts.HandleCommand(this, words);
+		return true;
 	}
 
 	string OblivionGetUid()

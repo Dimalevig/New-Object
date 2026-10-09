@@ -6,10 +6,14 @@ class OblivionNotify
 		NotificationSystem.SendNotificationToPlayerIdentityExtended(null, seconds, title, text);
 	}
 
+	// Особисте повідомлення: сповіщення + рядок у чаті (на випадок, якщо сповіщення не видно).
 	static void ToPlayer(PlayerBase player, string title, string text, float seconds)
 	{
-		if (player && player.GetIdentity())
-			NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), seconds, title, text);
+		if (!player || !player.GetIdentity())
+			return;
+
+		NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), seconds, title, text);
+		GetGame().RPCSingleParam(player, ERPCs.RPC_USER_ACTION_MESSAGE, new Param1<string>(title + ": " + text), true, player.GetIdentity());
 	}
 
 	static PlayerBase FindPlayerByName(string name)
