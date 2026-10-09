@@ -32,7 +32,6 @@ bool OblivionIsChatCommand(string text)
 
 	string cmd = words[0];
 	cmd.ToLower();
-	return cmd == "/contract" || cmd == "/contracts" || cmd == "/контракт" || cmd == "/контракти"
-		|| cmd == "/bounty" || cmd == "/баунті"
-		|| cmd == "/reward" || cmd == "/нагорода";
+	array<string> commands = {"/contract", "/contracts", "/контракт", "/контракти", "/bounty", "/баунті", "/reward", "/нагорода"};
+	return commands.Find(cmd) != -1;
 }

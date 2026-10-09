@@ -19,12 +19,19 @@ class OblivionRadiatorRepairSettings
 
 	bool Read(ParamsReadContext ctx)
 	{
-		return ctx.Read(Enabled)
-			&& ctx.Read(DurationSeconds)
-			&& ctx.Read(RepairToHealthPercent)
-			&& ctx.Read(AllowRuined)
-			&& ctx.Read(RequireAccessible)
-			&& ctx.Read(RepairsPerEpoxy);
+		if (!ctx.Read(Enabled))
+			return false;
+		if (!ctx.Read(DurationSeconds))
+			return false;
+		if (!ctx.Read(RepairToHealthPercent))
+			return false;
+		if (!ctx.Read(AllowRuined))
+			return false;
+		if (!ctx.Read(RequireAccessible))
+			return false;
+		if (!ctx.Read(RepairsPerEpoxy))
+			return false;
+		return true;
 	}
 }
 
@@ -47,11 +54,17 @@ class OblivionMetalPlatesSettings
 
 	bool Read(ParamsReadContext ctx)
 	{
-		return ctx.Read(Enabled)
-			&& ctx.Read(PlatesFromDoor)
-			&& ctx.Read(PlatesFromTrunk)
-			&& ctx.Read(PlatesFromHood)
-			&& ctx.Read(HacksawDamage);
+		if (!ctx.Read(Enabled))
+			return false;
+		if (!ctx.Read(PlatesFromDoor))
+			return false;
+		if (!ctx.Read(PlatesFromTrunk))
+			return false;
+		if (!ctx.Read(PlatesFromHood))
+			return false;
+		if (!ctx.Read(HacksawDamage))
+			return false;
+		return true;
 	}
 }
 
@@ -85,9 +98,13 @@ class OblivionVehicleActionsSettings
 
 	bool Read(ParamsReadContext ctx)
 	{
-		return ctx.Read(Enabled)
-			&& ctx.Read(CargoFromInside)
-			&& ctx.Read(AllowedActions);
+		if (!ctx.Read(Enabled))
+			return false;
+		if (!ctx.Read(CargoFromInside))
+			return false;
+		if (!ctx.Read(AllowedActions))
+			return false;
+		return true;
 	}
 }
 
@@ -182,12 +199,19 @@ class OblivionCarTrapsSettings
 
 	bool Read(ParamsReadContext ctx)
 	{
-		return ctx.Read(Enabled)
-			&& ctx.Read(DurationSeconds)
-			&& ctx.Read(InspectSeconds)
-			&& ctx.Read(DefuseSeconds)
-			&& ctx.Read(DefuseTool)
-			&& ctx.Read(Grenades);
+		if (!ctx.Read(Enabled))
+			return false;
+		if (!ctx.Read(DurationSeconds))
+			return false;
+		if (!ctx.Read(InspectSeconds))
+			return false;
+		if (!ctx.Read(DefuseSeconds))
+			return false;
+		if (!ctx.Read(DefuseTool))
+			return false;
+		if (!ctx.Read(Grenades))
+			return false;
+		return true;
 	}
 }
 
