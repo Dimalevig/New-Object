@@ -15,6 +15,14 @@ modded class MissionServer
 		m_OblivionPlaytimeRewards.Start();
 	}
 
+	override void OnMissionFinish()
+	{
+		if (m_OblivionPlaytimeRewards)
+			m_OblivionPlaytimeRewards.Save();
+
+		super.OnMissionFinish();
+	}
+
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
 	{
 		super.InvokeOnConnect(player, identity);

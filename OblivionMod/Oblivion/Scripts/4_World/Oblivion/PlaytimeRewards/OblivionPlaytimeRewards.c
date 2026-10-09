@@ -1,9 +1,26 @@
 // Нагорода за час у грі: кожні RewardMinutes живої гри — випадковий предмет із LootPool.
-// Один таймер на сервер раз на хвилину; час рахується в пам'яті до рестарту.
+// Один таймер на сервер раз на хвилину. Накопичений час зберігається в playtime.json
+// раз на SAVE_EVERY_TICKS хвилин і при вимкненні сервера — рестарт його не скидає.
+class OblivionPlaytimeEntry
+{
+	string Uid;
+	int    Seconds;
+}
+
+class OblivionPlaytimeData
+{
+	ref array<ref OblivionPlaytimeEntry> Players = new array<ref OblivionPlaytimeEntry>();
+}
+
 class OblivionPlaytimeRewards
 {
-	protected const int TICK_SECONDS = 60;
+	protected const int TICK_SECONDS     = 60;
+	protected const int SAVE_EVERY_TICKS = 5;
+
 	protected ref map<string, int> m_Seconds = new map<string, int>(); // Steam ID -> накопичені секунди
+	protected int  m_TicksSinceSave;
+	protected bool m_Dirty;
+	protected bool m_Started;
 
 	void Start()
 	{
@@ -11,7 +28,41 @@ class OblivionPlaytimeRewards
 		if (!s.Enabled || s.LootPool.Count() == 0 || s.RewardMinutes <= 0)
 			return;
 
+		Load();
+		m_Started = true;
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(Tick, TICK_SECONDS * 1000, true);
+	}
+
+	protected void Load()
+	{
+		if (!FileExist(OBLIVION_PLAYTIME_FILE))
+			return;
+
+		OblivionPlaytimeData data = new OblivionPlaytimeData();
+		JsonFileLoader<OblivionPlaytimeData>.JsonLoadFile(OBLIVION_PLAYTIME_FILE, data);
+		if (!data.Players)
+			return;
+
+		foreach (OblivionPlaytimeEntry entry : data.Players)
+			m_Seconds.Set(entry.Uid, entry.Seconds);
+	}
+
+	void Save()
+	{
+		if (!m_Started || !m_Dirty)
+			return;
+
+		OblivionPlaytimeData data = new OblivionPlaytimeData();
+		foreach (string uid, int seconds : m_Seconds)
+		{
+			OblivionPlaytimeEntry entry = new OblivionPlaytimeEntry();
+			entry.Uid     = uid;
+			entry.Seconds = seconds;
+			data.Players.Insert(entry);
+		}
+
+		JsonFileLoader<OblivionPlaytimeData>.JsonSaveFile(OBLIVION_PLAYTIME_FILE, data);
+		m_Dirty = false;
 	}
 
 	void Tick()
@@ -36,6 +87,14 @@ class OblivionPlaytimeRewards
 				Reward(player, s);
 			}
 			m_Seconds.Set(uid, seconds);
+			m_Dirty = true;
+		}
+
+		m_TicksSinceSave++;
+		if (m_TicksSinceSave >= SAVE_EVERY_TICKS)
+		{
+			m_TicksSinceSave = 0;
+			Save();
 		}
 	}
 
