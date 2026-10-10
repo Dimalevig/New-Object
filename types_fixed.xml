@@ -4292,7 +4292,7 @@
         <nominal>20</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>18</min>
+        <min>14</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -5655,10 +5655,10 @@
         <value name="Tier4"/>
     </type>
     <type name="Colt1911">
-        <nominal>26</nominal>
+        <nominal>22</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>22</min>
+        <min>15</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -6370,32 +6370,32 @@
         <category name="food"/>
     </type>
     <type name="Deagle">
-        <nominal>25</nominal>
+        <nominal>8</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>23</min>
+        <min>5</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
         <category name="weapons"/>
         <usage name="Town"/>
-        <value name="Tier1"/>
-        <value name="Tier2"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="Deagle_Gold">
-        <nominal>5</nominal>
+        <nominal>2</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>2</min>
+        <min>1</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="1" crafted="0" deloot="0"/>
         <category name="weapons"/>
         <usage name="Town"/>
-        <value name="Tier1"/>
-        <value name="Tier2"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="DeerPelt">
         <nominal>0</nominal>
@@ -6433,10 +6433,10 @@
         <usage name="Village"/>
     </type>
     <type name="Derringer_Black">
-        <nominal>0</nominal>
+        <nominal>6</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>0</min>
+        <min>4</min>
         <quantmin>50</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -6444,12 +6444,14 @@
         <category name="weapons"/>
         <value name="Tier1"/>
         <value name="Tier2"/>
+        <usage name="Town"/>
+        <usage name="Village"/>
     </type>
     <type name="Derringer_Grey">
-        <nominal>20</nominal>
+        <nominal>8</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>15</min>
+        <min>5</min>
         <quantmin>50</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -6457,12 +6459,13 @@
         <category name="weapons"/>
         <usage name="Town"/>
         <value name="Tier1"/>
+        <value name="Tier2"/>
     </type>
     <type name="Derringer_Pink">
-        <nominal>0</nominal>
+        <nominal>4</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>0</min>
+        <min>2</min>
         <quantmin>50</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -6470,6 +6473,8 @@
         <category name="weapons"/>
         <value name="Tier1"/>
         <value name="Tier2"/>
+        <usage name="Town"/>
+        <usage name="Village"/>
     </type>
     <type name="DesignerGlasses">
         <nominal>20</nominal>
@@ -6970,18 +6975,18 @@
         <usage name="Industrial"/>
     </type>
     <type name="Engraved1911">
-        <nominal>5</nominal>
+        <nominal>3</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>2</min>
+        <min>1</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
         <category name="weapons"/>
         <usage name="Military"/>
-        <value name="Tier1"/>
-        <value name="Tier2"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="Epinephrine">
         <nominal>30</nominal>
@@ -7157,10 +7162,10 @@
         <value name="Tier4"/>
     </type>
     <type name="FNX45">
-        <nominal>14</nominal>
+        <nominal>12</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>12</min>
+        <min>8</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -8684,10 +8689,10 @@
         <usage name="Farm"/>
     </type>
     <type name="Glock19">
-        <nominal>40</nominal>
+        <nominal>30</nominal>
         <lifetime>7200</lifetime>
         <restock>0</restock>
-        <min>35</min>
+        <min>21</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -12231,10 +12236,10 @@
         <category name="tools"/>
     </type>
     <type name="Longhorn">
-        <nominal>15</nominal>
+        <nominal>12</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>10</min>
+        <min>8</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -12681,10 +12686,10 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="MKII">
-        <nominal>30</nominal>
+        <nominal>25</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>27</min>
+        <min>17</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -13026,18 +13031,18 @@
         <value name="Tier2"/>
     </type>
     <type name="Mag_Deagle_9rnd">
-        <nominal>30</nominal>
+        <nominal>12</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>20</min>
+        <min>8</min>
         <quantmin>15</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
         <category name="weapons"/>
         <usage name="Town"/>
-        <value name="Tier1"/>
-        <value name="Tier2"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="Mag_FAL_20Rnd">
         <nominal>4</nominal>
@@ -13094,10 +13099,10 @@
         <value name="Tier3"/>
     </type>
     <type name="Mag_IJ70_8Rnd">
-        <nominal>60</nominal>
+        <nominal>50</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>50</min>
+        <min>35</min>
         <quantmin>10</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -13457,23 +13462,24 @@
         <value name="Tier4"/>
     </type>
     <type name="Magnum">
-        <nominal>25</nominal>
+        <nominal>15</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>20</min>
+        <min>10</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
         <category name="weapons"/>
         <usage name="Town"/>
-        <value name="Tier1"/>
+        <value name="Tier2"/>
+        <value name="Tier3"/>
     </type>
     <type name="MakarovIJ70">
-        <nominal>70</nominal>
+        <nominal>50</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>60</min>
+        <min>35</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -15236,10 +15242,10 @@
         <category name="tools"/>
     </type>
     <type name="P1">
-        <nominal>50</nominal>
+        <nominal>40</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>46</min>
+        <min>28</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
