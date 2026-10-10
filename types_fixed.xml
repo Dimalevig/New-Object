@@ -30374,20 +30374,6 @@
 <value name="Tier4"/>
 <category name="tools"/>
 </type>
-<type name="BM_BuildingBag">
-<nominal>10</nominal>
-<lifetime>14400</lifetime>
-<restock>7200</restock>
-<min>4</min>
-<quantmin>-1</quantmin>
-<quantmax>-1</quantmax>
-<cost>100</cost>
-<flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
-<category name="clothes"/>
-<usage name="Industrial"/>
-<value name="Tier3"/>
-<value name="Tier4"/>
-</type>
 <type name="Codelock">
 <nominal>8</nominal>
 <lifetime>14400</lifetime>
@@ -33422,33 +33408,5 @@
 	<type name="VAZ2107_koleso_destroyed">
     <lifetime>1800</lifetime>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="1" deloot="0"/>
-    </type>
-    <type name="Mangal_barrel">
-        <nominal>0</nominal>
-        <lifetime>3888000</lifetime>
-        <restock>0</restock>
-        <min>0</min>
-        <quantmin>-1</quantmin>
-        <quantmax>-1</quantmax>
-        <cost>100</cost>
-        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="0" count_in_player="0" crafted="1" deloot="0"/>
-        <category name="tools"/>
-        <tag name="floor"/>
-        <usage name="Industrial"/>
-        <usage name="Farm"/>
-    </type>
-	<type name="Mangal_barrel_pipe">
-        <nominal>0</nominal>
-        <lifetime>3888000</lifetime>
-        <restock>0</restock>
-        <min>0</min>
-        <quantmin>-1</quantmin>
-        <quantmax>-1</quantmax>
-        <cost>100</cost>
-        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="1" deloot="0"/>
-        <category name="tools"/>
-        <tag name="floor"/>
-        <usage name="Industrial"/>
-        <usage name="Farm"/>
     </type>
 </types>
