@@ -25,7 +25,7 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="AK101">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -37,7 +37,7 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="AK101_Black">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -49,7 +49,7 @@
     <usage name="ContaminatedArea"/>
     </type>
     <type name="AK101_Green">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -61,16 +61,18 @@
     <usage name="ContaminatedArea"/>
     </type>
     <type name="AK74">
-        <nominal>4</nominal>
+        <nominal>2</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>2</min>
+        <min>1</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="1"/>
         <category name="weapons"/>
         <usage name="Military"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="AK74_Black">
         <nominal>0</nominal>
@@ -119,7 +121,7 @@
         <usage name="Military"/>
     </type>
     <type name="AKM">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>7200</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -131,10 +133,10 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="AKS74U">
-        <nominal>8</nominal>
+        <nominal>5</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>5</min>
+        <min>4</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -390,7 +392,7 @@
         <category name="weapons"/>
     </type>
     <type name="ASVAL">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -2324,7 +2326,7 @@
         <category name="containers"/>
     </type>
     <type name="Aug">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>7200</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -2336,7 +2338,7 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="AugShort">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -2374,10 +2376,10 @@
         <usage name="Town"/>
     </type>
     <type name="B95">
-        <nominal>18</nominal>
+        <nominal>12</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>14</min>
+        <min>8</min>
         <quantmin>0</quantmin>
         <quantmax>75</quantmax>
         <cost>100</cost>
@@ -4249,10 +4251,10 @@
         <value name="Tier4"/>
     </type>
     <type name="CZ527">
-        <nominal>25</nominal>
+        <nominal>17</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>23</min>
+        <min>12</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -4263,10 +4265,10 @@
         <value name="Tier3"/>
     </type>
     <type name="CZ550">
-        <nominal>5</nominal>
+        <nominal>4</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>4</min>
+        <min>3</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -4277,16 +4279,18 @@
         <value name="Tier4"/>
     </type>
     <type name="CZ61">
-        <nominal>5</nominal>
+        <nominal>4</nominal>
         <lifetime>7200</lifetime>
         <restock>0</restock>
-        <min>4</min>
+        <min>3</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="1"/>
         <category name="weapons"/>
         <usage name="Police"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="CZ75">
         <nominal>16</nominal>
@@ -6090,7 +6094,7 @@
         <nominal>5</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>3</min>
+        <min>4</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -6101,7 +6105,7 @@
         <value name="Tier3"/>
     </type>
     <type name="Crossbow_Black">
-        <nominal>5</nominal>
+        <nominal>4</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
         <min>3</min>
@@ -6127,7 +6131,7 @@
         <usage name="Hunting"/>
     </type>
     <type name="Crossbow_Wood">
-        <nominal>3</nominal>
+        <nominal>2</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -7136,16 +7140,18 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="FAMAS">
-        <nominal>4</nominal>
+        <nominal>3</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>3</min>
+        <min>2</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="1"/>
         <category name="weapons"/>
         <usage name="Military"/>
+        <value name="Tier3"/>
+        <value name="Tier4"/>
     </type>
     <type name="FNP45_MRDSOptic">
         <nominal>10</nominal>
@@ -10711,10 +10717,10 @@
         <usage name="Village"/>
     </type>
     <type name="Izh18">
-        <nominal>50</nominal>
+        <nominal>42</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>47</min>
+        <min>29</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -10726,10 +10732,10 @@
         <value name="Tier3"/>
     </type>
     <type name="Izh18Shotgun">
-        <nominal>55</nominal>
+        <nominal>47</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>50</min>
+        <min>33</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -10741,10 +10747,10 @@
         <value name="Tier3"/>
     </type>
     <type name="Izh43Shotgun">
-        <nominal>30</nominal>
+        <nominal>24</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>26</min>
+        <min>17</min>
         <quantmin>50</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -12290,7 +12296,7 @@
         <category name="food"/>
     </type>
     <type name="M14">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>14400</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -12302,7 +12308,7 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="M16A2">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -12374,7 +12380,7 @@
         <usage name="Military"/>
     </type>
     <type name="M4A1">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>7200</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -12624,7 +12630,7 @@
         <usage name="Military"/>
     </type>
     <type name="M79">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -12702,10 +12708,10 @@
         <value name="Tier2"/>
     </type>
     <type name="MP5K">
-        <nominal>8</nominal>
+        <nominal>6</nominal>
         <lifetime>28800</lifetime>
         <restock>1800</restock>
-        <min>6</min>
+        <min>4</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -14299,10 +14305,10 @@
         <usage name="Military"/>
     </type>
     <type name="Mosin9130">
-        <nominal>17</nominal>
+        <nominal>12</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>15</min>
+        <min>8</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -14579,10 +14585,10 @@
         <category name="tools"/>
     </type>
     <type name="Mp133Shotgun">
-        <nominal>10</nominal>
+        <nominal>7</nominal>
         <lifetime>7200</lifetime>
         <restock>0</restock>
-        <min>8</min>
+        <min>5</min>
         <quantmin>0</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -15257,22 +15263,24 @@
         <value name="Tier2"/>
     </type>
     <type name="PM73Rak">
-        <nominal>5</nominal>
+        <nominal>4</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>4</min>
+        <min>3</min>
         <quantmin>-1</quantmin>
         <quantmax>-1</quantmax>
         <cost>100</cost>
         <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="1"/>
         <category name="weapons"/>
         <usage name="Police"/>
+        <value name="Tier1"/>
+        <value name="Tier2"/>
     </type>
     <type name="PP19">
-        <nominal>10</nominal>
+        <nominal>8</nominal>
         <lifetime>28800</lifetime>
         <restock>3600</restock>
-        <min>8</min>
+        <min>6</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -16772,10 +16780,10 @@
         <value name="Tier3"/>
     </type>
     <type name="R12">
-        <nominal>6</nominal>
+        <nominal>3</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>5</min>
+        <min>2</min>
         <quantmin>10</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -17152,10 +17160,10 @@
         <category name="tools"/>
     </type>
     <type name="Repeater">
-        <nominal>30</nominal>
+        <nominal>26</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>24</min>
+        <min>18</min>
         <quantmin>20</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -17235,10 +17243,10 @@
         <category name="clothes"/>
     </type>
     <type name="Ruger1022">
-        <nominal>35</nominal>
+        <nominal>31</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>25</min>
+        <min>22</min>
         <quantmin>100</quantmin>
         <quantmax>100</quantmax>
         <cost>100</cost>
@@ -17318,10 +17326,10 @@
         <category name="weapons"/>
     </type>
     <type name="SKS">
-        <nominal>8</nominal>
+        <nominal>4</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>6</min>
+        <min>3</min>
         <quantmin>25</quantmin>
         <quantmax>75</quantmax>
         <cost>100</cost>
@@ -17347,10 +17355,10 @@
         <value name="Tier4"/>
     </type>
     <type name="SSG82">
-        <nominal>12</nominal>
+        <nominal>10</nominal>
         <lifetime>14400</lifetime>
         <restock>0</restock>
-        <min>10</min>
+        <min>7</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -17361,7 +17369,7 @@
         <value name="Tier4"/>
     </type>
     <type name="SV98">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>7200</lifetime>
         <restock>0</restock>
         <min>1</min>
@@ -17397,10 +17405,10 @@
     <usage name="ContaminatedArea"/>
     </type>
     <type name="Saiga">
-        <nominal>12</nominal>
+        <nominal>11</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>10</min>
+        <min>8</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -17686,10 +17694,10 @@
         <usage name="Prison"/>
     </type>
     <type name="Scout_Chernarus">
-        <nominal>5</nominal>
+        <nominal>3</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>3</min>
+        <min>2</min>
         <quantmin>-1</quantmin>
         <quantmax>-1</quantmax>
         <cost>100</cost>
@@ -21285,10 +21293,10 @@
         <usage name="Military"/>
     </type>
     <type name="UMP45">
-        <nominal>8</nominal>
+        <nominal>6</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>6</min>
+        <min>4</min>
         <quantmin>30</quantmin>
         <quantmax>80</quantmax>
         <cost>100</cost>
@@ -21453,7 +21461,7 @@
         <usage name="Village"/>
     </type>
     <type name="VSS">
-        <nominal>2</nominal>
+        <nominal>1</nominal>
         <lifetime>28800</lifetime>
         <restock>3600</restock>
         <min>1</min>
@@ -21465,7 +21473,7 @@
         <usage name="ContaminatedArea"/>
     </type>
     <type name="Vikhr">
-        <nominal>4</nominal>
+        <nominal>3</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
         <min>2</min>
@@ -21688,10 +21696,10 @@
         <category name="tools"/>
     </type>
     <type name="Winchester70">
-        <nominal>4</nominal>
+        <nominal>2</nominal>
         <lifetime>28800</lifetime>
         <restock>0</restock>
-        <min>2</min>
+        <min>1</min>
         <quantmin>25</quantmin>
         <quantmax>75</quantmax>
         <cost>100</cost>
@@ -25458,8 +25466,8 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 </type>
 <type name="Asmond_Crossbow_Winter">
-<nominal>2</nominal>
-<lifetime>7200</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -25472,8 +25480,8 @@
 <value name="Tier3"/>
 </type>
 <type name="Asmond_Crossbow_Camo">
-<nominal>2</nominal>
-<lifetime>7200</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -25562,7 +25570,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25576,7 +25584,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25695,7 +25703,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25709,7 +25717,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25723,7 +25731,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25737,7 +25745,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -25753,7 +25761,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25767,7 +25775,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -25783,7 +25791,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25797,7 +25805,7 @@
 <nominal>1</nominal>
 <lifetime>28800</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -25906,9 +25914,9 @@
 <!--    SMGS    -->
 <type name="Asmond_AKS74U_Desert">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25919,9 +25927,9 @@
 </type>
 <type name="Asmond_AKS74U_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25932,9 +25940,9 @@
 </type>
 <type name="Asmond_AKS74U_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25945,9 +25953,9 @@
 </type>
 <type name="Asmond_AKS74U_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25958,9 +25966,9 @@
 </type>
 <type name="Asmond_AUGShort_Green">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25970,9 +25978,9 @@
 </type>
 <type name="Asmond_AUGShort_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25982,9 +25990,9 @@
 </type>
 <type name="Asmond_AUGShort_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -25994,9 +26002,9 @@
 </type>
 <type name="Asmond_AUGShort_Beige">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26006,9 +26014,9 @@
 </type>
 <type name="Asmond_PP19_Red">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26020,9 +26028,9 @@
 </type>
 <type name="Asmond_PP19_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26034,9 +26042,9 @@
 </type>
 <type name="Asmond_CZ61_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26048,9 +26056,9 @@
 </type>
 <type name="Asmond_CZ61_Sand">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26062,9 +26070,9 @@
 </type>
 <type name="Asmond_MP5K_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26076,9 +26084,9 @@
 </type>
 <type name="Asmond_MP5K_Light">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26090,9 +26098,9 @@
 </type>
 <type name="Asmond_MP5K_Sand">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26104,7 +26112,7 @@
 </type>
 <type name="Asmond_UMP45_Sand">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26113,42 +26121,52 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Military"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 </type>
 <type name="Asmond_UMP45_Green">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Military"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 </type>
 <type name="Asmond_UMP45_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Military"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 </type>
 <type name="Asmond_UMP45_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
+<quantmin>30</quantmin>
+<quantmax>80</quantmax>
+<cost>100</cost>
+<flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+<category name="weapons"/>
+<usage name="Military"/>
+<value name="Tier3"/>
+</type>
+<type name="Asmond_Vikhr_Red">
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
+<restock>600</restock>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26158,39 +26176,25 @@
 <value name="Tier2"/>
 <value name="Tier3"/>
 </type>
-<type name="Asmond_Vikhr_Red">
-<nominal>1</nominal>
-<lifetime>14400</lifetime>
-<restock>600</restock>
-<min>0</min>
-<quantmin>30</quantmin>
-<quantmax>80</quantmax>
-<cost>100</cost>
-<flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
-<category name="weapons"/>
-<usage name="Military"/>
-<value name="Tier3"/>
-<value name="Tier4"/>
-</type>
 <type name="Asmond_Vikhr_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Military"/>
+<value name="Tier2"/>
 <value name="Tier3"/>
-<value name="Tier4"/>
 </type>
 <type name="Asmond_PM73Rak_Black">
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -26203,7 +26207,7 @@
 <!--    SHOTGUNS    -->
 <type name="Asmond_IZH18Shotgun_RedWood">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -26211,15 +26215,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
+<value name="Tier2"/>
+<value name="Tier3"/>
 <usage name="Town"/>
 <usage name="Village"/>
-<value name="Tier1"/>
-<value name="Tier2"/>
 </type>
 <type name="Asmond_SawedoffIzh18Shotgun_RedWood">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -26235,7 +26238,7 @@
 </type>
 <type name="Asmond_IZH18Shotgun_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -26243,15 +26246,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
+<value name="Tier2"/>
+<value name="Tier3"/>
 <usage name="Town"/>
 <usage name="Village"/>
-<value name="Tier1"/>
-<value name="Tier2"/>
 </type>
 <type name="Asmond_SawedoffIzh18Shotgun_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -26266,8 +26268,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_IZH43Shotgun_DarkWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>50</quantmin>
@@ -26275,15 +26277,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_SawedoffIzh43Shotgun_DarkWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -26298,8 +26298,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_IZH43Shotgun_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>50</quantmin>
@@ -26307,15 +26307,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_SawedoffIzh43Shotgun_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -26330,8 +26328,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_IZH43Shotgun_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>50</quantmin>
@@ -26339,15 +26337,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_SawedoffIzh43Shotgun_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -26362,8 +26358,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_MP133_Black">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>7200</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -26372,13 +26368,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_MP133_Beige">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>7200</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -26387,13 +26382,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_MP133_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>7200</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -26402,13 +26396,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_R12_Wooden">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>10</quantmin>
@@ -26417,13 +26410,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_R12_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>10</quantmin>
@@ -26432,13 +26424,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_R12_SledgeHammer">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>10</quantmin>
@@ -26447,13 +26438,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Police"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_Saiga_Red">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -26470,7 +26460,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>20</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26482,7 +26472,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>20</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26492,9 +26482,9 @@
 </type>
 <type name="Asmond_AK74_Combatant">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26506,9 +26496,9 @@
 </type>
 <type name="Asmond_AK74_Desert">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26520,9 +26510,9 @@
 </type>
 <type name="Asmond_AK74_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26534,7 +26524,7 @@
 </type>
 <type name="Asmond_AK74_Rusted">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26548,9 +26538,9 @@
 </type>
 <type name="Asmond_AK74_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26562,9 +26552,9 @@
 </type>
 <type name="Asmond_AK101_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26574,9 +26564,9 @@
 </type>
 <type name="Asmond_AK101_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26586,9 +26576,9 @@
 </type>
 <type name="Asmond_AK101_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26598,9 +26588,9 @@
 </type>
 <type name="Asmond_AK101_Wine">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26610,9 +26600,9 @@
 </type>
 <type name="Asmond_AKM_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26622,9 +26612,9 @@
 </type>
 <type name="Asmond_AKM_Brown">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26634,9 +26624,9 @@
 </type>
 <type name="Asmond_AKM_Camo">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26646,9 +26636,9 @@
 </type>
 <type name="Asmond_AKM_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26658,9 +26648,9 @@
 </type>
 <type name="Asmond_ASVAL_Red">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26670,9 +26660,9 @@
 </type>
 <type name="Asmond_ASVAL_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26682,9 +26672,9 @@
 </type>
 <type name="Asmond_ASVAL_Moss">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26694,9 +26684,9 @@
 </type>
 <type name="Asmond_ASVAL_Stalker">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26706,9 +26696,9 @@
 </type>
 <type name="Asmond_ASVAL_Loner">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26718,9 +26708,9 @@
 </type>
 <type name="Asmond_FAMAS_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26732,9 +26722,9 @@
 </type>
 <type name="Asmond_SawedoffFAMAS_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -26746,9 +26736,9 @@
 </type>
 <type name="Asmond_VSS_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26758,9 +26748,9 @@
 </type>
 <type name="Asmond_VSS_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26770,9 +26760,9 @@
 </type>
 <type name="Asmond_VSS_Stalker">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26782,9 +26772,9 @@
 </type>
 <type name="Asmond_VSS_Yellow">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26794,9 +26784,9 @@
 </type>
 <type name="Asmond_AUG_Green">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26806,9 +26796,9 @@
 </type>
 <type name="Asmond_AUG_Beige">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26818,9 +26808,9 @@
 </type>
 <type name="Asmond_AUG_Grey">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26830,9 +26820,9 @@
 </type>
 <type name="Asmond_AUG_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26842,7 +26832,7 @@
 </type>
 <type name="Asmond_FAL_DarkWood">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26854,9 +26844,9 @@
 </type>
 <type name="Asmond_FAL_Moss">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26866,7 +26856,7 @@
 </type>
 <type name="Asmond_FAL_LightWood">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26878,7 +26868,7 @@
 </type>
 <type name="Asmond_FAL_Winter">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26890,7 +26880,7 @@
 </type>
 <type name="Asmond_M4A1_Tan">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26902,7 +26892,7 @@
 </type>
 <type name="Asmond_M4A1_Desert">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26914,7 +26904,7 @@
 </type>
 <type name="Asmond_M4A1_Green">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26926,7 +26916,7 @@
 </type>
 <type name="Asmond_M4A1_Dark">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26938,7 +26928,7 @@
 </type>
 <type name="Asmond_M4A1_Winter">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -26950,9 +26940,9 @@
 </type>
 <type name="Asmond_M4A1_Camo">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26962,9 +26952,9 @@
 </type>
 <type name="Asmond_M16A2_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26974,9 +26964,9 @@
 </type>
 <type name="Asmond_M16A2_Purple">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26986,9 +26976,9 @@
 </type>
 <type name="Asmond_M16A2_Green">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -26998,9 +26988,9 @@
 </type>
 <type name="Asmond_M16A2_Wooden">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27010,9 +27000,9 @@
 </type>
 <type name="Asmond_M16A2_Tan">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27022,9 +27012,9 @@
 </type>
 <type name="Asmond_M16A2_Camo">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>28800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27035,7 +27025,7 @@
 <!--    GENERAL RIFLES    -->
 <type name="Asmond_IZH18Rifle_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27045,12 +27035,12 @@
 <category name="weapons"/>
 <usage name="Farm"/>
 <usage name="Village"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
+<value name="Tier3"/>
 </type>
 <type name="Asmond_SawedoffIzh18_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27066,7 +27056,7 @@
 </type>
 <type name="Asmond_IZH18Rifle_Brown">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27076,12 +27066,12 @@
 <category name="weapons"/>
 <usage name="Farm"/>
 <usage name="Village"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
+<value name="Tier3"/>
 </type>
 <type name="Asmond_SawedoffIzh18_Brown">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27097,7 +27087,7 @@
 </type>
 <type name="Asmond_Repeater_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>20</quantmin>
@@ -27105,14 +27095,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_Repeater_Wooden">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>20</quantmin>
@@ -27120,14 +27109,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_Ruger1022_Black">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>100</quantmin>
@@ -27138,10 +27126,11 @@
 <usage name="Town"/>
 <usage name="Village"/>
 <value name="Tier1"/>
+<value name="Tier2"/>
 </type>
 <type name="Asmond_Ruger1022_Beige">
 <nominal>2</nominal>
-<lifetime>7200</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>100</quantmin>
@@ -27152,10 +27141,11 @@
 <usage name="Town"/>
 <usage name="Village"/>
 <value name="Tier1"/>
+<value name="Tier2"/>
 </type>
 <type name="Asmond_SKS_Black">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27168,8 +27158,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SKS_Old">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27182,8 +27172,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SKS_Lightwood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27196,8 +27186,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SKS_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27210,8 +27200,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SKS_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27224,8 +27214,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SKS_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27239,8 +27229,8 @@
 </type>
 <!--    SNIPER RIFLES    -->
 <type name="Asmond_B95_Wood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -27249,13 +27239,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SawoffB95_Wood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27270,8 +27259,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_B95_Dark">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -27280,13 +27269,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SawoffB95_Dark">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27301,8 +27289,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_B95_Moss">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -27311,13 +27299,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SawoffB95_Moss">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27332,8 +27319,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_B95_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>0</quantmin>
@@ -27342,13 +27329,12 @@
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
 <usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SawoffB95_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27364,7 +27350,7 @@
 </type>
 <type name="Asmond_CZ527_Camo">
 <nominal>2</nominal>
-<lifetime>10800</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27372,16 +27358,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_CZ527_Winter">
 <nominal>2</nominal>
-<lifetime>10800</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27389,16 +27372,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_CZ527_Black">
 <nominal>2</nominal>
-<lifetime>10800</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27406,16 +27386,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_CZ527_Brown">
 <nominal>2</nominal>
-<lifetime>10800</lifetime>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27423,16 +27400,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Farm"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier1"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Farm"/>
 </type>
 <type name="Asmond_CZ550_Brown">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27445,8 +27419,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_CZ550_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27459,8 +27433,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_CZ550_Black">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27473,8 +27447,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_CZ550_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27490,7 +27464,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27502,7 +27476,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27514,7 +27488,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27526,7 +27500,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27538,7 +27512,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27547,8 +27521,8 @@
 <usage name="ContaminatedArea"/>
 </type>
 <type name="Asmond_Mosin9130_Dark">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27556,16 +27530,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Town"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
+<usage name="Town"/>
+<usage name="Village"/>
 </type>
 <type name="Asmond_SawedoffMosin9130_Dark">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27580,8 +27552,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_Mosin9130_BrownCamo">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27589,16 +27561,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Town"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
+<usage name="Town"/>
+<usage name="Village"/>
 </type>
 <type name="Asmond_SawedoffMosin9130_BrownCamo">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27613,8 +27583,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_Mosin9130_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27622,16 +27592,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Town"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
+<usage name="Town"/>
+<usage name="Village"/>
 </type>
 <type name="Asmond_SawedoffMosin9130_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27646,8 +27614,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_Mosin9130_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27655,16 +27623,14 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Town"/>
-<usage name="Village"/>
-<usage name="Hunting"/>
-<value name="Tier2"/>
 <value name="Tier3"/>
 <value name="Tier4"/>
+<usage name="Town"/>
+<usage name="Village"/>
 </type>
 <type name="Asmond_SawedoffMosin9130_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>-1</quantmin>
@@ -27679,8 +27645,8 @@
 <value name="Tier2"/>
 </type>
 <type name="Asmond_Scout_Grey">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27688,13 +27654,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Prison"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Police"/>
 </type>
 <type name="Asmond_Scout_Beige">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27702,13 +27668,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Prison"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Police"/>
 </type>
 <type name="Asmond_Scout_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27716,13 +27682,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Prison"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Police"/>
 </type>
 <type name="Asmond_Scout_Wooden">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27730,13 +27696,13 @@
 <cost>100</cost>
 <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
 <category name="weapons"/>
-<usage name="Prison"/>
 <value name="Tier2"/>
 <value name="Tier3"/>
+<usage name="Police"/>
 </type>
 <type name="Asmond_SSG82_Black">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27749,8 +27715,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SSG82_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27763,8 +27729,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SSG82_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27777,8 +27743,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_SSG82_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>14400</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>30</quantmin>
@@ -27792,9 +27758,9 @@
 </type>
 <type name="Asmond_SV98_Black">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>40</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27804,9 +27770,9 @@
 </type>
 <type name="Asmond_SV98_Winter">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>40</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27816,9 +27782,9 @@
 </type>
 <type name="Asmond_SV98_Wooden">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>40</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27828,7 +27794,7 @@
 </type>
 <type name="Asmond_SVD_RedWood">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -27840,7 +27806,7 @@
 </type>
 <type name="Asmond_SVD_Winter">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -27852,7 +27818,7 @@
 </type>
 <type name="Asmond_SVD_Yellow">
 <nominal>0</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
 <min>0</min>
 <quantmin>30</quantmin>
@@ -27864,9 +27830,9 @@
 </type>
 <type name="Asmond_SVD_Camo">
 <nominal>1</nominal>
-<lifetime>14400</lifetime>
+<lifetime>7200</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27875,8 +27841,8 @@
 <usage name="ContaminatedArea"/>
 </type>
 <type name="Asmond_Winchester70_Black">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27889,8 +27855,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_Winchester70_Beige">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27903,8 +27869,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_Winchester70_Green">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27917,8 +27883,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_Winchester70_RedWood">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27931,8 +27897,8 @@
 <value name="Tier4"/>
 </type>
 <type name="Asmond_Winchester70_Winter">
-<nominal>2</nominal>
-<lifetime>10800</lifetime>
+<nominal>1</nominal>
+<lifetime>28800</lifetime>
 <restock>0</restock>
 <min>1</min>
 <quantmin>25</quantmin>
@@ -27949,7 +27915,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27961,7 +27927,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>30</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -27974,7 +27940,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -27988,7 +27954,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28002,7 +27968,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28016,7 +27982,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28030,7 +27996,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28044,7 +28010,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28058,7 +28024,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28072,7 +28038,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28086,7 +28052,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28100,7 +28066,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28114,7 +28080,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28128,7 +28094,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28142,7 +28108,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28156,7 +28122,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28170,7 +28136,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28184,7 +28150,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28198,7 +28164,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28212,7 +28178,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28226,7 +28192,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28240,7 +28206,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28254,7 +28220,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28268,7 +28234,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28282,7 +28248,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28296,7 +28262,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28310,7 +28276,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28324,7 +28290,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28338,7 +28304,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28352,7 +28318,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28366,7 +28332,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28380,7 +28346,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28394,7 +28360,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28408,7 +28374,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28422,7 +28388,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28436,7 +28402,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28450,7 +28416,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28464,7 +28430,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28478,7 +28444,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28492,7 +28458,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28506,7 +28472,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28520,7 +28486,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28534,7 +28500,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28548,7 +28514,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28562,7 +28528,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28576,7 +28542,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28590,7 +28556,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28604,7 +28570,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28618,7 +28584,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28632,7 +28598,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28646,7 +28612,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28660,7 +28626,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28674,7 +28640,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28688,7 +28654,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28702,7 +28668,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28716,7 +28682,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28730,7 +28696,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28744,7 +28710,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28756,7 +28722,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28768,7 +28734,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28780,7 +28746,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28792,7 +28758,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28806,7 +28772,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28820,7 +28786,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28834,7 +28800,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28848,7 +28814,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28862,7 +28828,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28876,7 +28842,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28890,7 +28856,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28904,7 +28870,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28918,7 +28884,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28932,7 +28898,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28946,7 +28912,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -28960,7 +28926,7 @@
 <nominal>1</nominal>
 <lifetime>7200</lifetime>
 <restock>0</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29173,7 +29139,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>10</quantmin>
 <quantmax>80</quantmax>
 <cost>100</cost>
@@ -29442,7 +29408,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>10</quantmin>
 <quantmax>50</quantmax>
 <cost>100</cost>
@@ -29565,7 +29531,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>1800</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29580,7 +29546,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>1800</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29596,7 +29562,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29611,7 +29577,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29625,7 +29591,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29639,7 +29605,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29654,7 +29620,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29669,7 +29635,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29683,7 +29649,7 @@
 <nominal>1</nominal>
 <lifetime>10800</lifetime>
 <restock>600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
@@ -29697,7 +29663,7 @@
 <nominal>1</nominal>
 <lifetime>14400</lifetime>
 <restock>3600</restock>
-<min>0</min>
+<min>1</min>
 <quantmin>-1</quantmin>
 <quantmax>-1</quantmax>
 <cost>100</cost>
