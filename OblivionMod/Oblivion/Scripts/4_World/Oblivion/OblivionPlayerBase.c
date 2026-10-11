@@ -52,21 +52,49 @@ modded class PlayerBase
 		return s.Enabled && s.InventoryInVehicle;
 	}
 
+	protected bool m_OblivionUnlockedInVehicle; // ми зняли ванільний замок при посадці
+
 	override void OnCommandVehicleStart()
 	{
 		super.OnCommandVehicleStart();
 
-		if (OblivionInventoryInVehicle() && GetInventory())
+		if (OblivionInventoryInVehicle() && GetInventory() && !m_OblivionUnlockedInVehicle)
+		{
 			GetInventory().UnlockInventory(LOCK_FROM_SCRIPT);
+			m_OblivionUnlockedInVehicle = true;
+		}
 	}
 
 	override void OnCommandVehicleFinish()
 	{
-		// Ванільний OnCommandVehicleFinish знімає замок — ставимо його, щоб лічильник зійшовся.
-		if (OblivionInventoryInVehicle() && GetInventory())
+		// Ванільний OnCommandVehicleFinish знімає замок — повертаємо той, що зняли при посадці, щоб лічильник зійшовся.
+		if (m_OblivionUnlockedInVehicle && GetInventory())
 			GetInventory().LockInventory(LOCK_FROM_SCRIPT);
+		m_OblivionUnlockedInVehicle = false;
 
 		super.OnCommandVehicleFinish();
+
+		// Страховка: після виходу ванільні замки (дія «Вийти», падіння) мають зникнути;
+		// якщо щось лишилося — інвентар залишився б замкненим до перезаходу.
+		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(OblivionReleaseStaleInventoryLock, 1500, false);
+	}
+
+	protected void OblivionReleaseStaleInventoryLock()
+	{
+		GameInventory inventory = GetInventory();
+		if (!inventory || !IsAlive())
+			return;
+
+		// Ці стани ваніль замикає законно — не чіпаємо.
+		if (IsInVehicle() || GetCommand_Vehicle() || GetCommand_Fall() || GetCommand_Swim() || GetCommand_Ladder() || GetCommand_Climb())
+			return;
+
+		int guard = 0;
+		while (inventory.IsInventoryLockedForLockType(LOCK_FROM_SCRIPT) && guard < 10)
+		{
+			inventory.UnlockInventory(LOCK_FROM_SCRIPT);
+			guard++;
+		}
 	}
 
 	override bool CanReceiveItemIntoHands(EntityAI item_to_hands)
