@@ -1272,13 +1272,15 @@ diff -ruN client_orig/scripts/4_World/Groups/Entities/PlayerBase.c client/script
 +}
 diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/4_World/Groups/Markers/OBLMarker.c
 --- client_orig/scripts/4_World/Groups/Markers/OBLMarker.c	2026-10-06 22:08:50.538337238 +0000
-+++ client/scripts/4_World/Groups/Markers/OBLMarker.c	2026-10-06 23:12:13.704181580 +0000
-@@ -41,6 +41,16 @@
++++ client/scripts/4_World/Groups/Markers/OBLMarker.c	2026-10-11 01:35:24.342236218 +0000
+@@ -41,6 +41,18 @@
  	int lastcolor = 0;
  	[NonSerialized()]
  	bool showBottom = true;
 +	[NonSerialized()]
 +	float lastFade = -1;
++	[NonSerialized()]
++	float fadeAlpha = 1.0;
 +	[NonSerialized()]
 +	float iconBaseW = -1, iconBaseH = -1;
 +	
@@ -1290,7 +1292,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  	
  	[NonSerialized()]
  	Widget compassWidget;
-@@ -131,7 +141,8 @@
+@@ -131,7 +143,8 @@
  			bottomWidget = mainWidget.FindAnyWidget("bottom");
  			
  			if (GetIcon().Length() > 0) {
@@ -1300,7 +1302,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  				iconWidget.LoadImageFile(0, GetIcon());
  			} else {
  				iconWidget.Show(false);
-@@ -148,9 +159,8 @@
+@@ -148,9 +161,8 @@
  			SetColor(true);
  		}
  		SetVisibleOnScreen(false);
@@ -1312,7 +1314,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		UpdateMarkerSlow();
  		if (OBLPartyMainConfig.Get().enableCompassHud)
  			InitCompassWidget();
-@@ -168,7 +178,8 @@
+@@ -168,7 +180,8 @@
  			compassIconWidget = ImageWidget.Cast(compassWidget.FindAnyWidget("icon"));
  			compassNameWidget = TextWidget.Cast(compassWidget.FindAnyWidget("name"));
  			if (GetIcon().Length() > 0) {
@@ -1322,7 +1324,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  				compassIconWidget.LoadImageFile(0, GetIcon());
  			} else {
  				compassIconWidget.Show(false);
-@@ -192,15 +203,8 @@
+@@ -192,15 +205,8 @@
  	
  	void UpdateMarkerSlow() {
  		SetColor();
@@ -1340,7 +1342,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		disable3dDifferentSubgroup = false;
  		show = ShowMarker();
  		//OBLLogger.Debug("Show Marker: " + name + ": " + show);
-@@ -241,6 +245,10 @@
+@@ -241,6 +247,10 @@
  	}
  	
  	void OBLMarker() {
@@ -1351,7 +1353,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		AddToAllList();
  	}
  	
-@@ -256,6 +264,9 @@
+@@ -256,6 +266,9 @@
  	}
  	
  	void SendPositionToServer() {
@@ -1361,7 +1363,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		ScriptRPC rpc = CreateRPCCall(OBLPartyRPCs.POSITION);
  		rpc.Write(position[0]);
  		rpc.Write(position[1]);
-@@ -270,7 +281,8 @@
+@@ -270,7 +283,8 @@
  	}
  	
  	void ~OBLMarker() {
@@ -1371,7 +1373,41 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		if (allMarkers) {
  			allMarkers.RemoveItem(this);
  		}
-@@ -330,7 +342,8 @@
+@@ -287,20 +301,30 @@
+ 	void SetColor(bool force = false) {
+ 		int rgb = Get3DColorARGB();
+ 		if (force || lastcolor != rgb) {
++			// згасання з відстанню застосовуємо лише до кольору 3D-елементів
++			// (не до кореня маркера — інакше проявлялась його рамка)
++			int fadedRgb = ApplyFade(rgb);
+ 			if (iconWidget)
+-				iconWidget.SetColor(rgb);
++				iconWidget.SetColor(fadedRgb);
+ 			if (nameWidget)
+-				nameWidget.SetColor(rgb);
++				nameWidget.SetColor(fadedRgb);
+ 			if (compassNameWidget && compassIconWidget) {
+ 				compassNameWidget.SetColor(rgb);
+ 				compassIconWidget.SetColor(rgb);
+ 			}
+ 			if (distanceWidget) {
+-				distanceWidget.SetColor(ARGB(colorA, 255, 255, 255));
++				distanceWidget.SetColor(ApplyFade(ARGB(colorA, 255, 255, 255)));
+ 			}
+ 			lastcolor = rgb;
+ 		}
+ 	}
++	
++	int ApplyFade(int argb) {
++		if (fadeAlpha >= 1.0)
++			return argb;
++		int a = ((argb >> 24) & 0xFF) * fadeAlpha;
++		return (a << 24) | (argb & 0x00FFFFFF);
++	}
+ 
+ 	bool SetColorARGB(int a, int r, int g, int b) {
+ 		if (colorA != a || colorR != r || colorG != g || colorB != b) {
+@@ -330,7 +354,8 @@
  			rpc.Write(r);
  			rpc.Write(g);
  			rpc.Write(b);
@@ -1381,7 +1417,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  			SendMarkerRPC(rpc);
  			return true;
  		}
-@@ -404,10 +417,37 @@
+@@ -404,10 +429,38 @@
  		vector pos = GetGame().GetCurrentCameraPosition();
  		dist = vector.Distance(position, pos);
  		if (dist < 1000) {
@@ -1412,7 +1448,8 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
 +		if (lastFade >= 0 && Math.AbsFloat(t - lastFade) < 0.02)
 +			return;
 +		lastFade = t;
-+		mainWidget.SetAlpha(1.0 - t * (1.0 - FADE_MIN_ALPHA));
++		fadeAlpha = 1.0 - t * (1.0 - FADE_MIN_ALPHA);
++		SetColor(true);
 +		if (iconWidget) {
 +			if (iconBaseW < 0)
 +				iconWidget.GetSize(iconBaseW, iconBaseH);
@@ -1421,7 +1458,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		}
  	}
  	
-@@ -430,8 +470,9 @@
+@@ -430,8 +483,9 @@
  	void UpdateDistance() {
  		if (ShowDistance()) {
  			SetDistance();
@@ -1433,7 +1470,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  			bottomWidget.Show(false);
  		}
  	}
-@@ -451,6 +492,7 @@
+@@ -451,6 +505,7 @@
  		if (!mainWidget || !show || !GetGame() || !GetGame().GetPlayer() || !GetGame().GetPlayer().IsAlive() || GetGame().GetPlayer().IsUnconscious())
  			return false;
  		UpdateDistance();
@@ -1441,7 +1478,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		return true;
  	}
  	
-@@ -549,7 +591,8 @@
+@@ -549,7 +604,8 @@
  	void SendMarkerRPC(ScriptRPC rpc) {
  		if (!parentGroup && GetGame().IsClient() && GetGame().IsMultiplayer()) {
  			PlayerBase pb = PlayerBase.Cast(GetGame().GetPlayer());
@@ -1451,7 +1488,7 @@ diff -ruN client_orig/scripts/4_World/Groups/Markers/OBLMarker.c client/scripts/
  		}
  		if (parentGroup) {
  			if (GetGame().IsServer()) {
-@@ -561,9 +604,9 @@
+@@ -561,9 +617,9 @@
  			rpc.Send(null, OBLPartyRPCs.MARKER_RPC, true);
  		} else {
  			if (!parentGroup)

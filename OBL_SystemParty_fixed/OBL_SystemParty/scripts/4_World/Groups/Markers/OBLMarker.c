@@ -44,6 +44,8 @@ class OBLMarker {
 	[NonSerialized()]
 	float lastFade = -1;
 	[NonSerialized()]
+	float fadeAlpha = 1.0;
+	[NonSerialized()]
 	float iconBaseW = -1, iconBaseH = -1;
 	
 	// плавне згасання й зменшення далеких 3D-маркерів
@@ -299,19 +301,29 @@ class OBLMarker {
 	void SetColor(bool force = false) {
 		int rgb = Get3DColorARGB();
 		if (force || lastcolor != rgb) {
+			// згасання з відстанню застосовуємо лише до кольору 3D-елементів
+			// (не до кореня маркера — інакше проявлялась його рамка)
+			int fadedRgb = ApplyFade(rgb);
 			if (iconWidget)
-				iconWidget.SetColor(rgb);
+				iconWidget.SetColor(fadedRgb);
 			if (nameWidget)
-				nameWidget.SetColor(rgb);
+				nameWidget.SetColor(fadedRgb);
 			if (compassNameWidget && compassIconWidget) {
 				compassNameWidget.SetColor(rgb);
 				compassIconWidget.SetColor(rgb);
 			}
 			if (distanceWidget) {
-				distanceWidget.SetColor(ARGB(colorA, 255, 255, 255));
+				distanceWidget.SetColor(ApplyFade(ARGB(colorA, 255, 255, 255)));
 			}
 			lastcolor = rgb;
 		}
+	}
+	
+	int ApplyFade(int argb) {
+		if (fadeAlpha >= 1.0)
+			return argb;
+		int a = ((argb >> 24) & 0xFF) * fadeAlpha;
+		return (a << 24) | (argb & 0x00FFFFFF);
 	}
 
 	bool SetColorARGB(int a, int r, int g, int b) {
@@ -442,7 +454,8 @@ class OBLMarker {
 		if (lastFade >= 0 && Math.AbsFloat(t - lastFade) < 0.02)
 			return;
 		lastFade = t;
-		mainWidget.SetAlpha(1.0 - t * (1.0 - FADE_MIN_ALPHA));
+		fadeAlpha = 1.0 - t * (1.0 - FADE_MIN_ALPHA);
+		SetColor(true);
 		if (iconWidget) {
 			if (iconBaseW < 0)
 				iconWidget.GetSize(iconBaseW, iconBaseH);
